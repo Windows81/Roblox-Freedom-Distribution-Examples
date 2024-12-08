@@ -1,0 +1,91 @@
+           type: {
+              name: 'Sequence',
+              element: {
+                  required: false,
+                  serializedName: 'ObjectElementType',
+                  type: {
+                    name: 'Object'
+                  }
+              }
+            }
+          },
+          type: {
+            required: true,
+            serializedName: 'type',
+            isPolymorphicDiscriminator: true,
+            type: {
+              name: 'String'
+            }
+          },
+          clusterSize: {
+            required: true,
+            serializedName: 'typeProperties.clusterSize',
+            type: {
+              name: 'Object'
+            }
+          },
+          timeToLive: {
+            required: true,
+            serializedName: 'typeProperties.timeToLive',
+            type: {
+              name: 'Object'
+            }
+          },
+          version: {
+            required: true,
+            serializedName: 'typeProperties.version',
+            type: {
+              name: 'Object'
+            }
+          },
+          linkedServiceName: {
+            required: true,
+            serializedName: 'typeProperties.linkedServiceName',
+            defaultValue: {},
+            type: {
+              name: 'Composite',
+              className: 'LinkedServiceReference'
+            }
+          },
+          hostSubscriptionId: {
+            required: true,
+            serializedName: 'typeProperties.hostSubscriptionId',
+            type: {
+              name: 'Object'
+            }
+          },
+          servicePrincipalId: {
+            required: false,
+            serializedName: 'typeProperties.servicePrincipalId',
+            type: {
+              name: 'Object'
+            }
+          },
+          servicePrincipalKey: {
+            required: false,
+            serializedName: 'typeProperties.servicePrincipalKey',
+            type: {
+              name: 'Composite',
+              polymorphicDiscriminator: {
+                serializedName: 'type',
+                clientName: 'type'
+              },
+              uberParent: 'SecretBase',
+              className: 'SecretBase'
+            }
+          },
+          tenant: {
+            required: true,
+            serializedName: 'typeProperties.tenant',
+            type: {
+              name: 'Object'
+            }
+          },
+          clusterResourceGroup: {
+            required: true,
+            serializedName: 'typeProperties.clusterResourceGroup',
+            type: {
+              name: 'Object'
+            }
+          },
+          clusterNamePrefix

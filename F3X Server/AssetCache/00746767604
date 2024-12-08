@@ -1,0 +1,4 @@
+.TouchpointAnalyticsClient.Service.TouchpointAnalyticsClientService - [onStartProfiling] InitScheduler took 230 to complete
+02/12 13:04:02.775  WARN [5] HP.TouchpointAnalyticsClient.Service.TouchpointAnalyticsClientService - [onStartProfiling] InitInternalAppCommunicationServerTest took 0 to complete
+02/12 13:04:02.775  WARN [5] HP.TouchpointAnalyticsClient.Service.TouchpointAnalyticsClientService - [onStartProfiling] RegisterPowerOptimization took 0 to complete
+02/12 13:04:02.786  WARN [14] HP.Touchpoin

@@ -1,0 +1,546 @@
+.class Lcom/roblox/client/contacts/b$5;
+.super Ljava/lang/Object;
+.source "SourceFile"
+
+# interfaces
+.implements Ljava/lang/Runnable;
+
+
+# annotations
+.annotation system Ldalvik/annotation/EnclosingMethod;
+    value = Lcom/roblox/client/contacts/b;->a(Lorg/json/JSONArray;Lcom/roblox/client/contacts/d;Landroid/os/HandlerThread;)V
+.end annotation
+
+.annotation system Ldalvik/annotation/InnerClass;
+    accessFlags = 0x0
+    name = null
+.end annotation
+
+
+# instance fields
+.field final synthetic a:Lorg/json/JSONArray;
+
+.field final synthetic b:Landroid/os/HandlerThread;
+
+.field final synthetic c:Lcom/roblox/client/contacts/d;
+
+.field final synthetic d:Lcom/roblox/client/contacts/b;
+
+
+# direct methods
+.method constructor <init>(Lcom/roblox/client/contacts/b;Lorg/json/JSONArray;Landroid/os/HandlerThread;Lcom/roblox/client/contacts/d;)V
+    .locals 0
+
+    .line 479
+    iput-object p1, p0, Lcom/roblox/client/contacts/b$5;->d:Lcom/roblox/client/contacts/b;
+
+    iput-object p2, p0, Lcom/roblox/client/contacts/b$5;->a:Lorg/json/JSONArray;
+
+    iput-object p3, p0, Lcom/roblox/client/contacts/b$5;->b:Landroid/os/HandlerThread;
+
+    iput-object p4, p0, Lcom/roblox/client/contacts/b$5;->c:Lcom/roblox/client/contacts/d;
+
+    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
+
+    return-void
+.end method
+
+
+# virtual methods
+.method public run()V
+    .locals 10
+
+    .line 483
+    new-instance v0, Ljava/util/ArrayList;
+
+    invoke-direct {v0}, Ljava/util/ArrayList;-><init>()V
+
+    .line 485
+    new-instance v1, Ljava/util/ArrayList;
+
+    invoke-direct {v1}, Ljava/util/ArrayList;-><init>()V
+
+    .line 487
+    new-instance v2, Ljava/lang/StringBuilder;
+
+    invoke-direct {v2}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string v3, "Server contacts:"
+
+    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    iget-object v3, p0, Lcom/roblox/client/contacts/b$5;->a:Lorg/json/JSONArray;
+
+    invoke-virtual {v3}, Lorg/json/JSONArray;->length()I
+
+    move-result v3
+
+    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
+
+    invoke-virtual {v2}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v2
+
+    const-string v3, "rbx.contacts"
+
+    invoke-static {v3, v2}, Lcom/roblox/client/ae/k;->b(Ljava/lang/String;Ljava/lang/String;)I
+
+    const/4 v2, 0x0
+
+    .line 489
+    :goto_0
+    iget-object v4, p0, Lcom/roblox/client/contacts/b$5;->a:Lorg/json/JSONArray;
+
+    invoke-virtual {v4}, Lorg/json/JSONArray;->length()I
+
+    move-result v4
+
+    const-wide/16 v5, -0x1
+
+    const/4 v7, 0x0
+
+    if-ge v2, v4, :cond_2
+
+    .line 492
+    :try_start_0
+    iget-object v4, p0, Lcom/roblox/client/contacts/b$5;->a:Lorg/json/JSONArray;
+
+    invoke-virtual {v4, v2}, Lorg/json/JSONArray;->get(I)Ljava/lang/Object;
+
+    move-result-object v4
+
+    check-cast v4, Lorg/json/JSONObject;
+    :try_end_0
+    .catch Lorg/json/JSONException; {:try_start_0 .. :try_end_0} :catch_1
+    .catch Ljava/lang/ClassCastException; {:try_start_0 .. :try_end_0} :catch_0
+
+    move-object v7, v4
+
+    goto :goto_1
+
+    :catch_0
+    move-exception v4
+
+    .line 496
+    new-instance v8, Ljava/lang/StringBuilder;
+
+    invoke-direct {v8}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string v9, "Class cast exception: "
+
+    invoke-virtual {v8, v9}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    invoke-virtual {v4}, Ljava/lang/ClassCastException;->getMessage()Ljava/lang/String;
+
+    move-result-object v4
+
+    invoke-virtual {v8, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    invoke-virtual {v8}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v4
+
+    invoke-static {v3, v4}, Lcom/roblox/client/ae/k;->b(Ljava/lang/String;Ljava/lang/String;)I
+
+    goto :goto_1
+
+    :catch_1
+    move-exception v4
+
+    .line 494
+    new-instance v8, Ljava/lang/StringBuilder;
+
+    invoke-direct {v8}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string v9, "Bad format exception: "
+
+    invoke-virtual {v8, v9}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    invoke-virtual {v4}, Lorg/json/JSONException;->getMessage()Ljava/lang/String;
+
+    move-result-object v4
+
+    invoke-virtual {v8, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    invoke-virtual {v8}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v4
+
+    invoke-static {v3, v4}, Lcom/roblox/client/ae/k;->b(Ljava/lang/String;Ljava/lang/String;)I
+
+    :goto_1
+    if-eqz v7, :cond_1
+
+    const-string v4, "sourceId"
+
+    .line 500
+    invoke-virtual {v7, v4, v5, v6}, Lorg/json/JSONObject;->optLong(Ljava/lang/String;J)J
+
+    move-result-wide v4
+
+    const-wide/16 v8, 0x0
+
+    cmp-long v6, v4, v8
+
+    if-lez v6, :cond_1
+
+    .line 503
+    iget-object v6, p0, Lcom/roblox/client/contacts/b$5;->d:Lcom/roblox/client/contacts/b;
+
+    invoke-static {v6}, Lcom/roblox/client/contacts/b;->a(Lcom/roblox/client/contacts/b;)Ljava/util/TreeMap;
+
+    move-result-object v6
+
+    invoke-static {v4, v5}, Ljava/lang/Long;->valueOf(J)Ljava/lang/Long;
+
+    move-result-object v8
+
+    invoke-virtual {v6, v8}, Ljava/util/TreeMap;->get(Ljava/lang/Object;)Ljava/lang/Object;
+
+    move-result-object v6
+
+    check-cast v6, Lcom/roblox/client/contacts/model/c;
+
+    if-eqz v6, :cond_1
+
+    .line 508
+    new-instance v8, Lcom/roblox/client/contacts/model/d;
+
+    invoke-virtual {v6}, Lcom/roblox/client/contacts/model/c;->b()Ljava/lang/String;
+
+    move-result-object v9
+
+    invoke-direct {v8, v4, v5, v9}, Lcom/roblox/client/contacts/model/d;-><init>(JLjava/lang/String;)V
+
+    .line 509
+    invoke-virtual {v8, v7}, Lcom/roblox/client/contacts/model/d;->a(Lorg/json/JSONObject;)V
+
+    .line 512
+    invoke-virtual {v8}, Lcom/roblox/client/contacts/model/d;->f()Z
+
+    move-result v4
+
+    if-nez v4, :cond_0
+
+    .line 513
+    invoke-virtual {v6}, Lcom/roblox/client/contacts/model/c;->c()Ljava/lang/String;
+
+    move-result-object v4
+
+    invoke-virtual {v8, v4}, Lcom/roblox/client/contacts/model/d;->a(Ljava/lang/String;)V
+
+    .line 514
+    invoke-virtual {v8}, Lcom/roblox/client/contacts/model/d;->g()Ljava/lang/String;
+
+    move-result-object v4
+
+    invoke-virtual {v6, v4}, Lcom/roblox/client/contacts/model/c;->b(Ljava/lang/String;)Ljava/lang/String;
+
+    move-result-object v4
+
+    invoke-virtual {v8, v4}, Lcom/roblox/client/contacts/model/d;->b(Ljava/lang/String;)V
+
+    .line 515
+    invoke-virtual {v1, v8}, Ljava/util/ArrayList;->add(Ljava/lang/Object;)Z
+
+    goto :goto_2
+
+    .line 517
+    :cond_0
+    invoke-virtual {v0, v8}, Ljava/util/ArrayList;->add(Ljava/lang/Object;)Z
+
+    :cond_1
+    :goto_2
+    add-int/lit8 v2, v2, 0x1
+
+    goto/16 :goto_0
+
+    .line 524
+    :cond_2
+    iget-object v2, p0, Lcom/roblox/client/contacts/b$5;->d:Lcom/roblox/client/contacts/b;
+
+    invoke-virtual {v0}, Ljava/util/ArrayList;->size()I
+
+    move-result v3
+
+    invoke-static {v2, v3}, Lcom/roblox/client/contacts/b;->a(Lcom/roblox/client/contacts/b;I)I
+
+    .line 525
+    iget-object v2, p0, Lcom/roblox/client/contacts/b$5;->d:Lcom/roblox/client/contacts/b;
+
+    new-instance v3, Ljava/util/ArrayList;
+
+    invoke-direct {v3}, Ljava/util/ArrayList;-><init>()V
+
+    invoke-static {v2, v3}, Lcom/roblox/client/contacts/b;->a(Lcom/roblox/client/contacts/b;Ljava/util/ArrayList;)Ljava/util/ArrayList;
+
+    .line 527
+    iget-object v2, p0, Lcom/roblox/client/contacts/b$5;->d:Lcom/roblox/client/contacts/b;
+
+    invoke-static {v2}, Lcom/roblox/client/contacts/b;->g(Lcom/roblox/client/contacts/b;)I
+
+    move-result v2
+
+    const-string v3, ""
+
+    if-lez v2, :cond_3
+
+    .line 529
+    new-instance v2, Lcom/roblox/client/contacts/model/d;
+
+    const-wide/16 v8, -0x2
+
+    invoke-direct {v2, v8, v9, v3}, Lcom/roblox/client/contacts/model/{"id":"WS","name":"Samoa","month":"2022-03","access_date":"2022-04-04","data":{"firefox":{"2":null,"3":null,"3.5":null,"3.6":null,"4":null,"5":null,"6":null,"7":null,"8":null,"9":null,"10":null,"11":null,"12":null,"13":null,"14":null,"15":null,"16":null,"17":null,"18":null,"19":null,"20":null,"21":null,"22":null,"23":null,"24":null,"25":null,"26":null,"27":null,"28":null,"29":null,"30":null,"31":null,"32":null,"33":null,"34":null,"35":null,"36":null,"37":null,"38":null,"39":null,"40":null,"41":null,"42":null,"43":null,"44":null,"45":null,"46":null,"47":null,"48":null,"49":null,"50":null,"51":null,"52":null,"53":null,"54":null,"55":null,"56":null,"57":null,"58":null,"59":0.00829,"60":null,"61":null,"62":null,"63":null,"64":null,"65":null,"66":null,"67":null,"68":null,"69":null,"70":null,"71":null,"72":null,"73":null,"74":null,"75":null,"76":null,"77":null,"78":null,"79":null,"80":null,"81":null,"82":null,"83":null,"84":null,"85":null,"86":null,"87":null,"88":null,"89":null,"90":null,"91":0.02073,"92":null,"93":null,"94":null,"95":0.00829,"96":null,"97":0.80432,"98":1.22307,"99":0.01658,"100":null},"chrome":{"4":null,"5":null,"6":null,"7":null,"8":null,"9":null,"10":null,"11":null,"12":null,"13":null,"14":null,"15":null,"16":null,"17":null,"18":null,"19":null,"20":null,"21":null,"22":null,"23":null,"24":null,"25":null,"26":null,"27":null,"28":null,"29":null,"30":null,"31":null,"32":null,"33":0.02073,"34":null,"35":null,"36":null,"37":null,"38":0.00829,"39":null,"40":0.01658,"41":null,"42":null,"43":null,"44":null,"45":null,"46":null,"47":null,"48":null,"49":null,"50":null,"51":null,"52":null,"53":null,"54":null,"55":null,"56":null,"57":null,"58":0.00829,"59":null,"60":null,"61":null,"62":null,"63":0.02902,"64":null,"65":null,"66":null,"67":0.01244,"68":null,"69":null,"70":null,"71":0.01658,"72":null,"73":null,"74":null,"75":null,"76":null,"77":null,"78":null,"79":0.01244,"80":0.04146,"81":0.02488,"83":null,"84":null,"85":null,"86":null,"87":0.02073,"88":0.00829,"89":0.00829,"90":0.00829,"91":0.04146,"92":0.01244,"93":0.01658,"94":0.29851,"95":0.11194,"96":0.08707,"97":0.24876,"98":5.35249,"99":15.00852,"100":0.14096,"101":0.00829,"102":null,"103":null},"opera":{"9":null,"9.5-9.6":null,"10.0-10.1":0,"10.5":null,"10.6":null,"11":null,"11.1":null,"11.5":null,"11.6":null,"12":null,"12.1":null,"15":null,"16":null,"17":null,"18":null,"19":null,"20":null,"21":null,"22":null,"23":null,"24":null,"25":null,"26":null,"27":null,"28":0.00829,"29":null,"30":null,"31":null,"32":null,"33":null,"34":null,"35":null,"36":null,"37":null,"38":null,"39":null,"40":null,"41":null,"42":null,"43":null,"44":null,"45":null,"46":null,"47":null,"48":null,"49":null,"50":null,"51":null,"52":null,"53":null,"54":null,"55":null,"56":null,"57":null,"58":null,"60":null,"62":null,"63":null,"64":null,"65":null,"66":null,"67":null,"68":null,"69":null,"70":null,"71":null,"72":null,"73":null,"74":null,"75":null,"76":null,"77":null,"78":null,"79":null,"80":null,"81":null,"82":0.00415,"83":null},"edge":{"12":0.00829,"13":0.00829,"14":0.01658,"15":0.02488,"16":0.05804,"17":0.03731,"18":0.08292,"79":null,"80":null,"81":null,"83":null,"84":0.07048,"85":0.04975,"86":null,"87":null,"88":null,"89":0.02073,"90":null,"91":null,"92":0.01658,"93":0.00829,"94":0.02073,"95":0.03731,"96":0.03731,"97":0.0995,"98":1.38891,"99":5.21981},"safari":{"3.1":null,"3.2":null,"4":0,"5":null,"5.1":null,"6":null,"6.1":null,"7":null,"7.1":null,"8":null,"9":null,"9.1":null,"10":null,"10.1":0.04975,"11":null,"11.1":0.02902,"12":null,"12.1":0.02488,"13":0.01658,"13.1":0.02073,"14":0.37729,"14.1":0.07877,"15":null,"15.1":0.12853,"15.2-15.3":0.04146,"15.4":0.04975,"0":null},"ios_saf":{"3.2":0,"4.0-4.1":0,"4.2-4.3":0,"5.0-5.1":0,"6.0-6.1":0,"7.0-7.1":0,"8":0,"8.1-8.4":0,"9.0-9.2":0,"9.3":0.08288,"10.0-10.2":0.0018,"10.3":0.01802,"11.0-11.2":0.03693,"11.3-11.4":0.66122,"12.0-12.1":0.04414,"12.2-12.5":0.43691,"13.0-13.1":0.05855,"13.2":0.38466,"13.3":0.22521,"13.4-13.7":0.33962,"14.0-14.4":1.56206,"14.5-14.8":2.47821,"15.0-15.1":0.33782,"15.2-15.3":2.01158,"15.4":0.32971},"samsung":{"4":0.15349,"5.0-5.4":0.02035,"6.2-6.4":0.04093,"7.2-7.4":0.60372,"8.2":0.02046,"9.2":0.05116,"10.1":0.02046,"11.1-11.2":0.33767,"12.0":0.04093,"13.0":0.35814,"14.0":0.59348,"15.0":0.15349,"16.0":1.36092},"android":{"2.1":0,"2.2":0,"2.3":0,"3":0,"4":0,"4.1":0,"4.2-4.3":0.00125,"4.4":0,"4.4.3-4.4.4":0.03387,"0":0},"op_mob":{"10":null,"11":null,"11.1":null,"11.5":null,"12":null,"12.1":null,"0":null},"ie":{"5.5":null,"6":null,"7":null,"8":null,"9":null,"10":null,"11":0.14096},"bb":{"7":0,"10":0},"ie_mob":{"10":0.02879,"11":0.04426},"and_chr":{"0":48.88354},"kaios":{"2.5":0.01756},"baidu":{"0":null},"and_ff":{"0":0.64979},"and_qq":{"10.4":0.01756},"and_uc":{"0":3.08506},"op_mini":{"0":1.95085}},"total":99.29753}                                                                                                                                                                                                                                                                                                                                    ","sts_include_subdomains":false,"sts_observed":1629660336.610302},{"expiry":1652305067.395428,"host":"/2ZMOcHsfeKESaWN0zNT16JOovUr7vyIYYVcW02fzOg=","mode":"force-https","sts_include_subdomains":false,"sts_observed":1620769067.395431},{"expiry":1681599250.491236,"host":"/2bBWqr54+KFA9Oi6jtQb6+V/3P+Wm28JYldAxcU7vc=","mode":"force-https","sts_include_subdomains":true,"sts_observed":1650063250.49124},{"expiry":1675675639.350588,"host":"/2e9kG5wKDuObNW5zZXl94rjo8gI0aXzFhA+ZzFNTAU=","mode":"force-https","sts_include_subdomains":true,"sts_observed":1644139639.350594},{"expiry":1675128716.665447,"host":"/2xmFS80ycn9t3+wbUKls4DzSSev6C1Wl2jK68gGwKo=","mode":"force-https","sts_include_subdomains":true,"sts_observed":1643592716.665451},{"expiry":1676953551.860331,"host":"/3S4Z295VyPNYON2X097HyHWr4RfrTa8TBnzdmWgxug=","mode":"force-https","sts_include_subdomains":false,"sts_observed":1645417551.860335},{"expiry":1658537001.144753,"host":"/3UHW49JYxiyc7JW+8YNktOChIXD55KICHVbqzDA/Fo=","mode":"force-https","sts_include_subdomains":true,"sts_observed":1642985001.14476},{"expiry":1663611851.313587,"host":"/5j4t7ImC5yhkJBeiYPB/DCPz1g3dOGxncpdCYq9lik=","mode":"force-https","sts_include_subdomains":false,"sts_observed":1647843851.31359},{"expiry":1683446374.149152,"host":"/77A5T6JogONNjN+n9oB7n86t/CqzpKXBbG9Xptlpjg=","mode":"force-https","sts_include_subdomains":false,"sts_observed":1651910374.149156},{"expiry":1683074413.403398,"host":"///tmiHPxSPU0v13jv5YHOuPSPygrY+NHCrX7tJqk4s=","mode":"force-https","sts_include_subdomains":true,"sts_observed":1651538413.403402}],"version":2}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
+
+<HTML>
+<HEAD>
+<TITLE>
+ME_Event
+</TITLE>
+<META NAME="keywords" CONTENT="ME_Event class">
+<SCRIPT type="text/javascript">
+function windowTitle()
+{
+    parent.document.title="ME_Event";
+}
+</SCRIPT>
+</HEAD>
+<BODY BGCOLOR="white" onload="windowTitle();">
+<!-- ========= START OF TOP NAVBAR ======= -->
+<A NAME="navbar_top"><!-- --></A>
+<A HREF="#skip-navbar_top" title="Skip navigation links"></A>
+
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+  SUMMARY:&nbsp;NESTED&nbsp;|&nbsp;<A HREF="#field_summary">FIELD</A>&nbsp;|&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
+  <TR/><TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
+
+</TR>
+</TABLE>
+<A NAME="skip-navbar_top"></A>
+<!-- ========= END OF TOP NAVBAR ========= -->                
+<HR>
+<!-- ======== START OF CLASS DATA ======== -->
+<H2>
+Class ME_Event</H2>
+
+	<b>Used in features:</b>  Intel(R) ME defined Classes 
+
+	
+		
+<PRE>
+
+ME_Event
+
+</PRE>
+<DL>
+
+</DL>
+
+<HR>
+<DL>
+<DT><PRE>
+
+class <B>ME_Event</B><DT></DL>
+
+</PRE>
+<P>
+<b>General Information:</b><br/>A class Representing Events generated by Intel(R) ME<br/><br/><b>Qualifiers:</b><br>-------------<br>Version=0.0.4<br/><br/>
+
+<HR>
+</P>        
+<!-- =========== FIELD SUMMARY =========== -->
+<A NAME="field_summary"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+<B>Supported Fields Summary</B></FONT></TH>
+</TR>
+
+
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="left" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;uint8 </CODE></FONT></TD>
+<TD><CODE><B><A HREF="ME_Event.html#Category">Category</A></B> </CODE>
+<BR>
+Category of the event<br/>
+</TD>
+
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="left" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;uint32 </CODE></FONT></TD>
+<TD><CODE><B><A HREF="ME_Event.html#ID">ID</A></B> </CODE>
+<BR>
+Unique identifier of the event<br/>
+</TD>
+
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="left" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;string </CODE></FONT></TD>
+<TD><CODE><B><A HREF="ME_Event.html#Message">Message</A></B> </CODE>
+<BR>
+Event description<br/>
+</TD>
+
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="left" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;datetime </CODE></FONT></TD>
+<TD><CODE><B><A HREF="ME_Event.html#CreationTime">CreationTime</A></B> </CODE>
+<BR>
+Event creation time<br/>
+</TD>
+</TD>
+</TR>
+</TABLE>
+<br/>
+<!-- ========== METHOD SUMMARY =========== -->
+<A NAME="method_summary"><!-- --></A>
+
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#FFCCCC" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+<B>Methods Summary</B></FONT></TH>
+</TR>
+
+
+
+
+
+
+
+
+
+</TD>
+</TABLE>
+<br/>
+
+<A NAME="field_detail"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2">
+<B>Field Detail</B></FONT></TH>
+</TR>
+</TABLE>
+
+
+<A NAME="Category"><!-- --></A><H3>
+Category </H3>
+<PRE>
+public uint8 <B>Category</B></PRE>
+
+<DL>
+<DD>
+
+<b>General Information:</b><br/>Category of the event<br/><br/><b>Qualifiers:</b><br>-------------<br>ValueMap={1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 13}<br/>Values={General, System Defense, EAC, Remote Diagnostic, WLAN, SecIO, KVM, RCS, Services, IP Sync, User Consent}<br/><br/>
+<P>
+<DL>
+</DL>
+</DL>
+<HR>            
+
+<A NAME="ID"><!-- --></A><H3>
+ID </H3>
+<PRE>
+public uint32 <B>ID</B></PRE>
+
+<DL>
+<DD>
+
+<b>General Information:</b><br/>Unique identifier of the event<br/>
+<P>
+<DL>
+</DL>
+</DL>
+<HR>            
+
+<A NAME="Message"><!-- --></A><H3>
+Message </H3>
+<PRE>
+public string <B>Message</B></PRE>
+
+<DL>
+<DD>
+
+<b>General Information:</b><br/>Event description<br/><br/><b>Qualifiers:</b><br>-------------<br>MaxLen=256<br/><br/>
+<P>
+<DL>
+</DL>
+</DL>
+<HR>            
+
+<A NAME="CreationTime"><!-- --></A><H3>
+CreationTime </H3>
+<PRE>
+public datetime <B>CreationTime</B></PRE>
+
+<DL>
+<DD>
+
+<b>General Information:</b><br/>Event creation time<br/>
+<P>
+<DL>
+</DL>
+</DL>
+<HR>            
+
+
+<A NAME="method_detail"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#FFCCCC" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2">
+<B>Method Detail</B></FONT></TH>
+</TR>
+</TABLE>
+         
+
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+  SUMMARY:&nbsp;NESTED&nbsp;|&nbsp;<A HREF="#field_summary">FIELD</A>&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
+  <TR/><TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
+</TR>
+</TABLE>
+<A NAME="skip-navbar_bottom"></A>
+
+</BODY>
+</HTML>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             MSCF    3      D          +        3  ğ%              O§        §T€b  DesktopTargetCompDB_professional_lt-lt.xml š)›0> €[€€
+òt  FU b  ^U )4×ßøOöş°öoÍÌd,ŞÊ²˜ÊyKM55¨Lßı÷@0 ˆH Ì
+  õ#ˆàÕñ:âğ1x›M¢Kæ¦0%[Â†°V·ìW~’3wë2++Åüí2EÌÓüâxQWÑPŒ@¸otTG¬œ„$´N€ï@¤   ŠFÀŞí{÷±ï­M¢Š0­fÃî’¶(ë­q»C{O¤ºµi½i¶ÛWíiAÈòş``+ßŸ£ü÷ÅqÙÒ7»È4ğŸëï•éïƒK:«¸4«ã(†íoï÷=ü½ÈŸLñw¦Ó¼ôrĞS/³w/€xéÂ'Æ×M ØA0Ô‡VEÄW×°`ŸBËa)ö!ôm_¾ú˜ÂéÓº?¿;¼0¼ö«È"øA	âü@ˆ„d—(½¼¾°½Fú.Òÿ¹4¢>ºJ´¸Ã/'{]Mr¦‰£Ö¨;d˜0*È·	Úâ{Åù­TÕ¤]	¢Tâºu‹ıir»ûãÆ;^¶ëpºØ/cà¨‡|Az;@°õÆÖœZGŞ•Õïúfûõ-óY‰¯Åauí•ô3gœŞ”¾mŞ¿î>‘õy»úùÁGŞ¿Ïì#ä‘¼=ú·ÓïmrùµÃúÕ¸ùŠ	âO¾JìÁWMqğe]¿ºìá(-^˜ËÓ'Gm£±Ò¥lñ8î"=YM=¯˜eş–ôYı¶Òq›e|º¾œ[¢Q'7Î‹Ñoz"ü[;é¡èÚ-çvæï l¹¿4ïó@ıéÂp×'ù,åA½—¿ëÑ×¬C±5õÛ×æôÇË£‡Ş8s¼ÄîÄ÷xı`^ê'oÏi7ÚÈ]s}NŒšãö«[­Uò¹¾×šòÁŠoM±+ŒÀî.Ï×˜™ÃAE%æ:‚üèª"ı¯-*º¶¼Åô[ÎèYß~~şõ¹‹Ü'ì†¿x	Z©rçKÍ^Ù	$oö¼¿úQ‚¼îß¦k÷WUHú.KyÛô¿+\­¤øu¡¶§M1×ÎŞ±¿¾åo£âDÅçâ{×ÚVwY+tŒû¶¥ø›`¸ús3z´‰wá†HŸ®*»Â­É¯®ì&şİ¼Àßîe]Wß”gP/Û÷äy¦]ìÂjºêÜú»q_«×¿àWâ‡î*ÜE
+GªğµÎwTos=¿Vï¡—µwV\e¶”F¦ƒ¿úå­¸^¹£ŞQÕõËfW¶ËónÚ’·yAÔ÷Éì\·lğ$åÁäÇ©üæQaïÙÛn‡ô®‘^8x;½Z&­£öZ=Ì?–ü
+œš»_ÓùÔ÷éJáÔËwŠnqÿõRÛƒâa»%ı^j=Ù÷²Ó?š¼JZWOĞØ°ªu.É¸§M
+Ë‹ıCvÃ„Å÷ãÿ¢~¾g´øé3Ûcı:ÇŸÜ;}«X•_?M6¹x
+¤ôæáî½I9/ï/ûÿGĞøwy&şşª±:àŒ‡L\ÇË›Îp+šC«7u<÷›Oß•W<etO)ş\6á9ã³³ğµë	©¡÷¾íWQ_Ó£¯cx.ƒ×½*wï,GÜJa(ŒÓxïÂØPüe9lÂÕ›|&n£ù–Ú`¡ş¯ÍÚËŸÿæÛ×~'ìvü ?”@!¾#Âš*âî™şëw£/®îä›Öó£ıûxŒâÀÿıo£Fª»H÷yGU…÷®©å	>WV\²JÏ[g¯ÉŸü‡Ñº¯×Gd›İ%ñv]#Óë§1¼™T<›ŸrÃÂ‚~ìÔßºå7öu¶ä.®
+äõ{b€ÛÜÃ¬ÿÕæ(K×ÍùÆ‹›ˆ²Hm»YìƒUÿúÇ5¹îë8ÊÈœšŞøuÃ·ØZn;æ{½¼E~óríÕ=o—{ëÅ™&dë3×NrW)×j+ÜÛ[şÇ?é`²± ,½ìF$zª£Áı¡¡×p¯{–[JQTÖ7'©úòÃüqô½/â\RYç"uât¯˜º;VG8iQS8´â}”8G «ó¶ÅÇ‰?2¯Ö÷µs’Óí"õÛ°îÊIB(Lóº^»Û$eü´Q,\NÆq]Íe×xWòS Ìïr»6£=åõŒ†W#5=áp ~":Dä-ı– §~Ó1ÃC7ÓÁÉ{DèD¾İ„šÜÜİ[—W>øgÖ„y×·ñI«æëzÛòí¦ÆŒîÎ>Ã—áäX÷ü|)j=É’j6:È›ü=(¹í{ZOzüÎN•vm£87i/ìıáìµ°±ß¸[óøQOãá´6šĞu›¹ş|üø¦¿<\Á…¡¶"Š·ß4á_~¹•7Tış\½5+õÖ¯“”·m{“şS´¹—×æğ—õ[[ ØQ¿CİUMìõÊ’6j(¼z³p©®ˆµŸ;Ğ¾ßÏÍ¨ÿºÿ¬Fñ[¿‚ÿ‰ÍÓïËÚOÉÓW±æş×Çö¸ßuP\¼CªÍZ]şIäz[EzÚÓå2ä¨
+Ö?êá÷Ø˜ç‚M»Á¯X7=Îux?!%)ùX·Å}|·Â±îß¨yæÎ0ø{ÿêãkÒ¯4Šy ÛÏI–Üe>ßÂ}3á¿ãk”¹GÒ]ıp‚Ø3½)sÒt	°Ûè\m„üøYÛQÙ>§ô€e®‹‡Ë_¡ÿµ¨~Ğ@
+BË'ö0j[Òº7|Rÿe€îë½ñ›½o|ÏSƒ¯\ÙOõ·ò_Íyò%Ïš;Ût)eüæÍI([d[l#ô:'tØswe›Îêˆ&&—Òióˆâk¡3Ü$-ƒ(†"â,~(‹cÅ·éIãîOp_pËæ¾8:İìí)Rw¢ğÆÍÕ•vGËË\¬~
+) }³<½§To€WFüQD8’ô)/“Y¿AÁ•°™İ*‹Â³Ô"G·Í<ÕÅçİ¬ñ£-]N+_æÛh'Ó ÛÉª®ŠTûËi	h+Œp ò],ªXÎhK¬$ûa•é’a ’v7Ø­í&q ‚ÉWZ$b—G$Ş-ƒê0È9UB8âànZÀ33à#_ß7y¯Õ¼`ë£a ‚$J9€ï%òÅû¯ËNîùšg…ÀUÏ³Á©G!•PbáèBì@Å>ÄJ@?ôC?	¶ÕáûüğTö|§ğÈ°XQxTª&ç"Ë³0­‹é»İzˆMŒÄÕÅõRÔmít‚8’j¡ï¿nwµi>]Ú³Šy÷«Ëˆnã¸ÌRiêFØJ«:_¦æ-åÊÈT™ƒÕÂA $C
+$¿–‘©ÏæáÎn²¤k–­
+fTe‰[K¢2ZjŞGVµ)F€Ø†	Ù¤äüq:{@Ê§-| ƒQ1s|J>{—xhæğ¤&íR¥eÕ®²µy‘¯l¦c1òÅ¢¸V4¯¼	‰OÁŒìÇUêÉ`ß=b¯OŠAAßHãÊİØ¬ƒV¨-D¯3nuŒã”Ütú‰W´l‹È EıF’ã0{ø¥¹ÿbÛ¬ˆ™Ú]Ã±b¸áJ6yX}/Å£3«µ9	È+iU« â¢ N%éÁ]ñ÷ŸÂìi®W¨i1,ééAC™šC>f	¯,&Øá‘uĞ«||¯û1Oó‰æ\5Ó¾ØB©‚[Õ±FŠt¶f¯1ÎÜiš­–Åp-úµÆa[WƒÖH’åÊ6T‡ù“ø—‰?A#^Şòu¿if£aôzÌ¤>á/:éQ¹MrHGŒC3ˆ]¦Ì8èˆC£Pê÷ò,ÿO	‹>G‡XáÊÆä1Å ÁÇ±RÖÙƒ¯6 Ü¬·-Š	!ŞA^EËdhì ùÒ”#ÛïêÉYÚ‹›@J¦Êl§šœø7“2OÇy³†}èy”­¯øB™KÕ×â@Cù@³îœ†¥ÁİÁÚ:+Ù<¨p~‚`àÕï¥’r–¢ñÒç?._E³Í8`œh©‚b5LxËX«ÌğL-’4¼­[YVã2GèN@99ˆq9Qm‘íeè±ºØ–Ù'…&wD„M	wqn«TÚ/30¤°—9c­U@P°ı`$Ámzú¹é Ïò®=¶-¬H¥Tí7<§ê¶—
+TRHR­ÇĞ‡Ìš¶ªøî@bëmlÂÕ ¯¾¥
+H´CIqÙâH²+ŠBºı 2^"­¹ÂƒZ”V:ë8¼åóp
+âHxÇÔHG0ŠQº%ß%Î-,WQât0=q´6‘VéYí”ÒuQ©”íËPL¸9µ›@Kxàåø=œ×ƒI`C´DÈHø]„¾å‰_gCm©T—EÈ½&¦nZeû‹%ë2ã¬©™Pw5W¹^¤‘I¢l—gÜÂ3ú+&`£bÁñZ-NúI^#ŒU]e`&Xnœ5áÁœöE„†´v`œÄv@·Q<dŸ¼SÿËfiÖdkÀ§ù†^‹¥¬Ë”bW¹ø²Èƒ*1)Ñ-Ù‘W¼e:u'«/t›¾~:[®,[ÒX/Sõ%Eåë:m¨ó°dëğR¹Ùx‰­RMÌî|¢ü	e
+[Pj5Jƒ ."û“o;²÷¬±•XX\Ÿ7ÂKW„şó¯`½rj{¯5=PÚ˜¬CÓãÛ#¬>Q‚[É`Óİ5>/ŸÚÊ×9“ «Šˆïxx G‚GrZQ˜w'–€¼©ÌÖáÁî³äCÒFØIËšóøÓSUUh‡?[hŸF
+2D5j„a@l4r–d!\¶H'{ì;²¿ÆM³^İ¦RW.ÇKi'÷Øİ¦Ì0êH•$.,¬¢–™y{r¤`å‚êE~’ôòèªe0u%ªV1æÒIÜ}`¿(VYÀ–Z¹äÜADÚ¨ª@Ä€î$V´ØÖK~q: |˜@QÇ­Êk·ãB€E¶­»UK*‰x ŠÍ5ìh´l¥Mø®æHl£#g+“r	¥C·å)[ÒÍ¸Ïåf¬‰ 7º!UçÅ(HsùkhÌP+c[3ëN#ZÀÛ:ÈÉÆñvÎÁ±°†¦ŒÜE
+=s-³9'™ÂÔ&jöÚ&Ùëb VG%bèêF<Îµ“7“È©½4ir—9Î»DÃÌTHŠ(–M5íô»‹ÅBÂÊ!
+óÇÁiì‘­%|rÆGBÍ.´Q`g—P) ÆÛæì>Ø4Ù>ÔuBüD;&¢.Ü€¢º0Ák$£;°g›eÆyÊ 3ì6 Qè”Å$üù,%£ró³P,õB5Ô¬YÄAÕÈZo9W;¦mÄ½Ç³k8Ğ­Å…‰µc…’E¸Î&h6Ñš×‹$ÆfÖ'ÜªQ¶ƒ·¹‡§càC¡ŒĞ‘X0ÚÈ Ó Â¬SÒ–ê6UçfĞÊ_Õ^ğ‹Èå¡$ÛÕÊÊ´rdl68ä‡NSè0@DSÏ¹p¦‰‘ĞrÁ*zAŞÑCTÙ"¬éÔô@@×éF'¶0${!VÁƒÇl$(Ş³s1İ·ÌXâä0’×Ì2\é°™O6·İQğÄ’Reò·aèıâ”]	Gb³ìmãï¸÷L¦aíÏil™ e·!ehFé—Áï`¯¸™,äÕhì’òVUãîÿ•Ò×Ô©Å1`2KÅ3ª§5¬+äËœ:@…­JÓü=XÔ:§|O2N	ûìSœô¿ÊM:êSĞ‚£«5ç.4œTu’™VU«ØQ  gB>¢)»Pá¤Èj ÔÊÛìà0ŸFLfO'ôô¥—B'šñ<ğEÚâ`g•D`†…–™¿‡u,jÍ• Q«éB÷µ¯^E
+š¶±
+¯N!ód)‡™©ƒt´+1gîæŒ¼us·xÕâÁ>‹ñ	8·Ş¨q¯ñV\¡ú1MÊÂdá-\ª”w(AóÁÇR&‰ÍåhÎİkóWâKq8:¿—=Mù
+_¨âQÓ$½–Š¼Iu«Fên•æØj™FÜ$í¥—C"¤k¶€r7)
+Ì!y®Ñ'Ô²Vg
+b¥æ*?à\ÖaË‰~ã!¿ùXŒ‘ğy‡ŠGòÅ}¶4–¨#½¼ Å”òÇN‹4è§Î¦–-q¹ÖS‹b/gj»“IŒ‰!¦±CŞËc¦ÕºNf¶4afĞ¸l•…—MŠí9š]Á ª% «–{°æı÷®™Æ¡Õ'`eBVÇãØØ/ô=ğâA«¼¯Õ>)¹C½z;ïr‘$°{~L †VlÕ‚Á#46D&Ø^H¤X³ûø¨:AWAóÊJl$/	Ÿ•hI¬éU~…–{Èzš¹Oã6ÀÃı:Ş´HwÕoo¦!çåóÄ'ºkõ™:å½D¬‹5¦³F»µSh +‘2sù‚„"³DhÎËÍa>"GD~dŸí7zFï&•»Ã:Î½SÚDÁLí’¨1–¬ ;”¿®€‡ì¢P‡)AdåŒD‰@úABdç$Í†›.ŞÎŒq‰ƒ>eÍ©µÁsœ“XE7sLÃ'*“Tz1Ó¯6Š¢'‘Í€tŒ¤}'¼›™q:‘ãDÎ‹¡mjµj*0_ÕÚèú>ÜÓÜ136EàÔ9ÒrNJ/…4“Ëß –bğĞ#7•ºFù²Ï®Kl¬Ø¢·*ŒòæÕçù	z€fà€Ìô2Á€@ñ`Ò IÆó^o •w·±?3¬‰(`(1Œ"ó+bÖˆ4£ Î`kºv(‘%Øïj+99á™&ùÏ]ö‡9¼™¡À• Îl-ÓfJ“9_/úi¶qÎ´bu6ašV©ûôØ‡ÇSŒ
+Ád@¡q"CğÎz~WøW òkŒS`LÕTÕM¨).rÈÇ±–f,2^7ñW/A(Ægæ$œî]5<yÇf+#)§ÌfD´ŸÁÆ"JóCBF4İ‹ñƒ6^oÌ".ŸÀ8#`È‰oÈïrğ¤Œ÷œĞ~/ÑP@â0,f»¯.†UqâÆÅ5ÆsêVÅ8X +%@º‚`Ğx¡í›·ı¯Èß=T²;ã«Ìˆ;]¯æTA­Ã´4N‹,éŠ™Å:6Á~¥ú¸iÓ‡m›^.T	™?·Ø/iøû™ÈŠ8ÃÔ®˜›íS)ÆÎFî%@g…A1H9¤îú¥Õ}Ïğfˆó¾B ¡ñ%Y%[ÄÉŠ© ;Ûu9·ßn‰.Şz³PÌW¡9˜4T)¬Èf5XjùQã¼å0G3;%%[²%Ãı$zr'Wäğ¢³kà›‘ ©XtærfAå7hÉåyÀRa w5À“t§<rÃcQè­LF‚ãÌäğX£ÃÉUÄƒ¦İ•êÅcz/	3ó;™Z“ëwVƒ êÁ¼	Ã¾<dË‡Ç´¼f?»d†‘²ÖZÊæ‰Aƒ±$¨¨.Ì³Ü£|†,æ»Ü]|'H‘Ïèä-œ“³àÃs‡1\‚ÚÈïÿ?B0aõ'„|³SÁ_Ã:áf¹.zSqù×Jc½–+…’ØŠUóKÍóAÇAB(‘ ğú›•4ŞÏ‚U‡Şf´¯¯î˜§'÷M  0‚%è	*†H†÷ ‚%Ù0‚%Õ10	`†He 0
++‚7 0‹0V
++‚7¡H¦µ†Õ´¡$f®¢Ú`Ö41200
++‚71" rlP1·ræº)Â»z’†)TĞC¾ÙÊ''mÃq«)010	`†He  OÿEÂi“´EÀ
+ÈZUJ/øk×’¡ ¨·Ë¼ç ‚r0‚ú0‚â 3  9özgm  ¯    90	*†H†÷ 0~10	UUS10U
+Washington10URedmond10U
+Microsoft Corporation1(0&UMicrosoft Code Signing PCA 20100210902182558Z220901182558Z0t10	UUS10U
+Washington10URedmond10U
+Microsoft Corporation10UMicrosoft Corporation0‚"0	*†H†÷ ‚ 0‚
+‚ ØÆsÅUrãÖh¶›¶¤ä•	áëTÕ˜ì$§‹ÚX_ÇÔ˜¬n–_uÏHƒ²¶ÄFçE8qŒ%|Y³cÉPOP4ôÈ/ÈéÔ»Ï“?zÌ&ì|^˜´õAV6ğûÔÿßâZF¾/ò¬âPùô1éü(;Å5P2rZ9}€!—;û³ëĞtÏ¢ÄV²Oú¨›V

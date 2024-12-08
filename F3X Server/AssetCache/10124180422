@@ -1,0 +1,92 @@
+
+tune=-10
+
+lokey=f6
+hikey=g6
+pitch_keycenter=f#6
+
+<region>
+sample=..\libs\SSO\Samples\Piccolo\piccolo-a5-PB-loop.wav
+tune=-7
+
+lokey=g#6
+hikey=a#6
+pitch_keycenter=a6
+
+<region>
+sample=..\libs\SSO\Samples\Piccolo\piccolo-c6-PB-loop.wav
+tune=-10
+
+lokey=b6
+hikey=c#7
+pitch_keycenter=c7
+
+<region>
+sample=..\libs\SSO\Samples\Piccolo\piccolo-d#6-PB-loop.wav
+tune=-5
+
+lokey=d7
+hikey=e7
+pitch_keycenter=d#7
+
+<region>
+sample=..\libs\SSO\Samples\Piccolo\piccolo-f#6-PB-loop.wav
+tune=-7
+
+lokey=f7
+hikey=c8 // extend the range (PB)
+pitch_keycenter=f#7
+
+
+
+//==============================================================
+// Solo Piccolo : Staccato
+//
+//   Woodwinds - Piccolo Solo.sfz from Sonatina Symphonic Orchestra - http://sso.mattiaswestlund.net
+//
+//   modified by Paul Battersby - http://virtualplaying.com
+//
+//==============================================================
+
+// ------------------------------
+//  Sonatina Symphonic Orchestra
+// ------------------------------
+//           Piccolo
+// ------------------------------
+
+<group>
+// sustain by default
+sw_default=c2
+sw_lokey=c2
+sw_hikey=e2
+sw_last=d2
+sw_label=D2 Normal Mod Wheel
+
+// mod wheel slows attack (PB)
+ampeg_attackcc1=0.5
+// mod wheel reduces volume (PB)
+gain_cc1=-15
+// manufacture staccato from sustain (PB)
+offset=2492
+
+ampeg_attack=0.04
+ampeg_sustain=0.0
+ampeg_hold=0.06
+ampeg_decay=0.7
+ampeg_release=0.7
+volume=0.8
+
+
+// randomize like a real player(PB)
+pitch_random=12
+amp_random=1.5
+delay_random=0.012
+
+
+
+
+
+
+
+<region>
+sample=..\

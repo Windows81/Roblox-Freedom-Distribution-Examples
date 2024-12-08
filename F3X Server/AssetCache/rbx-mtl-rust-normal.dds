@@ -1,0 +1,1381 @@
+st/pull/2428) Update qs to version 6.3.0 ğŸš€ (@greenkeeperio-bot)
+- [#2420](https://github.com/request/request/pull/2420) change .on to .once, remove possible memory leaks (@duereg)
+- [#2426](https://github.com/request/request/pull/2426) Remove "isFunction" helper in favor of "typeof" check (@zertosh)
+- [#2425](https://github.com/request/request/pull/2425) Simplify "defer" helper creation (@zertosh)
+- [#2402](https://github.com/request/request/pull/2402) form-data@2.1.1 breaks build ğŸš¨ (@greenkeeperio-bot)
+- [#2393](https://github.com/request/request/pull/2393) Update form-data to version 2.1.0 ğŸš€ (@greenkeeperio-bot)
+
+### v2.75.0 (2016/09/17)
+- [#2381](https://github.com/request/request/pull/2381) Drop support for Node 0.10 (@simov)
+- [#2377](https://github.com/request/request/pull/2377) Update form-data to version 2.0.0 ğŸš€ (@greenkeeperio-bot)
+- [#2353](https://github.com/request/request/pull/2353) Add greenkeeper ignored packages (@simov)
+- [#2351](https://github.com/request/request/pull/2351) Update karma-tap to version 3.0.1 ğŸš€ (@greenkeeperio-bot)
+- [#2348](https://github.com/request/request/pull/2348) form-data@1.0.1 breaks build ğŸš¨ (@greenkeeperio-bot)
+- [#2349](https://github.com/request/request/pull/2349) Check error type instead of string (@scotttrinh)
+
+### v2.74.0 (2016/07/22)
+- [#2295](https://github.com/request/request/pull/2295) Update tough-cookie to 2.3.0 (@stash-sfdc)
+- [#2280](https://github.com/request/request/pull/2280) Update karma-tap to version 2.0.1 ğŸš€ (@greenkeeperio-bot)
+
+### v2.73.0 (2016/07/09)
+- [#2240](https://github.com/request/request/pull/2240) Remove connectionErrorHandler to fix #1903 (@zarenner)
+- [#2251](https://github.com/request/request/pull/2251) tape@4.6.0 breaks build ğŸš¨ (@greenkeeperio-bot)
+- [#2225](https://github.com/request/request/pull/2225) Update docs (@ArtskydJ)
+- [#2203](https://github.com/request/request/pull/2203) Update browserify to version 13.0.1 ğŸš€ (@greenkeeperio-bot)
+- [#2275](https://github.com/request/request/pull/2275) Update karma to version 1.1.1 ğŸš€ (@greenkeeperio-bot)
+- [#2204](https://github.com/request/request/pull/2204) Add codecov.yml and disable PR comments (@simov)
+- [#2212](https://github.com/request/request/pull/2212) Fix link to http.IncomingMessage documentation (@nazieb)
+- [#2208](https://github.com/request/request/pull/2208) Update to form-data RC4 and pass null values to it (@simov)
+- [#2207](https://github.com/request/request/pull/2207) Move aws4 require statement to the top (@simov)
+- [#2199](https://github.com/request/request/pull/2199) Update karma-coverage to version 1.0.0 ğŸš€ (@greenkeeperio-bot)
+- [#2206](https://github.com/request/request/pull/2206) Update qs to version 6.2.0 ğŸš€ (@greenkeeperio-bot)
+- [#2205](https://github.com/request/request/pull/2205) Use server-destory to close hanging sockets in tests (@simov)
+- [#2200](https://github.com/request/request/pull/2200) Update karma-cli to version 1.0.0 ğŸš€ (@greenkeeperio-bot)
+
+### v2.72.0 (2016/04/17)
+- [#2176](https://github.com/request/request/pull/2176) Do not try to pipe Gzip responses with no body (@simov)
+- [#2175](https://github.com/request/request/pull/2175) Add 'delete' alias for the 'del' API method (@simov, @MuhanZou)
+- [#2172](https://github.com/request/request/pull/2172) Add support for deflate content encoding (@czardoz)
+- [#2169](https://github.com/request/request/pull/2169) Add callback option (@simov)
+- [#2165](https://github.com/request/request/pull/2165) Check for self.req existence inside the write method (@simov)
+- [#2167](https://github.com/request/request/pull/2167) Fix TravisCI badge reference master branch (@a0viedo)
+
+### v2.71.0 (2016/04/12)
+- [#2164](https://github.com/request/request/pull/2164) Catch errors from the underlying http module (@simov)
+
+### v2.70.0 (2016/04/05)
+- [#2147](https://github.com/request/request/pull/2147) Update eslint to version 2.5.3 ğŸš€ (@simov, @greenkeeperio-bot)
+- [#2009](https://github.com/request/request/pull/2009) Support JSON stringify replacer argument. (@elyobo)
+- [#2142](https://github.com/request/request/pull/2142) Update eslint to version 2.5.1 ğŸš€ (@greenkeeperio-bot)
+- [#2128](https://github.com/request/request/pull/2128) Update browserify-istanbul to version 2.0.0 ğŸš€ (@greenkeeperio-bot)
+- [#2115](https://github.com/request/request/pull/2115) Update eslint to version 2.3.0 ğŸš€ (@simov, @greenkeeperio-bot)
+- [#2089](https://github.com/request/request/pull/2089) Fix badges (@simov)
+- [#2092](https://github.com/request/request/pull/2092) Update browserify-istanbul to version 1.0.0 ğŸš€ (@greenkeeperio-bot)
+- [#2079](https://github.com/request/request/pull/2079) Accept read stream as body option (@simov)
+- [#2070](https://github.com/request/request/pull/2070) Update bl to version 1.1.2 ğŸš€ (@greenkeeperio-bot)
+- [#2063](https://github.com/request/request/pull/2063) Up bluebird and oauth-sign (@simov)
+- [#2058](https://github.com/request/request/pull/2058) Karma fixes for latest versions (@eiriksm)
+- [#2057](https://github.com/request/request/pull/2057) Update contributing guidelines (@simov)
+- [#2054](https://github.com/request/request/pull/2054) Update qs to version 6.1.0 ğŸš€ (@greenkeeperio-bot)
+
+### v2.69.0 (2016/01/27)
+- [#2041](https://github.com/request/request/pull/2041) restore aws4 as regular dependency (@rmg)
+
+### v2.68.0 (2016/01/27)
+- [#2036](https://github.com/request/request/pull/2036) Add AWS Signature Version 4 (@simov, @mirkods)
+- [#2022](https://github.com/request/request/pull/2022) Convert numeric multipart bodies to string (@simov, @feross)
+- [#2024](https://github.com/request/request/pull/2024) Update har-validator dependency for nsp advisory #76 (@TylerDixon)
+- [#2016](https://github.com/request/request/pull/2016) Update qs to version 6.0.2 ğŸš€ (@greenkeeperio-bot)
+- [#2007](https://github.com/request/request/pull/2007) Use the `extend` module instead of util._extend (@simov)
+- [#2003](https://github.com/request/request/pull/2003) Update browserify to version 13.0.0 ğŸš€ (@greenkeeperio-bot)
+- [#1989](https://github.com/request/request/pull/1989) Update buffer-equal to version 1.0.0 ğŸš€ (@greenkeeperio-bot)
+- [#1956](https://github.com/request/request/pull/1956) Check form-data content-length value before setting up the header (@jongyoonlee)
+- [#1958](https://github.com/request/request/pull/1958) Use IncomingMessage.destroy method (@simov)
+- [#1952](https://github.com/request/request/pull/1952) Adds example for Tor proxy (@prometheansacrifice)
+- [#1943](https://github.com/request/request/pull/1943) Update eslint to version 1.10.3 ğŸš€ (@simov, @greenkeeperio-bot)
+- [#1924](https://github.com/request/request/pull/1924) Update eslint to version 1.10.1 ğŸš€ (@greenkeeperio-bot)
+- [#1915](https://github.com/request/request/pull/1915) Remove content-length and transfer-encoding headers from defaultProxyHeaderWhiteList (@yaxia)
+
+### v2.67.0 (2015/11/19)
+- [#1913](https://github.com/request/request/pull/1913) Update http-signature to version 1.1.0 ğŸš€ (@greenkeeperio-bot)
+
+### v2.66.0 (2015/11/18)
+- [#1906](https://github.com/request/request/pull/1906) Update README URLs based on HTTP redirects (@ReadmeCritic)
+- [#1905](https://github.com/request/request/pull/1905) Convert typed arrays into regular buffers (@simov)
+- [#1902](https://github.com/request/request/pull/1902) node-uuid@1.4.7 breaks build ğŸš¨ (@greenkeeperio-bot)
+- [#1894](https://github.com/request/request/pull/1894) Fix tunneling after redirection from https (Original: #1881) (@simov, @falms)
+- [#1893](https://github.com/request/request/pull/1893) Update eslint to version 1.9.0 ğŸš€ (@greenkeeperio-bot)
+- [#1852](https://github.com/request/request/pull/1852) Update eslint to version 1.7.3 ğŸš€ (@simov, @greenkeeperio-bot, @paulomcnally, @michelsalib, @arbaaz, @nsklkn, @LoicMahieu, @JoshWillik, @jzaefferer, @ryanwholey, @djchie, @thisconnect, @mgenereu, @acroca, @Sebmaster, @KoltesDigital)
+- [#1876](https://github.com/request/request/pull/1876) Implement loose matching for har mime types (@simov)
+- [#1875](https://github.com/request/request/pull/1875) Update bluebird to version 3.0.2 ğŸš€ (@simov, @greenkeeperio-bot)
+- [#1871](https://github.com/request/request/pull/1871) Update browserify to version 12.0.1 ğŸš€ (@greenkeeperio-bot)
+- [#1866](https://github.com/request/request/pull/1866) Add missing quotes on x-token property in README (@miguelmota)
+- [#1874](https://github.com/request/request/pull/1874) Fix typo in README.md (@gswalden)
+- [#1860](https://github.com/request/request/pull/1860) Improve referer header tests and docs (@simov)
+- [#1861](https://github.com/request/request/pull/1861) Remove redundant call to Stream constructor (@watson)
+- [#1857](https://github.com/request/request/pull/1857) Fix Referer header to point to the original host name (@simov)
+- [#1850](https://github.com/request/request/pull/1850) Update karma-coverage to version 0.5.3 ğŸš€ (@greenkeeperio-bot)
+- [#1847](https://github.com/request/request/pull/1847) Use node's latest version when building (@simov)
+- [#1836](https://github.com/request/request/pull/1836) Tunnel: fix wrong property name (@KoltesDigital)
+- [#1820](https://github.com/request/request/pull/1820) Set href as request.js uses it (@mgenereu)
+- [#1840](https://github.com/request/request/pull/1840) Update http-signature to version 1.0.2 ğŸš€ (@greenkeeperio-bot)
+- [#1845](https://github.com/request/request/pull/1845) Update istanbul to version 0.4.0 ğŸš€ (@greenkeeperio-bot)
+
+### v2.65.0 (2015/10/11)
+- [#1833](https://github.com/request/request/pull/1833) Update aws-sign2 to version 0.6.0 ğŸš€ (@greenkeeperio-bot)
+- [#1811](https://github.com/request/request/pull/1811) Enable loose cookie parsing in tough-cookie (@Sebmaster)
+- [#1830](https://github.com/request/request/pull/1830) Bring back tilde ranges for all dependencies (@simov)
+- [#1821](https://github.com/request/request/pull/1821) Implement support for RFC 2617 MD5-sess algorithm. (@BigDSK)
+- [#1828](https://github.com/request/request/pull/1828) Updated qs dependency to 5.2.0 (@acroca)
+- [#1818](https://github.com/request/request/pull/1818) Extract `readResponseBody` method out of `onRequestResponse` (@pvoisin)
+- [#1819](https://github.com/request/request/pull/1819) Run stringify once (@mgenereu)
+- [#1814](https://github.com/request/request/pull/1814) Updated har-validator to version 2.0.2 (@greenkeeperio-bot)
+- [#1807](https://github.com/request/request/pull/1807) Updated tough-cookie to version 2.1.0 (@greenkeeperio-bot)
+- [#1800](https://github.com/request/request/pull/1800) Add caret ranges for devDependencies, except eslint (@simov)
+- [#1799](https://github.com/request/request/pull/1799) Updated karma-browserify to version 4.4.0 (@greenkeeperio-bot)
+- [#1797](https://github.com/request/request/pull/1797) Updated tape to version 4.2.0 (@greenkeeperio-bot)
+- [#1788](https://github.com/request/request/pull/1788) Pinned all dependencies (@greenkeeperio-bot)
+
+### v2.64.0 (2015/09/25)
+- [#1787](https://github.com/request/request/pull/1787) npm ignore examples, release.sh and disabled.appveyor.yml (@thisconnect)
+- [#1775](https://github.com/request/request/pull/1775) Fix typo in README.md (@djchie)
+- [#1776](https://github.com/request/request/pull/1776) Changed word 'conjuction' to read 'conjunction' in README.md (@ryanwholey)
+- [#1785](https://github.com/request/request/pull/1785) Revert: Set default application/json content-type when using json option #1772 (@simov)
+
+### v2.63.0 (2015/09/21)
+- [#1772](https://github.com/request/request/pull/1772) Set default application/json content-type when using json option (@jzaefferer)
+
+### v2.62.0 (2015/09/15)
+- [#1768](https://github.com/request/request/pull/1768) Add node 4.0 to the list of build targets (@simov)
+- [#1767](https://github.com/request/request/pull/1767) Query strings now cooperate with unix sockets (@JoshWillik)
+- [#1750](https://github.com/request/request/pull/1750) Revert doc about installation of tough-cookie added in #884 (@LoicMahieu)
+- [#1746](https://github.com/request/request/pull/1746) Missed comma in Readme (@nsklkn)
+- [#1743](https://github.com/request/request/pull/1743) Fix options not being initialized in defaults method (@simov)
+
+### v2.61.0 (2015/08/19)
+- [#1721](https://github.com/request/request/pull/1721) Minor fix in README.md (@arbaaz)
+- [#1733](https://github.com/request/request/pull/1733) Avoid useless Buffer transformation (@michelsalib)
+- [#1726](https://github.com/request/request/pull/1726) Update README.md (@paulomcnally)
+- [#1715](https://github.com/request/request/pull/1715) Fix forever option in node > 0.10 #1709 (@calibr)
+- [#1716](https://github.com/request/request/pull/1716) Do not create Buffer from Object in setContentLength(iojs v3.0 issue) (@calibr)
+- [#1711](https://github.com/request/request/pull/1711) Add ability to detect connect timeouts (@kevinburke)
+- [#1712](https://github.com/request/request/pull/1712) Set certificate expiration to August 2, 2018 (@kevinburke)
+- [#1700](https://github.com/request/request/pull/1700) debug() when JSON.parse() on a response body fails (@phillipj)
+
+### v2.60.0 (2015/07/21)
+- [#1687](https://github.com/request/request/pull/1687) Fix caseless bug - content-type not being set for multipart/form-data (@simov, @garymathews)
+
+### v2.59.0 (2015/07/20)
+- [#1671](https://github.com/request/request/pull/1671) Add tests and docs for using the agent, agentClass, agentOptions and forever options.
+ Forever option defaults to using http(s).Agent in node 0.12+ (@simov)
+- [#1679](https://github.com/request/request/pull/1679) Fix - do not remove OAuth param when using OAuth realm (@simov, @jhalickman)
+- [#1668](https://github.com/request/request/pull/1668) updated dependencies (@deamme)
+- [#1656](https://github.com/request/request/pull/1656) Fix form method (@simov)
+- [#1651](https://github.com/request/request/pull/1651) Preserve HEAD method when using followAllRedirects (@simov)
+- [#1652](https://github.com/request/request/pull/1652) Update `encoding` option documentation in README.md (@daniel347x)
+- [#1650](https://github.com/request/request/pull/1650) Allow content-type overriding when using the `form` option (@simov)
+- [#1646](https://github.com/request/request/pull/1646) Clarify the nature of setting `ca` in `agentOptions` (@jeffcharles)
+
+### v2.58.0 (2015/06/16)
+- [#1638](https://github.com/request/request/pull/1638) Use the `extend` module to deep extend in the defaults method (@simov)
+- [#1631](https://github.com/request/request/pull/1631) Move tunnel logic into separate module (@simov)
+- [#1634](https://github.com/request/request/pull/1634) Fix OAuth query transport_method (@simov)
+- [#1603](https://github.com/request/request/pull/1603) Add codecov (@simov)
+
+### v2.57.0 (2015/05/31)
+- [#1615](https://github.com/request/request/pull/1615) Replace '.client' with '.socket' as the former was deprecated in 2.2.0. (@ChALkeR)
+
+### v2.56.0 (2015/05/28)
+- [#1610](https://github.com/request/request/pull/1610) Bump module dependencies (@simov)
+- [#1600](https://github.com/request/request/pull/1600) Extract the querystring logic into separate module (@simov)
+- [#1607](https://github.com/request/request/pull/1607) Re-generate certificates (@simov)
+- [#1599](https://github.com/request/request/pull/1599) Move getProxyFromURI logic below the check for Invaild URI (#1595) (@simov)
+- [#1598](https://github.com/request/request/pull/1598) Fix the way http verbs are defined in order to please intellisense IDEs (@simov, @flannelJesus)
+- [#1591](https://github.com/request/request/pull/1591) A few minor fixes: (@simov)
+- [#1584](https://github.com/request/request/pull/1584) Refactor test-default tests (according to comments in #1430) (@simov)
+- [#1585](https://github.com/request/request/pull/1585) Fixing documentation regarding TLS options (#1583) (@mainakae)
+- [#1574](https://github.com/request/request/pull/1574) Refresh the oauth_nonce on redirect (#1573) (@simov)
+- [#1570](https://github.com/request/request/pull/1570) Discovered tests that weren't properly running (@seanstrom)
+- [#1569](https://github.com/request/request/pull/1569) Fix pause before response arrives (@kevinoid)
+- [#1558](https://github.com/request/request/pull/1558) Emit error instead of throw (@simov)
+- [#1568](https://github.com/request/request/pull/1568) Fix stall when piping gzipped response (@kevinoid)
+- [#1560](https://github.com/request/request/pull/1560) Update combined-stream (@apechimp)
+- [#1543](https://github.com/request/request/pull/1543) Initial support for oauth_body_hash on json payloads (@simov, @aesopwolf)
+- [#1541](https://github.com/request/request/pull/1541) Fix coveralls (@simov)
+- [#1540](https://github.com/request/request/pull/1540) Fix recursive defaults for convenience methods (@simov)
+- [#1536](https://github.com/request/request/pull/1536) More eslint style rules (@froatsnook)
+- [#1533](https://github.com/request/request/pull/1533) Adding dependency status bar to README.md (@YasharF)
+- [#1539](https://github.com/request/request/pull/1539) ensure the latest version of har-validator is included (@ahmadnassri)
+- [#1516](https://github.com/request/request/pull/1516) forever+pool test (@devTristan)
+
+### v2.55.0 (2015/04/05)
+- [#1520](https://github.com/request/request/pull/1520) Refactor defaults (@simov)
+- [#1525](https://github.com/request/request/pull/1525) Delete request headers with undefined value. (@froatsnook)
+- [#1521](https://github.com/request/request/pull/1521) Add promise tests (@simov)
+- [#1518](https://github.com/request/request/pull/1518) Fix defaults (@simov)
+- [#1515](https://github.com/request/request/pull/1515) Allow static invoking of convenience methods (@simov)
+- [#1505](https://github.com/request/request/pull/1505) Fix multipart boundary extraction regexp (@simov)
+- [#1510](https://github.com/request/request/pull/1510) Fix basic auth form data (@simov)
+
+### v2.54.0 (2015/03/24)
+- [#1501](https://github.com/request/request/pull/1501) HTTP Archive 1.2 support (@ahmadnassri)
+- [#1486](https://github.com/request/request/pull/1486) Add a test for the forever agent (@akshayp)
+- [#1500](https://github.com/request/request/pull/1500) Adding handling for no auth method and null bearer (@philberg)
+- [#1498](https://github.com/request/request/pull/1498) Add table of contents in readme (@simov)
+- [#1477](https://github.com/request/request/pull/1477) Add support for qs options via qsOptions key (@simov)
+- [#1496](https://github.com/request/request/pull/1496) Parameters encoded to base 64 should be decoded as UTF-8, not ASCII. (@albanm)
+- [#1494](https://github.com/request/request/pull/1494) Update eslint (@froatsnook)
+- [#1474](https://github.com/request/request/pull/1474) Require Colon in Basic Auth (@erykwalder)
+- [#1481](https://github.com/request/request/pull/1481) Fix baseUrl and redirections. (@burningtree)
+- [#1469](https://github.com/request/request/pull/1469) Feature/base url (@froatsnook)
+- [#1459](https://github.com/request/request/pull/1459) Add option to time request/response cycle (including rollup of redirects) (@aaron-em)
+- [#1468](https://github.com/request/request/pull/1468) Re-enable io.js/node 0.12 build (@simov, @mikeal, @BBB)
+- [#1442](https://github.com/request/request/pull/1442) Fixed the issue with strictSSL tests on  0.12 & io.js by explicitly setting a cipher that matches the cert. (@BBB, @nickmccurdy, @demohi, @simov, @0x4139)
+- [#1460](https://github.com/request/request/pull/1460) localAddress or proxy config is lost when redirecting (@simov, @0x4139)
+- [#1453](https://github.com/request/request/pull/1453) Test on Node.js 0.12 and io.js with allowed failures (@nickmccurdy, @demohi)
+- [#1426](https://github.com/request/request/pull/1426) Fixing tests to pass on io.js and node 0.12 (only test-https.js stiff failing) (@mikeal)
+- [#1446](https://github.com/request/request/pull/1446) Missing HTTP referer header with redirects Fixes #1038 (@simov, @guimon)
+- [#1428](https://github.com/request/request/pull/1428) Deprecate Node v0.8.x (@nylen)
+- [#1436](https://github.com/request/request/pull/1436) Add ability to set a requester without setting default options (@tikotzky)
+- [#1435](https://github.com/request/request/pull/1435) dry up verb methods (@sethpollack)
+- [#1423](https://github.com/request/request/pull/1423) Allow fully qualified multipart content-type header (@simov)
+- [#1430](https://github.com/request/request/pull/1430) Fix recursive requester (@tikotzky)
+- [#1429](https://github.com/request/request/pull/1429) Throw error when making HEAD request with a body (@tikotzky)
+- [#1419](https://github.com/request/request/pull/1419) Add note that the project is broken in 0.12.x (@nylen)
+- [#1413](https://github.com/request/request/pull/1413) Fix basic auth (@simov)
+- [#1397](https://github.com/request/request/pull/1397) Improve pipe-from-file tests (@nylen)
+
+### v2.53.0 (2015/02/02)
+- [#1396](https://github.com/request/request/pull/1396) Do not rfc3986 escape JSON bodies (@nylen, @simov)
+- [#1392](https://github.com/request/request/pull/1392) Improve `timeout` option description (@watson)
+
+### v2.52.0 (2015/02/02)
+- [#1383](https://github.com/request/request/pull/1383) Add missing HTTPS options that were not being passed to tunnel (@brichard19) (@nylen)
+- [#1388](https://github.com/request/request/pull/1388) Upgrade mime-types package version (@roderickhsiao)
+- [#1389](https://github.com/request/request/pull/1389) Revise Setup Tunnel Function (@seanstrom)
+- [#1374](https://github.com/request/request/pull/1374) Allow explicitly disabling tunneling for proxied https destinations (@nylen)
+- [#1376](https://github.com/request/request/pull/1376) Use karma-browserify for tests. Add browser test coverage reporter. (@eiriksm)
+- [#1366](https://github.com/request/request/pull/1366) Refactor OAuth into separate module (@simov)
+- [#1373](https://github.com/request/request/pull/1373) Rewrite tunnel test to be pure Node.js (@nylen)
+- [#1371](https://github.com/request/request/pull/1371) Upgrade test reporter (@nylen)
+- [#1360](https://github.com/request/request/pull/1360) Refactor basic, bearer, digest auth logic into separate class (@simov)
+- [#1354](https://github.com/request/request/pull/1354) Remove circular dependency from debugging code (@nylen)
+- [#1351](https://github.com/request/request/pull/1351) Move digest auth into private prototype method (@simov)
+- [#1352](https://github.com/request/request/pull/1352) Update hawk dependency to ~2.3.0 (@mridgway)
+- [#1353](https://github.com/request/request/pull/1353) Correct travis-ci badge (@dogancelik)
+- [#1349](https://github.com/request/request/pull/1349) Make sure we return on errored browser requests. (@eiriksm)
+- [#1346](https://github.com/request/request/pull/1346) getProxyFromURI Extraction Refactor (@seanstrom)
+- [#1337](https://github.com/request/request/pull/1337) Standardize test ports on 6767 (@nylen)
+- [#1341](https://github.com/request/request/pull/1341) Emit FormData error events as Request error events (@nylen, @rwky)
+- [#1343](https://github.com/request/request/pull/1343) Clean up readme badges, and add Travis and Coveralls badges (@nylen)
+- [#1345](https://github.com/request/request/pull/1345) Update README.md (@Aaron-Hartwig)
+- [#1338](https://github.com/request/request/pull/1338) Always wait for server.close() callback in tests (@nylen)
+- [#1342](https://github.com/request/request/pull/1342) Add mock https server and redo start of browser tests for this purpose. (@eiriksm)
+- [#1339](https://github.com/request/request/pull/1339) Improve auth docs (@nylen)
+- [#1335](https://github.com/request/request/pull/1335) Add support for OAuth plaintext signature method (@simov)
+- [#1332](https://github.com/request/request/pull/1332) Add clean script to remove test-browser.js after the tests run (@seanstrom)
+- [#1327](https://github.com/request/request/pull/1327) Fix errors generating coverage reports. (@nylen)
+- [#1330](https://github.com/request/request/pull/1330) Return empty buffer upon empty response body and encoding is set to null (@seanstrom)
+- [#1326](https://github.com/request/request/pull/1326) Use faster container-based infrastructure on Travis (@nylen)
+- [#1315](https://github.com/request/request/pull/1315) Implement rfc3986 option (@simov, @nylen, @apoco, @DullReferenceException, @mmalecki, @oliamb, @cliffcrosland, @LewisJEllis, @eiriksm, @poislagarde)
+- [#1314](https://github.com/request/request/pull/1314) Detect urlencoded form data header via regex (@simov)
+- [#1317](https://github.com/request/request/pull/1317) Improve OAuth1.0 server side flow example (@simov)
+
+### v2.51.0 (2014/12/10)
+- [#1310](https://github.com/request/request/pull/1310) Revert changes introduced in https://github.com/request/request/pull/1282 (@simov)
+
+### v2.50.0 (2014/12/09)
+- [#1308](https://github.com/request/request/pull/1308) Add browser test to keep track of browserify compability. (@eiriksm)
+- [#1299](https://github.com/request/request/pull/1299) Add optional support for jsonReviver (@poislagarde)
+- [#1277](https://github.com/request/request/pull/1277) Add Coveralls configuration (@simov)
+- [#1307](https://github.com/request/request/pull/1307) Upgrade form-data, add back browserify compability. Fixes #455. (@eiriksm)
+- [#1305](https://github.com/request/request/pull/1305) Fix typo in README.md (@LewisJEllis)
+- [#1288](https://github.com/request/request/pull/1288) Update README.md to explain custom file use case (@cliffcrosland)
+
+### v2.49.0 (2014/11/28)
+- [#1295](https://github.com/request/request/pull/1295) fix(proxy): no-proxy false positive (@oliamb)
+- [#1292](https://github.com/request/request/pull/1292) Upgrade `caseless` to 0.8.1 (@mmalecki)
+- [#1276](https://github.com/request/request/pull/1276) Set transfer encoding for multipart/related to chunked by default (@simov)
+- [#1275](https://github.com/request/request/pull/1275) Fix multipart content-type headers detection (@simov)
+- [#1269](https://github.com/request/request/pull/1269) adds streams example for review (@tbuchok)
+- [#1238](https://github.com/request/request/pull/1238) Add examples README.md (@simov)
+
+### v2.48.0 (2014/11/12)
+- [#1263](https://github.com/request/request/pull/1263) Fixed a syntax error / typo in README.md (@xna2)
+- [#1253](https://github.com/request/request/pull/1253) Add multipart chunked flag (@simov, @nylen)
+- [#1251](https://github.com/request/request/pull/1251) Clarify that defaults() does not modify global defaults (@nylen)
+- [#1250](https://github.com/request/request/pull/1250) Improve documentation for pool and maxSockets options (@nylen)
+- [#1237](https://github.com/request/request/pull/1237) Documenting error handling when using streams (@vmattos)
+- [#1244](https://github.com/request/request/pull/1244) Finalize changelog command (@nylen)
+- [#1241](https://github.com/request/request/pull/1241) Fix typo (@alexanderGugel)
+- [#1223](https://github.com/request/request/pull/1223) Show latest version number instead of "upcoming" in changelog (@nylen)
+- [#1236](https://github.com/request/request/pull/1236) Document how to use custom CA in README (#1229) (@hypesystem)
+- [#1228](https://github.com/request/request/pull/1228) Support for oauth with RSA-SHA1 signing (@nylen)
+- [#1216](https://github.com/request/request/pull/1216) Made json and multipart options coexist (@nylen, @simov)
+- [#1225](https://github.com/request/request/pull/1225) Allow header white/exclusive lists in any case. (@RReverser)
+
+### v2.47.0 (2014/10/26)
+- [#1222](https://github.com/request/request/pull/1222) Move from mikeal/request to request/request (@nylen)
+- [#1220](https://github.com/request/request/pull/1220) update qs dependency to 2.3.1 (@FredKSchott)
+- [#1212](https://github.com/request/request/pull/1212) Improve tests/test-timeout.js (@nylen)
+- [#1219](https://github.com/request/request/pull/1219) remove old globalAgent workaround for node 0.4 (@request)
+- [#1214](https://github.com/request/request/pull/1214) Remove cruft left over from optional dependencies (@nylen)
+- [#1215](https://github.com/request/request/pull/1215) Add proxyHeaderExclusiveList option for proxy-only headers. (@RReverser)
+- [#1211](https://github.com/request/request/pull/1211) Allow 'Host' header instead of 'host' and remember case across redirects (@nylen)
+- [#1208](https://github.com/request/request/pull/1208) Improve release script (@nylen)
+- [#1213](https://github.com/request/request/pull/1213) Support for custom cookie store (@nylen, @mitsuru)
+- [#1197](https://github.com/request/request/pull/1197) Clean up some code around setting the agent (@FredKSchott)
+- [#1209](https://github.com/request/request/pull/1209) Improve multipart form append test (@simov)
+- [#1207](https://github.com/request/request/pull/1207) Update changelog (@nylen)
+- [#1185](https://github.com/request/request/pull/1185) Stream multipart/related bodies (@simov)
+
+### v2.46.0 (2014/10/23)
+- [#1198](https://github.com/request/request/pull/1198) doc for TLS/SSL protocol options (@shawnzhu)
+- [#1200](https://github.com/request/request/pull/1200) Add a Gitter chat badge to README.md (@gitter-badger)
+- [#1196](https://github.com/request/request/pull/1196) Upgrade taper test reporter to v0.3.0 (@nylen)
+- [#1199](https://github.com/request/request/pull/1199) Fix lint error: undeclared var i (@nylen)
+- [#1191](https://github.com/request/request/pull/1191) Move self.proxy decision logic out of init and into a helper (@FredKSchott)
+- [#1190](https://github.com/request/request/pull/1190) Move _buildRequest() logic back into init (@FredKSchott)
+- [#1186](https://github.com/request/request/pull/1186) Support Smarter Unix URL Scheme (@FredKSchott)
+- [#1178](https://github.com/request/request/pull/1178) update form documentation for new usage (@FredKSchott)
+- [#1180](https://github.com/request/request/pull/1180) Enable no-mixed-requires linting rule (@nylen)
+- [#1184](https://github.com/request/request/pull/1184) Don't forward authorization header across redirects to different hosts (@nylen)
+- [#1183](https://github.com/request/request/pull/1183) Correct README about pre and postamble CRLF using multipart and not mult... (@netpoetica)
+- [#1179](https://github.com/request/request/pull/1179) Lint tests directory (@nylen)
+- [#1169](https://github.com/request/request/pull/1169) add metadata for form-data file field (@dotcypress)
+- [#1173](https://github.com/request/request/pull/1173) remove optional dependencies (@seanstrom)
+- [#1165](https://github.com/request/request/pull/1165) Cleanup event listeners and remove function creation from init (@FredKSchott)
+- [#1174](https://github.com/request/request/pull/1174) update the request.cookie docs to have a valid cookie example (@seanstrom)
+- [#1168](https://github.com/request/request/pull/1168) create a detach helper and use detach helper in replace of nextTick (@seanstrom)
+- [#1171](https://github.com/request/request/pull/1171) in post can send form data and use callback (@MiroRadenovic)
+- [#1159](https://github.com/request/request/pull/1159) accept charset for x-www-form-urlencoded content-type (@seanstrom)
+- [#1157](https://github.com/request/request/pull/1157) Update README.md: body with json=true (@Rob--W)
+- [#1164](https://github.com/request/request/pull/1164) Disable tests/test-timeout.js on Travis (@nylen)
+- [#1153](https://github.com/request/request/pull/1153) Document how to run a single test (@nylen)
+- [#1144](https://github.com/request/request/pull/1144) adds documentation for the "response" event within the streaming section (@tbuchok)
+- [#1162](https://github.com/request/request/pull/1162) Update eslintrc file to no longer allow past errors (@FredKSchott)
+- [#1155](https://github.com/request/request/pull/1155) Support/use self everywhere (@seanstrom)
+- [#1161](https://github.com/request/request/pull/1161) fix no-use-before-define lint warnings (@emkay)
+- [#1156](https://github.com/request/request/pull/1156) adding curly brackets to get rid of lint errors (@emkay)
+- [#1151](https://github.com/request/request/pull/1151) Fix localAddress test on OS X (@nylen)
+- [#1145](https://github.com/request/request/pull/1145) documentation: fix outdated reference to setCookieSync old name in README (@FredKSchott)
+- [#1131](https://github.com/request/request/pull/1131) Update pool documentation (@FredKSchott)
+- [#1143](https://github.com/request/request/pull/1143) Rewrite all tests to use tape (@nylen)
+- [#1137](https://github.com/request/request/pull/1137) Add ability to specifiy querystring lib in options. (@jgrund)
+- [#1138](https://github.com/request/request/pull/1138) allow hostname and port in place of host on uri (@cappslock)
+- [#1134](https://github.com/request/request/pull/1134) Fix multiple redirects and `self.followRedirect` (@blakeembrey)
+- [#1130](https://github.com/request/request/pull/1130) documentation fix: add note about npm test for contributing (@FredKSchott)
+- [#1120](https://github.com/request/request/pull/1120) Support/refactor request setup tunnel (@seanstrom)
+- [#1129](https://github.com/request/request/pull/1129) linting fix: convert double quote strings to use single quotes (@FredKSchott)
+- [#1124](https://github.com/request/request/pull/1124) linting fix: remove unneccesary semi-colons (@FredKSchott)
+
+### v2.45.0 (2014/10/06)
+- [#1128](https://github.com/request/request/pull/1128) Add test for setCookie regression (@nylen)
+- [#1127](https://github.com/request/request/pull/1127) added tests around using objects as values in a query string (@bcoe)
+- [#1103](https://github.com/request/request/pull/1103) Support/refactor request constructor (@nylen, @seanstrom)
+- [#1119](https://github.com/request/request/pull/1119) add basic linting to request library (@FredKSchott)
+- [#1121](https://github.com/request/request/pull/1121) Revert "Explicitly use sync versions of cookie functions" (@nylen)
+- [#1118](https://github.com/request/request/pull/1118) linting fix: Restructure bad empty if statement (@FredKSchott)
+- [#1117](https://github.com/request/request/pull/1117) Fix a bad check for valid URIs (@FredKSchott)
+- [#1113](https://github.com/request/request/pull/1113) linting fix: space out operators (@FredKSchott)
+- [#1116](https://github.com/request/request/pull/1116) Fix typo in `noProxyHost` definition (@FredKSchott)
+- [#1114](https://github.com/request/request/pull/1114) linting fix: Added a `new` operator that was missing when creating and throwing a new error (@FredKSchott)
+- [#1096](https://github.com/request/request/pull/1096) No_proxy support (@samcday)
+- [#1107](https://github.com/request/request/pull/1107) linting-fix: remove unused variables (@FredKSchott)
+- [#1112](https://github.com/request/request/pull/1112) linting fix: Make return values consistent and more straitforward (@FredKSchott)
+- [#1111](https://github.com/request/request/pull/1111) linting fix: authPieces was getting redeclared (@FredKSchott)
+- [#1105](https://github.com/request/request/pull/1105) Use strict mode in request (@FredKSchott)
+- [#1110](https://github.com/request/request/pull/1110) linting fix: replace lazy '==' with more strict '===' (@FredKSchott)
+- [#1109](https://github.com/request/request/pull/1109) linting fix: remove function call from if-else conditional statement (@FredKSchott)
+- [#1102](https://github.com/request/request/pull/1102) Fix to allow setting a `requester` on recursive calls to `request.defaults` (@tikotzky)
+- [#1095](https://github.com/request/request/pull/1095) Tweaking engines in package.json (@pdehaan)
+- [#1082](https://github.com/request/request/pull/1082) Forward the socket event from the httpModule request (@seanstrom)
+- [#972](https://github.com/request/request/pull/972) Clarify gzip handling in the README (@kevinoid)
+- [#1089](https://github.com/request/request/pull/1089) Mention that encoding defaults to utf8, not Buffer (@stuartpb)
+- [#1088](https://github.com/request/request/pull/1088) Fix cookie example in README.md and make it more clear (@pipi32167)
+- [#1027](https://github.com/request/request/pull/1027) Add support for multipart form data in request options. (@crocket)
+- [#1076](https://github.com/request/request/pull/1076) use Request.abort() to abort the request when the request has timed-out (@seanstrom)
+- [#1068](https://github.com/request/request/pull/1068) add optional postamble required by .NET multipart requests (@netpoetica)
+
+### v2.43.0 (2014/09/18)
+- [#1057](https://github.com/request/request/pull/1057) Defaults should not overwrite defined options (@davidwood)
+- [#1046](https://github.com/request/request/pull/1046) Propagate datastream errors, useful in case gzip fails. (@ZJONSSON, @Janpot)
+- [#1063](https://github.com/request/request/pull/1063) copy the input headers object #1060 (@finnp)
+- [#1031](https://github.com/request/request/pull/1031) Explicitly use sync versions of cookie functions (@ZJONSSON)
+- [#1056](https://github.com/request/request/pull/1056) Fix redirects when passing url.parse(x) as URL to convenience method (@nylen)
+
+### v2.42.0 (2014/09/04)
+- [#1053](https://github.com/request/request/pull/1053) Fix #1051 Parse auth properly when using non-tunneling proxy (@isaacs)
+
+### v2.41.0 (2014/09/04)
+- [#1050](https://github.com/request/request/pull/1050) Pass whitelisted headers to tunneling proxy.  Organize all tunneling logic. (@isaacs, @Feldhacker)
+- [#1035](https://github.com/request/request/pull/1035) souped up nodei.co badge (@rvagg)
+- [#1048](https://github.com/request/request/pull/1048) Aws is now possible over a proxy (@steven-aerts)
+- [#1039](https://github.com/request/request/pull/1039) extract out helper functions to a helper file (@seanstrom)
+- [#1021](https://github.com/request/request/pull/1021) Support/refactor indexjs (@seanstrom)
+- [#1033](https://github.com/request/request/pull/1033) Improve and document debug options (@nylen)
+- [#1034](https://github.com/request/request/pull/1034) Fix readme headings (@nylen)
+- [#1030](https://github.com/request/request/pull/1030) Allow recursive request.defaults (@tikotzky)
+- [#1029](https://github.com/request/request/pull/1029) Fix a couple of typos (@nylen)
+- [#675](https://github.com/request/request/pull/675) Checking for SSL fault on connection before reading SSL properties (@VRMink)
+- [#989](https://github.com/request/request/pull/989) Added allowRedirect function. Should return true if redirect is allowed or false otherwise (@doronin)
+- [#1025](https://github.com/request/request/pull/1025) [fixes #1023] Set self._ended to true once response has ended (@mridgway)
+- [#1020](https://github.com/request/request/pull/1020) Add back removed debug metadata (@FredKSchott)
+- [#1008](https://github.com/request/request/pull/1008) Moving to  module instead of cutomer buffer concatenation. (@mikeal)
+- [#770](https://github.com/request/request/pull/770) Added dependency badge for README file; (@timgluz, @mafintosh, @lalitkapoor, @stash, @bobyrizov)
+- [#1016](https://github.com/request/request/pull/1016) toJSON no longer results in an infinite loop, returns simple objects (@FredKSchott)
+- [#1018](https://github.com/request/request/pull/1018) Remove pre-0.4.4 HTTPS fix (@mmalecki)
+- [#1006](https://github.com/request/request/pull/1006) Migrate to caseless, fixes #1001 (@mikeal)
+- [#995](https://github.com/request/request/pull/995) Fix parsing array of objects (@sjonnet19)
+- [#999](https://github.com/request/request/pull/999) Fix fallback for browserify for optional modules. (@eiriksm)
+- [#996](https://github.com/request/request/pull/996) Wrong oauth signature when multiple same param keys exist [updated] (@bengl)
+
+### v2.40.0 (2014/08/06)
+- [#992](https://github.com/request/request/pull/992) Fix security vulnerability. Update qs (@poeticninja)
+- [#988](https://github.com/request/request/pull/988) â€œ--â€ -> â€œâ€”â€ (@upisfree)
+- [#987](https://github.com/request/request/pull/987) Show optional modules as being loaded by the module that reqeusted them (@iarna)
+
+### v2.39.0 (2014/07/24)
+- [#976](https://github.com/request/request/pull/976) Update README.md (@pvoznenko)
+
+### v2.38.0 (2014/07/22)
+- [#952](https://github.com/request/request/pull/952) Adding support to client certificate with proxy use case (@ofirshaked)
+- [#884](https://github.com/request/request/pull/884) Documented tough-cookie installation. (@wbyoung)
+- [#935](https://github.com/request/request/pull/935) Correct repository url (@fritx)
+- [#963](https://github.com/request/request/pull/963) Update changelog (@nylen)
+- [#960](https://github.com/request/request/pull/960) Support gzip with encoding on node pre-v0.9.4 (@kevinoid)
+- [#953](https://github.com/request/request/pull/953) Add async Content-Length computation when using form-data (@LoicMahieu)
+- [#844](https://github.com/request/request/pull/844) Add support for HTTP[S]_PROXY environment variables.  Fixes #595. (@jvmccarthy)
+- [#946](https://github.com/request/request/pull/946) defaults: merge headers (@aj0strow)
+
+### v2.37.0 (2014/07/07)
+- [#957](https://github.com/request/request/pull/957) Silence EventEmitter memory leak warning #311 (@watson)
+- [#955](https://github.com/request/request/pull/955) check for content-length header before setting it in nextTick (@camilleanne)
+- [#951](https://github.com/request/request/pull/951) Add support for gzip content decoding (@kevinoid)
+- [#949](https://github.com/request/request/pull/949) Manually enter querystring in form option (@charlespwd)
+- [#944](https://github.com/request/request/pull/944) Make request work with browserify (@eiriksm)
+- [#943](https://github.com/request/request/pull/943) New mime module (@eiriksm)
+- [#927](https://github.com/request/request/pull/927) Bump version of hawk dep. (@samccone)
+- [#907](https://github.com/request/request/pull/907) append secureOptions to poolKey (@medovob)
+
+### v2.35.0 (2014/05/17)
+- [#901](https://github.com/request/request/pull/901) Fixes #555 (@pigulla)
+- [#897](https://github.com/request/request/pull/897) merge with default options (@vohof)
+- [#891](https://github.com/request/request/pull/891) fixes 857 - options object is mutated by calling request (@lalitkapoor)
+- [#869](https://github.com/request/request/pull/869) Pipefilter test (@tgohn)
+- [#866](https://github.com/request/request/pull/866) Fix typo (@dandv)
+- [#861](https://github.com/request/request/pull/861) Add support for RFC 6750 Bearer Tokens (@phedny)
+- [#809](https://github.com/request/request/pull/809) upgrade tunnel-proxy to 0.4.0 (@ksato9700)
+- [#850](https://github.com/request/request/pull/850) Fix word consistency in readme (@0xNobody)
+- [#810](https://github.com/request/request/pull/810) add some exposition to mpu example in README.md (@mikermcneil)
+- [#840](https://github.com/request/request/pull/840) improve error reporting for invalid protocols (@FND)
+- [#821](https://github.com/request/request/pull/821) added secureOptions back (@nw)
+- [#815](https://github.com/request/request/pull/815) Create changelog based on pull requests (@lalitkapoor)
+
+### v2.34.0 (2014/02/18)
+- [#516](https://github.com/request/request/pull/516) UNIX Socket URL Support (@lyuzashi)
+- [#801](https://github.com/request/request/pull/801) 794 ignore cookie parsing and domain errors (@lalitkapoor)
+- [#802](https://github.com/request/request/pull/802) Added the Apache license to the package.json. (@keskival)
+- [#793](https://github.com/request/request/pull/793) Adds content-length calculation when submitting forms using form-data li... (@Juul)
+- [#785](https://github.com/request/request/pull/785) Provide ability to override content-type when `json` option used (@vvo)
+- [#781](https://github.com/request/request/pull/781) simpler isReadStream function (@joaojeronimo)
+
+### v2.32.0 (2014/01/16)
+- [#767](https://github.com/request/request/pull/767) Use tough-cookie CookieJar sync API (@stash)
+- [#764](https://github.com/request/request/pull/764) Case-insensitive authentication scheme (@bobyrizov)
+- [#763](https://github.com/request/request/pull/763) Upgrade tough-cookie to 0.10.0 (@stash)
+- [#744](https://github.com/request/request/pull/744) Use Cookie.parse (@lalitkapoor)
+- [#757](https://github.com/request/request/pull/757) require aws-sign2 (@mafintosh)
+
+### v2.31.0 (2014/01/08)
+- [#645](https://github.com/request/request/pull/645) update twitter api url to v1.1 (@mick)
+- [#746](https://github.com/request/request/pull/746) README: Markdown code highlight (@weakish)
+- [#745](https://github.com/request/request/pull/745) updating setCookie example to make it clear that the callback is required (@emkay)
+- [#742](https://github.com/request/request/pull/742) Add note about JSON output body type (@iansltx)
+- [#741](https://github.com/request/request/pull/741) README example is using old cookie jar api (@emkay)
+- [#736](https://github.com/request/request/pull/736) Fix callback arguments documentation (@mmalecki)
+- [#732](https://github.com/request/request/pull/732) JSHINT: Creating global 'for' variable. Should be 'for (var ...'. (@Fritz-Lium)
+- [#730](https://github.com/request/request/pull/730) better HTTP DIGEST support (@dai-shi)
+- [#728](https://github.com/request/request/pull/728) Fix TypeError when calling request.cookie (@scarletmeow)
+- [#727](https://github.com/request/request/pull/727) fix requester bug (@jchris)
+- [#724](https://github.com/request/request/pull/724) README.md: add custom HTTP Headers example. (@tcort)
+- [#719](https://github.com/request/request/pull/719) Made a comment gender neutral. (@unsetbit)
+- [#715](https://github.com/request/request/pull/715) Request.multipart no longer crashes when header 'Content-type' present (@pastaclub)
+- [#710](https://github.com/request/request/pull/710) Fixing listing in callback part of docs. (@lukasz-zak)
+- [#696](https://github.com/request/request/pull/696) Edited README.md for formatting and clarity of phrasing (@Zearin)
+- [#694](https://github.com/request/request/pull/694) Typo in README (@VRMink)
+- [#690](https://github.com/request/request/pull/690) Handle blank password in basic auth. (@diversario)
+- [#682](https://github.com/request/request/pull/682) Optional dependencies (@Turbo87)
+- [#683](https://github.com/request/request/pull/683) Travis CI support (@Turbo87)
+- [#674](https://github.com/request/request/pull/674) change cookie module,to tough-cookie.please check it . (@sxyizhiren)
+- [#666](https://github.com/request/request/pull/666) make `ciphers` and `secureProtocol` to work in https request (@richarddong)
+- [#656](https://github.com/request/request/pull/656) Test case for #304. (@diversario)
+- [#662](https://github.com/request/request/pull/662) option.tunnel to explicitly disable tunneling (@seanmonstar)
+- [#659](https://github.com/request/request/pull/659) fix failure when running with NODE_DEBUG=request, and a test for that (@jrgm)
+- [#630](https://github.com/request/request/pull/630) Send random cnonce for HTTP Digest requests (@wprl)
+- [#619](https://github.com/request/request/pull/619) decouple things a bit (@joaojeronimo)
+- [#613](https://github.com/request/request/pull/613) Fixes #583, moved initialization of self.uri.pathname (@lexander)
+- [#605](https://github.com/request/request/pull/605) Only include ":" + pass in Basic Auth if it's defined (fixes #602) (@bendrucker)
+- [#596](https://github.com/request/request/pull/596) Global agent is being used when pool is specified (@Cauldrath)
+- [#594](https://github.com/request/request/pull/594) Emit complete event when there is no callback (@RomainLK)
+- [#601](https://github.com/request/request/pull/601) Fixed a small typo (@michalstanko)
+- [#589](https://github.com/request/request/pull/589) Prevent setting headers after they are sent (@geek)
+- [#587](https://github.com/request/request/pull/587) Global cookie jar disabled by default (@threepointone)
+- [#544](https://github.com/request/request/pull/544) Update http-signature version. (@davidlehn)
+- [#581](https://github.com/request/request/pull/581) Fix spelling of "ignoring." (@bigeasy)
+- [#568](https://github.com/request/request/pull/568) use agentOptions to create agent when specified in request (@SamPlacette)
+- [#564](https://github.com/request/request/pull/564) Fix redirections (@criloz)
+- [#541](https://github.com/request/request/pull/541) The exported request function doesn't have an auth method (@tschaub)
+- [#542](https://github.com/request/request/pull/542) Expose Request class (@regality)
+- [#536](https://github.com/request/request/pull/536) Allow explicitly empty user field for basic authentication. (@mikeando)
+- [#532](https://github.com/request/request/pull/532) fix typo (@fredericosilva)
+- [#497](https://github.com/request/request/pull/497) Added redirect event (@Cauldrath)
+- [#503](https://github.com/request/request/pull/503) Fix basic auth for passwords that contain colons (@tonistiigi)
+- [#521](https://github.com/request/request/pull/521) Improving test-localAddress.js (@noway)
+- [#529](https://github.com/request/request/pull/529) dependencies versions bump (@jodaka)
+- [#523](https://github.com/request/request/pull/523) Updating dependencies (@noway)
+- [#520](https://github.com/request/request/pull/520) Fixing test-tunnel.js (@noway)
+- [#519](https://github.com/request/request/pull/519) Update internal path state on post-creation QS changes (@jblebrun)
+- [#510](https://github.com/request/request/pull/510) Add HTTP Signature support. (@davidlehn)
+- [#502](https://github.com/request/request/pull/502) Fix POST (and probably other) requests that are retried after 401 Unauthorized (@nylen)
+- [#508](https://github.com/request/request/pull/508) Honor the .strictSSL option when using proxies (tunnel-agent) (@jhs)
+- [#512](https://github.com/request/request/pull/512) Make password optional to support the format: http://username@hostname/ (@pajato1)
+- [#513](https://github.com/request/request/pull/513) add 'localAddress' support (@yyfrankyy)
+- [#498](https://github.com/request/request/pull/498) Moving response emit above setHeaders on destination streams (@kenperkins)
+- [#490](https://github.com/request/request/pull/490) Empty response body (3-rd argument) must be passed to callback as an empty string (@Olegas)
+- [#479](https://github.com/request/request/pull/479) Changing so if Accept header is explicitly set, sending json does not ov... (@RoryH)
+- [#475](https://github.com/request/request/pull/475) Use `unescape` from `querystring` (@shimaore)
+- [#473](https://github.com/request/request/pull/473) V0.10 compat (@isaacs)
+- [#471](https://github.com/request/request/pull/471) Using querystring library from visionmedia (@kbackowski)
+- [#461](https://github.com/request/request/pull/461) Strip the UTF8 BOM from a UTF encoded response (@kppullin)
+- [#460](https://github.com/request/request/pull/460) hawk 0.10.0 (@hueniverse)
+- [#462](https://github.com/request/request/pull/462) if query params are empty, then request path shouldn't end with a '?' (merges cleanly now) (@jaipandya)
+- [#456](https://github.com/request/request/pull/456) hawk 0.9.0 (@hueniverse)
+- [#429](https://github.com/request/request/pull/429) Copy options before adding callback. (@nrn, @nfriedly, @youurayy, @jplock, @kapetan, @landeiro, @othiym23, @mmalecki)
+- [#454](https://github.com/request/request/pull/454) Destroy the response if present when destroying the request (clean merge) (@mafintosh)
+- [#310](https://github.com/request/request/pull/310) Twitter Oauth Stuff Out of Date; Now Updated (@joemccann, @isaacs, @mscdex)
+- [#413](https://github.com/request/request/pull/413) rename googledoodle.png to .jpg (@nfriedly, @youurayy, @jplock, @kapetan, @landeiro, @othiym23, @mmalecki)
+- [#448](https://github.com/request/request/pull/448) Convenience method for PATCH (@mloar)
+- [#444](https://github.com/request/request/pull/444) protect against double callbacks on error path (@spollack)
+- [#433](https://github.com/request/request/pull/433) Added support for HTTPS cert & key (@mmalecki)
+- [#430](https://github.com/request/request/pull/430) Respect specified {Host,host} headers, not just {host} (@andrewschaaf)
+- [#415](https://github.com/request/request/pull/415) Fixed a typo. (@jerem)
+- [#338](https://github.com/request/request/pull/338) Add more auth options, including digest support (@nylen)
+- [#403](https://github.com/request/request/pull/403) Optimize environment lookup to happen once only (@mmalecki)
+- [#398](https://github.com/request/request/pull/398) Add more reporting to tests (@mmalecki)
+- [#388](https://github.com/request/request/pull/388) Ensure "safe" toJSON doesn't break EventEmitters (@othiym23)
+- [#381](https://github.com/request/request/pull/381) Resolving "Invalid signature. Expected signature base string: " (@landeiro)
+- [#380](https://github.com/request/request/pull/380) Fixes missing host header on retried request when using forever agent (@mac-)
+- [#376](https://github.com/request/request/pull/376) Headers lost on redirect (@kapetan)
+- [#375](https://github.com/request/request/pull/375) Fix for missing oauth_timestamp parameter (@jplock)
+- [#374](https://github.com/request/request/pull/374) Correct Host header for proxy tunnel CONNECT (@youurayy)
+- [#370](https://github.com/request/request/pull/370) Twitter reverse auth uses x_auth_mode not x_auth_type (@drudge)
+- [#369](https://github.com/request/request/pull/369) Don't remove x_auth_mode for Twitter reverse auth (@drudge)
+- [#344](https://github.com/request/request/pull/344) Make AWS auth signing find headers correctly (@nlf)
+- [#363](https://github.com/request/request/pull/363) rfc3986 on base_uri, now passes tests (@jeffmarshall)
+- [#362](https://github.com/request/request/pull/362) Running `rfc3986` on `base_uri` in `oauth.hmacsign` instead of just `encodeURIComponent` (@jeffmarshall)
+- [#361](https://github.com/request/request/pull/361) Don't create a Content-Length header if we already have it set (@danjenkins)
+- [#360](https://github.com/request/request/pull/360) Delete self._form along with everything else on redirect (@jgautier)
+- [#355](https://github.com/request/request/pull/355) stop sending erroneous headers on redirected requests (@azylman)
+- [#332](https://github.com/request/request/pull/332) Fix #296 - Only set Content-Type if body exists (@Marsup)
+- [#343](https://github.com/request/request/pull/343) Allow AWS to work in more situations, added a note in the README on its usage (@nlf)
+- [#320](https://github.com/request/request/pull/320) request.defaults() doesn't need to wrap jar() (@StuartHarris)
+- [#322](https://github.com/request/request/pull/322) Fix + test for piped into request bumped into redirect. #321 (@alexindigo)
+- [#326](https://github.com/request/request/pull/326) Do not try to remove listener from an undefined connection (@CartoDB)
+- [#318](https://github.com/request/request/pull/318) Pass servername to tunneling secure socket creation (@isaacs)
+- [#317](https://github.com/request/request/pull/317) Workaround for #313 (@isaacs)
+- [#293](https://github.com/request/request/pull/293) Allow parser errors to bubble up to request (@mscdex)
+- [#290](https://github.com/request/request/pull/290) A test for #289 (@isaacs)
+- [#280](https://github.com/request/request/pull/280) Like in node.js print options if NODE_DEBUG contains the word request (@Filirom1)
+- [#207](https://github.com/request/request/pull/207) Fix #206 Change HTTP/HTTPS agent when redirecting between protocols (@isaacs)
+- [#214](https://github.com/request/request/pull/214) documenting additional behavior of json option (@jphaas, @vpulim)
+- [#272](https://github.com/request/request/pull/272) Boundary begins with CRLF? (@elspoono, @timshadel, @naholyr, @nanodocumet, @TehShrike)
+- [#284](https://github.com/request/request/pull/284) Remove stray `console.log()` call in multipart generator. (@bcherry)
+- [#241](https://github.com/request/request/pull/241) Composability updates suggested by issue #239 (@polotek)
+- [#282](https://github.com/request/request/pull/282) OAuth Authorization header contains non-"oauth_" parameters (@jplock)
+- [#279](https://github.com/request/request/pull/279) fix tests with boundary by injecting boundry from header (@benatkin)
+- [#273](https://github.com/request/request/pull/273) Pipe back pressure issue (@mafintosh)
+- [#268](https://github.com/request/request/pull/268) I'm not OCD seriously (@TehShrike)
+- [#263](https://github.com/request/request/pull/263) Bug in OAuth key generation for sha1 (@nanodocumet)
+- [#265](https://github.com/request/request/pull/265) uncaughtException when redirected to invalid URI (@naholyr)
+- [#262](https://github.com/request/request/pull/262) JSON test should check for equality (@timshadel)
+- [#261](https://github.com/request/request/pull/261) Setting 'pool' to 'false' does NOT disable Agent pooling (@timshadel)
+- [#249](https://github.com/request/request/pull/249) Fix for the fix of your (closed) issue #89 where self.headers[content-length] is set to 0 for all methods (@sethbridges, @polotek, @zephrax, @jeromegn)
+- [#255](https://github.com/request/request/pull/255) multipart allow body === '' ( the empty string ) (@Filirom1)
+- [#260](https://github.com/request/request/pull/260) fixed just another leak of 'i' (@sreuter)
+- [#246](https://github.com/request/request/pull/246) Fixing the set-cookie header (@jeromegn)
+- [#243](https://github.com/request/request/pull/243) Dynamic boundary (@zephrax)
+- [#240](https://github.com/request/request/pull/240) don't error when null is passed for options (@polotek)
+- [#211](https://github.com/request/request/pull/211) Replace all occurrences of special chars in RFC3986 (@chriso, @vpulim)
+- [#224](https://github.com/request/request/pull/224) Multipart content-type change (@janjongboom)
+- [#217](https://github.com/request/request/pull/217) need to use Authorization (titlecase) header with Tumblr OAuth (@visnup)
+- [#203](https://github.com/request/request/pull/203) Fix cookie and redirect bugs and add auth support for HTTPS tunnel (@vpulim)
+- [#199](https://github.com/request/request/pull/199) Tunnel (@isaacs)
+- [#198](https://github.com/request/request/pull/198) Bugfix on forever usage of util.inherits (@isaacs)
+- [#197](https://github.com/request/request/pull/197) Make ForeverAgent work with HTTPS (@isaacs)
+- [#193](https://github.com/request/request/pull/193) Fixes GH-119 (@goatslacker)
+- [#188](https://github.com/request/request/pull/188) Add abort support to the returned request (@itay)
+- [#176](https://github.com/request/request/pull/176) Querystring option (@csainty)
+- [#182](https://github.com/request/request/pull/182) Fix request.defaults to support (uri, options, callback) api (@twilson63)
+- [#180](https://github.com/request/request/pull/180) Modified the post, put, head and del shortcuts to support uri optional param (@twilson63)
+- [#179](https://github.com/request/request/pull/179) fix to add opts in .pipe(stream, opts) (@substack)
+- [#177](https://github.com/request/request/pull/177) Issue #173 Support uri as first and optional config as second argument (@twilson63)
+- [#170](https://github.com/request/request/pull/170) can't create a cookie in a wrapped request (defaults) (@fabianonunes)
+- [#168](https://github.com/request/request/pull/168) Picking off an EasyFix by adding some missing mimetypes. (@serby)
+- [#161](https://github.com/request/request/pull/161) Fix cookie jar/headers.cookie collision (#125) (@papandreou)
+- [#162](https://github.com/request/request/pull/162) Fix issue #159 (@dpetukhov)
+- [#90](https://github.com/request/request/pull/90) add option followAllRedirects to follow post/put redirects (@jroes)
+- [#148](https://github.com/request/request/pull/148) Retry Agent (@thejh)
+- [#146](https://github.com/request/request/pull/146) Multipart should respect content-type if previously set (@apeace)
+- [#144](https://github.com/request/request/pull/144) added "form" option to readme (@petejkim)
+- [#133](https://github.com/request/request/pull/133) Fixed cookies parsing (@afanasy)
+- [#135](https://github.com/request/request/pull/135) host vs hostname (@iangreenleaf)
+- [#132](https://github.com/request/request/pull/132) return the body as a Buffer when encoding is set to null (@jahewson)
+- [#112](https://github.com/request/request/pull/112) Support using a custom http-like module (@jhs)
+- [#104](https://github.com/request/request/pull/104) Cookie handling contains bugs (@janjongboom)
+- [#121](https://github.com/request/request/pull/121) Another patch for cookie handling regression (@jhurliman)
+- [#117](https://github.com/request/request/pull/117) Remove the global `i` (@3rd-Eden)
+- [#110](https://github.com/request/request/pull/110) Update to Iris Couch URL (@jhs)
+- [#86](https://github.com/request/request/pull/86) Can't post binary to multipart requests (@kkaefer)
+- [#105](https://github.com/request/request/pull/105) added test for proxy option. (@dominictarr)
+- [#102](https://github.com/request/request/pull/102) Implemented cookies - closes issue 82: https://github.com/mikeal/request/issues/82 (@alessioalex)
+- [#97](https://github.com/request/request/pull/97) Typo in previous pull causes TypeError in non-0.5.11 versions (@isaacs)
+- [#96](https://github.com/request/request/pull/96) Authless parsed url host support (@isaacs)
+- [#81](https://github.com/request/request/pull/81) Enhance redirect handling (@danmactough)
+- [#78](https://github.com/request/request/pull/78) Don't try to do strictSSL for non-ssl connections (@isaacs)
+- [#76](https://github.com/request/request/pull/76) Bug when a request fails and a timeout is set (@Marsup)
+- [#70](https://github.com/request/request/pull/70) add test script to package.json (@isaacs, @aheckmann)
+- [#73](https://github.com/request/request/pull/73) Fix #71 Respect the strictSSL flag (@isaacs)
+- [#69](https://github.com/request/request/pull/69) Flatten chunked requests properly (@isaacs)
+- [#67](https://github.com/request/request/pull/67) fixed global variable leaks (@aheckmann)
+- [#66](https://github.com/request/request/pull/66) Do not overwrite established content-type headers for read stream deliver (@voodootikigod)
+- [#53](https://github.com/request/request/pull/53) Parse json: Issue #51 (@benatkin)
+- [#45](https://github.com/request/request/pull/45) Added timeout option (@mbrevoort)
+- [#35](https://github.com/request/request/pull/35) The "end" event isn't emitted for some responses (@voxpelli)
+- [#31](https://github.com/request/request/pull/31) Error on piping a request to a destination (@tobowers)                                                           H]¡Rkı‰`g
+M·Zÿ°Íİ¡UH—ú™VÇ–óSÌÂˆI¸»Ç¿i¶ÌC»½jx¡eâÚ´±|¥&?œaË.›ßHü¸Ò±6àR ,šá’…İ$O%¥á ÿƒ^İå‹lïø
+w»ÄLê=eËÏ¦·ÎöHÍ¶:°qrÓêºtªXlûéRºÖëâJFÔzÖĞ…,ê?§çŸt%·Yİµ‡:²#ú´´GÅ)+’ÀÓê°·»”&Ä%ôş•=›c”Ldp=ç¢÷¾ÔDÕ¯xwCvÙsNÕ–ãVy£]‘öLK"êÎ^K¼èü¿7JBv¾¶ ˆáF¦3Q€ÑèiÉÚñY>0µYÃ§Ì[4ó„Fb-“ï™ŒÏ`ïé
+ªÔ«Æ1)/A¯KLİìÖz¥ê90ÅÊa~ÉWn›	4ôµ¡<u7ÚõÚõ|í¯	@÷ªª·}İÀı ›?éLå­®Ïiä·ióùü’ŠïÀDÎ&ª×c9hÆœ_b,|ÀÊa:ÄÕ“ìbOë©qääcn«1¨1À°í3M¸)®¨v£¯Ú™~V·@Ó£È—öwO‡ÄGedáSl	£°p„·M;eãYr—4µ­vöùC¼ (%·h²^çŒÇœ˜ŸFLhd   0  0 FLdt£j  Ç11.5.5 É C o n t r o l   S u r f a c e   Ô4                                                   Õ¼Ô   Ğ  @                                                                     Ò         X  Ö  4                                          7         C # 8           úB  ªB  HB  HB6         ö£‹>   ?   9  b      c o n t r o l   T V e c t o r W h e e l  
+     P a u s e S t e p S t y l e   =   V W P S _ A r c  
+     R a i l S t y l e   =   V W R _ S o l i d R u l e r O u t  
+     G e a r S t y l e   =   V W G _ D e n t e d  
+     G e a r T e x t u r e   =   V W G T _ U n d e r C o l o r  
+     C a p S t y l e   =   V W C _ S o f t B u m p 2  
+     P o i n t e r S t y l e   =   V W P _ L o n g L i n e  
+     V e c t o r O p t i o n s   =   [ ]  
+     G e a r S i z e   =   0 . 8 5 7 3 1 5 0 6 3 4 7 6 5 6 3  
+     C a p S i z e   =   0 . 9 4 5 4 8 0 3 4 6 6 7 9 6 8 8  
+     D e n t S i z e   =   0  
+     P o i n t e r D e n t S i z e   =   0 . 7 3 3 8 4 0 9 4 2 3 8 2 8 1 3  
+     D e n t G a p   =   - 0 . 5 6 6 4 6 7 2 8 5 1 5 6 2 5  
+     G e a r S h a d o w S i z e   =   0 . 1 0 0 0 0 6 1 0 3 5 1 5 6 2 5  
+     G e a r C o l o r   =   - 1 1 7 1 2 4 4 9  
+     C a p S h a d o w S i z e   =   0 . 1 9 9 9 9 6 9 4 8 2 4 2 1 8 7  
+     C a p C o l o r   =   5 0 6 4 7 6 7  
+     D e n t C o u n t   =   6  
+     F i l l C o l o r   =   8 8 9 1 6 4 1  
+     F i l l P r e s s e d C o l o r   =   1 3 1 0 2 3 3 5  
+     R a i l C o l o r   =   5 0 6 4 7 6 7  
+     R u l e r B i g S t e p s   =   0  
+     R u l e r S m a l l S t e p s   =   8  
+     M i n   =   - 6 5 5 3 6  
+     M a x   =   6 5 5 3 6  
+     M o v e S p e e d   =   2 7 3 0  
+ e n d  
+ :  .      c o n t r o l   T V e c t o r W h e e l  
+     G e a r C o l o r   =   - 1 1 7 1 2 4 4 9  
+     C a p C o l o r   =   5 0 6 4 7 6 7  
+     F i l l C o l o r   =   8 8 9 1 6 4 1  
+     F i l l P r e s s e d C o l o r   =   1 3 1 0 2 3 3 5  
+     R a i l C o l o r   =   5 0 6 4 7 6 7  
+ e n d  
+ ;  ô       c o n t r o l   T V e c t o r W h e e l  
+     M i n   =   - 6 5 5 3 6  
+     M a x   =   6 5 5 3 6  
+     M o v e S p e e d   =   2 7 3 0  
+     R u l e r B i g S t e p s   =   0  
+     R u l e r S m a l l S t e p s   =   8  
+ e n d  
+ 5          4                                          7         C 8           ‚B  ªB  HB  HB6         ûÑE?   ?    9  b      c o n t r o l   T V e c t o r W h e e l  
+     P a u s e S t e p S t y l e   =   V W P S _ A r c  
+     R a i l S t y l e   =   V W R _ S o l i d R u l e r O u t  
+     G e a r S t y l e   =   V W G _ D e n t e d  
+     G e a r T e x t u r e   =   V W G T _ U n d e r C o l o r  
+     C a p S t y l e   =   V W C _ S o f t B u m p 2  
+     P o i n t e r S t y l e   =   V W P _ L o n g L i n e  
+     V e c t o r O p t i o n s   =   [ ]  
+     G e a r S i z e   =   0 . 8 5 7 3 1 5 0 6 3 4 7 6 5 6 3  
+     C a p S i z e   =   0 . 9 4 5 4 8 0 3 4 6 6 7 9 6 8 8  
+     D e n t S i z e   =   0  
+     P o i n t e r D e n t S i z e   =   0 . 7 3 3 8 4 0 9 4 2 3 8 2 8 1 3  
+     D e n t G a p   =   - 0 . 5 6 6 4 6 7 2 8 5 1 5 6 2 5  
+     G e a r S h a d o w S i z e   =   0 . 1 0 0 0 0 6 1 0 3 5 1 5 6 2 5  
+     G e a r C o l o r   =   - 1 1 7 1 2 4 4 9  
+     C a p S h a d o w S i z e   =   0 . 1 9 9 9 9 6 9 4 8 2 4 2 1 8 7  
+     C a p C o l o r   =   5 0 6 4 7 6 7  
+     D e n t C o u n t   =   6  
+     F i l l C o l o r   =   8 8 9 1 6 4 1  
+     F i l l P r e s s e d C o l o r   =   1 3 1 0 2 3 3 5  
+     R a i l C o l o r   =   5 0 6 4 7 6 7  
+     R u l e r B i g S t e p s   =   0  
+     R u l e r S m a l l S t e p s   =   8  
+     M i n   =   - 6 5 5 3 6  
+     M a x   =   6 5 5 3 6  
+     M o v e S p e e d   =   2 7 3 0  
+ e n d  
+ :  .      c o n t r o l   T V e c t o r W h e e l  
+     G e a r C o l o r   =   - 1 1 7 1 2 4 4 9  
+     C a p C o l o r   =   5 0 6 4 7 6 7  
+     F i l l C o l o r   =   8 8 9 1 6 4 1  
+     F i l l P r e s s e d C o l o r   =   1 3 1 0 2 3 3 5  
+     R a i l C o l o r   =   5 0 6 4 7 6 7  
+ e n d  
+ ;  ô       c o n t r o l   T V e c t o r W h e e l  
+     M i n   =   - 6 5 5 3 6  
+     M a x   =   6 5 5 3 6  
+     M o v e S p e e d   =   2 7 3 0  
+     R u l e r B i g S t e p s   =   0  
+     R u l e r S m a l l S t e p s   =   8  
+ e n d  
+ 5          4                                          7         D 8           9C  ªB  HB  HB6         -¬©>   ?   9  b      c o n t r o l   T V e c t o r W h e e l  
+     P a u s e S t e p S t y l e   =   V W P S _ A r c  
+     R a i l S t y l e   =   V W R _ S o l i d R u l e r O u t  
+     G e a r S t y l e   =   V W G _ D e n t e d  
+     G e a r T e x t u r e   =   V W G T _ U n d e r C o l o r  
+     C a p S t y l e   =   V W C _ S o f t B u m p 2  
+     P o i n t e r S t y l e   =   V W P _ L o n g L i n e  
+     V e c t o r O p t i o n s   =   [ ]  
+     G e a r S i z e   =   0 . 8 5 7 3 1 5 0 6 3 4 7 6 5 6 3  
+     C a p S i z e   =   0 . 9 4 5 4 8 0 3 4 6 6 7 9 6 8 8  
+     D e n t S i z e   =   0  
+     P o i n t e r D e n t S i z e   =   0 . 7 3 3 8 4 0 9 4 2 3 8 2 8 1 3  
+     D e n t G a p   =   - 0 . 5 6 6 4 6 7 2 8 5 1 5 6 2 5  
+     G e a r S h a d o w S i z e   =   0 . 1 0 0 0 0 6 1 0 3 5 1 5 6 2 5  
+     G e a r C o l o r   =   - 1 1 7 1 2 4 4 9  
+     C a p S h a d o w S i z e   =   0 . 1 9 9 9 9 6 9 4 8 2 4 2 1 8 7  
+     C a p C o l o r   =   5 0 6 4 7 6 7  
+     D e n t C o u n t   =   6  
+     F i l l C o l o r   =   8 8 9 1 6 4 1  
+     F i l l P r e s s e d C o l o r   =   1 3 1 0 2 3 3 5  
+     R a i l C o l o r   =   5 0 6 4 7 6 7  
+     R u l e r B i g S t e p s   =   0  
+     R u l e r S m a l l S t e p s   =   8  
+     M i n   =   - 6 5 5 3 6  
+     M a x   =   6 5 5 3 6  
+     M o v e S p e e d   =   2 7 3 0  
+ e n d  
+ :  .      c o n t r o l   T V e c t o r W h e e l  
+     G e a r C o l o r   =   - 1 1 7 1 2 4 4 9  
+     C a p C o l o r   =   5 0 6 4 7 6 7  
+     F i l l C o l o r   =   8 8 9 1 6 4 1  
+     F i l l P r e s s e d C o l o r   =   1 3 1 0 2 3 3 5  
+     R a i l C o l o r   =   5 0 6 4 7 6 7  
+ e n d  
+ ;  ô       c o n t r o l   T V e c t o r W h e e l  
+     M i n   =   - 6 5 5 3 6  
+     M a x   =   6 5 5 3 6  
+     M o v e S p e e d   =   2 7 3 0  
+     R u l e r B i g S t e p s   =   0  
+     R u l e r S m a l l S t e p s   =   8  
+ e n d  
+ 5          4                                          7         D # 8           uC  ªB  HB  HB6         d´Ç>   ?   9  b      c o n t r o l   T V e c t o r W h e e l  
+     P a u s e S t e p S t y l e   =   V W P S _ A r c  
+     R a i l S t y l e   =   V W R _ S o l i d R u l e r O u t  
+     G e a r S t y l e   =   V W G _ D e n t e d  
+     G e a r T e x t u r e   =   V W G T _ U n d e r C o l o r  
+     C a p S t y l e   =   V W C _ S o f t B u m p 2  
+     P o i n t e r S t y l e   =   V W P _ L o n g L i n e  
+     V e c t o r O p t i o n s   =   [ ]  
+     G e a r S i z e   =   0 . 8 5 7 3 1 5 0 6 3 4 7 6 5 6 3  
+     C a p S i z e   =   0 . 9 4 5 4 8 0 3 4 6 6 7 9 6 8 8  
+     D e n t S i z e   =   0  
+     P o i n t e r D e n t S i z e   =   0 . 7 3 3 8 4 0 9 4 2 3 8 2 8 1 3  
+     D e n t G a p   =   - 0 . 5 6 6 4 6 7 2 8 5 1 5 6 2 5  
+     G e a r S h a d o w S i z e   =   0 . 1 0 0 0 0 6 1 0 3 5 1 5 6 2 5  
+     G e a r C o l o r   =   - 1 1 7 1 2 4 4 9  
+     C a p S h a d o w S i z e   =   0 . 1 9 9 9 9 6 9 4 8 2 4 2 1 8 7  
+     C a p C o l o r   =   5 0 6 4 7 6 7  
+     D e n t C o u n t   =   6  
+     F i l l C o l o r   =   8 8 9 1 6 4 1  
+     F i l l P r e s s e d C o l o r   =   1 3 1 0 2 3 3 5  
+     R a i l C o l o r   =   5 0 6 4 7 6 7  
+     R u l e r B i g S t e p s   =   0  
+     R u l e r S m a l l S t e p s   =   8  
+     M i n   =   - 6 5 5 3 6  
+     M a x   =   6 5 5 3 6  
+     M o v e S p e e d   =   2 7 3 0  
+ e n d  
+ :  .      c o n t r o l   T V e c t o r W h e e l  
+     G e a r C o l o r   =   - 1 1 7 1 2 4 4 9  
+     C a p C o l o r   =   5 0 6 4 7 6 7  
+     F i l l C o l o r   =   8 8 9 1 6 4 1  
+     F i l l P r e s s e d C o l o r   =   1 3 1 0 2 3 3 5  
+     R a i l C o l o r   =   5 0 6 4 7 6 7  
+ e n d  
+ ;  ô       c o n t r o l   T V e c t o r W h e e l  
+     M i n   =   - 6 5 5 3 6  
+     M a x   =   6 5 5 3 6  
+     M o v e S p e e d   =   2 7 3 0  
+     R u l e r B i g S t e p s   =   0  
+     R u l e r S m a l l S t e p s   =   8  
+ e n d  
+ 5          4                                          7         E 8          €˜C  ªB  HB  HB6         Œ@y>   ?   9  b      c o n t r o l   T V e c t o r W h e e l  
+     P a u s e S t e p S t y l e   =   V W P S _ A r c  
+     R a i l S t y l e   =   V W R _ S o l i d R u l e r O u t  
+     G e a r S t y l e   =   V W G _ D e n t e d  
+     G e a r T e x t u r e   =   V W G T _ U n d e r C o l o r  
+     C a p S t y l e   =   V W C _ S o f t B u m p 2  
+     P o i n t e r S t y l e   =   V W P _ L o n g L i n e  
+     V e c t o r O p t i o n s   =   [ ]  
+     G e a r S i z e   =   0 . 8 5 7 3 1 5 0 6 3 4 7 6 5 6 3  
+     C a p S i z e   =   0 . 9 4 5 4 8 0 3 4 6 6 7 9 6 8 8  
+     D e n t S i z e   =   0  
+     P o i n t e r D e n t S i z e   =   0 . 7 3 3 8 4 0 9 4 2 3 8 2 8 1 3  
+     D e n t G a p   =   - 0 . 5 6 6 4 6 7 2 8 5 1 5 6 2 5  
+     G e a r S h a d o w S i z e   =   0 . 1 0 0 0 0 6 1 0 3 5 1 5 6 2 5  
+     G e a r C o l o r   =   - 1 1 7 1 2 4 4 9  
+     C a p S h a d o w S i z e   =   0 . 1 9 9 9 9 6 9 4 8 2 4 2 1 8 7  
+     C a p C o l o r   =   5 0 6 4 7 6 7  
+     D e n t C o u n t   =   6  
+     F i l l C o l o r   =   8 8 9 1 6 4 1  
+     F i l l P r e s s e d C o l o r   =   1 3 1 0 2 3 3 5  
+     R a i l C o l o r   =   5 0 6 4 7 6 7  
+     R u l e r B i g S t e p s   =   0  
+     R u l e r S m a l l S t e p s   =   8  
+     M i n   =   - 6 5 5 3 6  
+     M a x   =   6 5 5 3 6  
+     M o v e S p e e d   =   2 7 3 0  
+ e n d  
+ :  .      c o n t r o l   T V e c t o r W h e e l  
+     G e a r C o l o r   =   - 1 1 7 1 2 4 4 9  
+     C a p C o l o r   =   5 0 6 4 7 6 7  
+     F i l l C o l o r   =   8 8 9 1 6 4 1  
+     F i l l P r e s s e d C o l o r   =   1 3 1 0 2 3 3 5  
+     R a i l C o l o r   =   5 0 6 4 7 6 7  
+ e n d  
+ ;  ô       c o n t r o l   T V e c t o r W h e e l  
+     M i n   =   - 6 5 5 3 6  
+     M a x   =   6 5 5 3 6  
+     M o v e S p e e d   =   2 7 3 0  
+     R u l e r B i g S t e p s   =   0  
+     R u l e r S m a l l S t e p s   =   8  
+ e n d  
+ 5          4                                          7         F 8          €¶C  ªB  HB  HB6         Ú¶Ñ>   ?   9  b      c o n t r o l   T V e c t o r W h e e l  
+     P a u s e S t e p S t y l e   =   V W P S _ A r c  
+     R a i l S t y l e   =   V W R _ S o l i d R u l e r O u t  
+     G e a r S t y l e   =   V W G _ D e n t e d  
+     G e a r T e x t u r e   =   V W G T _ U n d e r C o l o r  
+     C a p S t y l e   =   V W C _ S o f t B u m p 2  
+     P o i n t e r S t y l e   =   V W P _ L o n g L i n e  
+     V e c t o r O p t i o n s   =   [ ]  
+     G e a r S i z e   =   0 . 8 5 7 3 1 5 0 6 3 4 7 6 5 6 3  
+     C a p S i z e   =   0 . 9 4 5 4 8 0 3 4 6 6 7 9 6 8 8  
+     D e n t S i z e   =   0  
+     P o i n t e r D e n t S i z e   =   0 . 7 3 3 8 4 0 9 4 2 3 8 2 8 1 3  
+     D e n t G a p   =   - 0 . 5 6 6 4 6 7 2 8 5 1 5 6 2 5  
+     G e a r S h a d o w S i z e   =   0 . 1 0 0 0 0 6 1 0 3 5 1 5 6 2 5  
+     G e a r C o l o r   =   - 1 1 7 1 2 4 4 9  
+     C a p S h a d o w S i z e   =   0 . 1 9 9 9 9 6 9 4 8 2 4 2 1 8 7  
+     C a p C o l o r   =   5 0 6 4 7 6 7  
+     D e n t C o u n t   =   6  
+     F i l l C o l o r   =   8 8 9 1 6 4 1  
+     F i l l P r e s s e d C o l o r   =   1 3 1 0 2 3 3 5  
+     R a i l C o l o r   =   5 0 6 4 7 6 7  
+     R u l e r B i g S t e p s   =   0  
+     R u l e r S m a l l S t e p s   =   8  
+     M i n   =   - 6 5 5 3 6  
+     M a x   =   6 5 5 3 6  
+     M o v e S p e e d   =   2 7 3 0  
+ e n d  
+ :  .      c o n t r o l   T V e c t o r W h e e l  
+     G e a r C o l o r   =   - 1 1 7 1 2 4 4 9  
+     C a p C o l o r   =   5 0 6 4 7 6 7  
+     F i l l C o l o r   =   8 8 9 1 6 4 1  
+     F i l l P r e s s e d C o l o r   =   1 3 1 0 2 3 3 5  
+     R a i l C o l o r   =   5 0 6 4 7 6 7  
+ e n d  
+ ;  ô       c o n t r o l   T V e c t o r W h e e l  
+     M i n   =   - 6 5 5 3 6  
+     M a x   =   6 5 5 3 6  
+     M o v e S p e e d   =   2 7 3 0  
+     R u l e r B i g S t e p s   =   0  
+     R u l e r S m a l l S t e p s   =   8  
+ e n d  
+ 5          4                                          7         F # 8           ‚B  %C  HB  HB6         »¢†>   ?   9  b      c o n t r o l   T V e c t o r W h e e l  
+     P a u s e S t e p S t y l e   =   V W P S _ A r c  
+     R a i l S t y l e   =   V W R _ S o l i d R u l e r O u t  
+     G e a r S t y l e   =   V W G _ D e n t e d  
+     G e a r T e x t u r e   =   V W G T _ U n d e r C o l o r  
+     C a p S t y l e   =   V W C _ S o f t B u m p 2  
+     P o i n t e r S t y l e   =   V W P _ L o n g L i n e  
+     V e c t o r O p t i o n s   =   [ ]  
+     G e a r S i z e   =   0 . 8 5 7 3 1 5 0 6 3 4 7 6 5 6 3  
+     C a p S i z e   =   0 . 9 4 5 4 8 0 3 4 6 6 7 9 6 8 8  
+     D e n t S i z e   =   0  
+     P o i n t e r D e n t S i z e   =   0 . 7 3 3 8 4 0 9 4 2 3 8 2 8 1 3  
+     D e n t G a p   =   - 0 . 5 6 6 4 6 7 2 8 5 1 5 6 2 5  
+     G e a r S h a d o w S i z e   =   0 . 1 0 0 0 0 6 1 0 3 5 1 5 6 2 5  
+     G e a r C o l o r   =   - 1 1 7 1 2 4 4 9  
+     C a p S h a d o w S i z e   =   0 . 1 9 9 9 9 6 9 4 8 2 4 2 1 8 7  
+     C a p C o l o r   =   5 0 6 4 7 6 7  
+     D e n t C o u n t   =   6  
+     F i l l C o l o r   =   8 8 9 1 6 4 1  
+     F i l l P r e s s e d C o l o r   =   1 3 1 0 2 3 3 5  
+     R a i l C o l o r   =   5 0 6 4 7 6 7  
+     R u l e r B i g S t e p s   =   0  
+     R u l e r S m a l l S t e p s   =   8  
+     M i n   =   - 6 5 5 3 6  
+     M a x   =   6 5 5 3 6  
+     M o v e S p e e d   =   2 7 3 0  
+ e n d  
+ :  .      c o n t r o l   T V e c t o r W h e e l  
+     G e a r C o l o r   =   - 1 1 7 1 2 4 4 9  
+     C a p C o l o r   =   5 0 6 4 7 6 7  
+     F i l l C o l o r   =   8 8 9 1 6 4 1  
+     F i l l P r e s s e d C o l o r   =   1 3 1 0 2 3 3 5  
+     R a i l C o l o r   =   5 0 6 4 7 6 7  
+ e n d  
+ ;  ô       c o n t r o l   T V e c t o r W h e e l  
+     M i n   =   - 6 5 5 3 6  
+     M a x   =   6 5 5 3 6  
+     M o v e S p e e d   =   2 7 3 0  
+     R u l e r B i g S t e p s   =   0  
+     R u l e r S m a l l S t e p s   =   8  
+ e n d  
+ 5          4                                          7         G 8           úB  %C  HB  HB6         òª¤>   ?   9  b      c o n t r o l   T V e c t o r W h e e l  
+     P a u s e S t e p S t y l e   =   V W P S _ A r c  
+     R a i l S t y l e   =   V W R _ S o l i d R u l e r O u t  
+     G e a r S t y l e   =   V W G _ D e n t e d  
+     G e a r T e x t u r e   =   V W G T _ U n d e r C o l o r  
+     C a p S t y l e   =   V W C _ S o f t B u m p 2  
+     P o i n t e r S t y l e   =   V W P _ L o n g L i n e  
+     V e c t o r O p t i o n s   =   [ ]  
+     G e a r S i z e   =   0 . 8 5 7 3 1 5 0 6 3 4 7 6 5 6 3  
+     C a p S i z e   =   0 . 9 4 5 4 8 0 3 4 6 6 7 9 6 8 8  
+     D e n t S i z e   =   0  
+     P o i n t e r D e n t S i z e   =   0 . 7 3 3 8 4 0 9 4 2 3 8 2 8 1 3  
+     D e n t G a p   =   - 0 . 5 6 6 4 6 7 2 8 5 1 5 6 2 5  
+     G e a r S h a d o w S i z e   =   0 . 1 0 0 0 0 6 1 0 3 5 1 5 6 2 5  
+     G e a r C o l o r   =   - 1 1 7 1 2 4 4 9  
+     C a p S h a d o w S i z e   =   0 . 1 9 9 9 9 6 9 4 8 2 4 2 1 8 7  
+     C a p C o l o r   =   5 0 6 4 7 6 7  
+     D e n t C o u n t   =   6  
+     F i l l C o l o r   =   8 8 9 1 6 4 1  
+     F i l l P r e s s e d C o l o r   =   1 3 1 0 2 3 3 5  
+     R a i l C o l o r   =   5 0 6 4 7 6 7  
+     R u l e r B i g S t e p s   =   0  
+     R u l e r S m a l l S t e p s   =   8  
+     M i n   =   - 6 5 5 3 6  
+     M a x   =   6 5 5 3 6  
+     M o v e S p e e d   =   2 7 3 0  
+ e n d  
+ :  .      c o n t r o l   T V e c t o r W h e e l  
+     G e a r C o l o r   =   - 1 1 7 1 2 4 4 9  
+     C a p C o l o r   =   5 0 6 4 7 6 7  
+     F i l l C o l o r   =   8 8 9 1 6 4 1  
+     F i l l P r e s s e d C o l o r   =   1 3 1 0 2 3 3 5  
+     R a i l C o l o r   =   5 0 6 4 7 6 7  
+ e n d  
+ ;  ô       c o n t r o l   T V e c t o r W h e e l  
+     M i n   =   - 6 5 5 3 6  
+     M a x   =   6 5 5 3 6  
+     M o v e S p e e d   =   2 7 3 0  
+     R u l e r B i g S t e p s   =   0  
+     R u l e r S m a l l S t e p s   =   8  
+ e n d  
+ 5          4                                          7         G # 8           9C  %C  HB  HB6         ´VW?   ?   9  b      c o n t r o l   T V e c t o r W h e e l  
+     P a u s e S t e p S t y l e   =   V W P S _ A r c  
+     R a i l S t y l e   =   V W R _ S o l i d R u l e r O u t  
+     G e a r S t y l e   =   V W G _ D e n t e d  
+     G e a r T e x t u r e   =   V W G T _ U n d e r C o l o r  
+     C a p S t y l e   =   V W C _ S o f t B u m p 2  
+     P o i n t e r S t y l e   =   V W P _ L o n g L i n e  
+     V e c t o r O p t i o n s   =   [ ]  
+     G e a r S i z e   =   0 . 8 5 7 3 1 5 0 6 3 4 7 6 5 6 3  
+     C a p S i z e   =   0 . 9 4 5 4 8 0 3 4 6 6 7 9 6 8 8  
+     D e n t S i z e   =   0  
+     P o i n t e r D e n t S i z e   =   0 . 7 3 3 8 4 0 9 4 2 3 8 2 8 1 3  
+     D e n t G a p   =   - 0 . 5 6 6 4 6 7 2 8 5 1 5 6 2 5  
+     G e a r S h a d o w S i z e   =   0 . 1 0 0 0 0 6 1 0 3 5 1 5 6 2 5  
+     G e a r C o l o r   =   - 1 1 7 1 2 4 4 9  
+     C a p S h a d o w S i z e   =   0 . 1 9 9 9 9 6 9 4 8 2 4 2 1 8 7  
+     C a p C o l o r   =   5 0 6 4 7 6 7  
+     D e n t C o u n t   =   6  
+     F i l l C o l o r   =   8 8 9 1 6 4 1  
+     F i l l P r e s s e d C o l o r   =   1 3 1 0 2 3 3 5  
+     R a i l C o l o r   =   5 0 6 4 7 6 7  
+     R u l e r B i g S t e p s   =   0  
+     R u l e r S m a l l S t e p s   =   8  
+     M i n   =   - 6 5 5 3 6  
+     M a x   =   6 5 5 3 6  
+     M o v e S p e e d   =   2 7 3 0  
+ e n d  
+ :  .      c o n t r o l   T V e c t o r W h e e l  
+     G e a r C o l o r   =   - 1 1 7 1 2 4 4 9  
+     C a p C o l o r   =   5 0 6 4 7 6 7  
+     F i l l C o l o r   =   8 8 9 1 6 4 1  
+     F i l l P r e s s e d C o l o r   =   1 3 1 0 2 3 3 5  
+     R a i l C o l o r   =   5 0 6 4 7 6 7  
+ e n d  
+ ;  ô       c o n t r o l   T V e c t o r W h e e l  
+     M i n   =   - 6 5 5 3 6  
+     M a x   =   6 5 5 3 6  
+     M o v e S p e e d   =   2 7 3 0  
+     R u l e r B i g S t e p s   =   0  
+     R u l e r S m a l l S t e p s   =   8  
+ e n d  
+ 5          4                                          7         A 8           uC  %C  HB  HB6         ÏZf?   ?	   9  b      c o n t r o l   T V e c t o r W h e e l  
+     P a u s e S t e p S t y l e   =   V W P S _ A r c  
+     R a i l S t y l e   =   V W R _ S o l i d R u l e r O u t  
+     G e a r S t y l e   =   V W G _ D e n t e d  
+     G e a r T e x t u r e   =   V W G T _ U n d e r C o l o r  
+     C a p S t y l e   =   V W C _ S o f t B u m p 2  
+     P o i n t e r S t y l e   =   V W P _ L o n g L i n e  
+     V e c t o r O p t i o n s   =   [ ]  
+     G e a r S i z e   =   0 . 8 5 7 3 1 5 0 6 3 4 7 6 5 6 3  
+     C a p S i z e   =   0 . 9 4 5 4 8 0 3 4 6 6 7 9 6 8 8  
+     D e n t S i z e   =   0  
+     P o i n t e r D e n t S i z e   =   0 . 7 3 3 8 4 0 9 4 2 3 8 2 8 1 3  
+     D e n t G a p   =   - 0 . 5 6 6 4 6 7 2 8 5 1 5 6 2 5  
+     G e a r S h a d o w S i z e   =   0 . 1 0 0 0 0 6 1 0 3 5 1 5 6 2 5  
+     G e a r C o l o r   =   - 1 1 7 1 2 4 4 9  
+     C a p S h a d o w S i z e   =   0 . 1 9 9 9 9 6 9 4 8 2 4 2 1 8 7  
+     C a p C o l o r   =   5 0 6 4 7 6 7  
+     D e n t C o u n t   =   6  
+     F i l l C o l o r   =   8 8 9 1 6 4 1  
+     F i l l P r e s s e d C o l o r   =   1 3 1 0 2 3 3 5  
+     R a i l C o l o r   =   5 0 6 4 7 6 7  
+     R u l e r B i g S t e p s   =   0  
+     R u l e r S m a l l S t e p s   =   8  
+     M i n   =   - 6 5 5 3 6  
+     M a x   =   6 5 5 3 6  
+     M o v e S p e e d   =   2 7 3 0  
+ e n d  
+ :  .      c o n t r o l   T V e c t o r W h e e l  
+     G e a r C o l o r   =   - 1 1 7 1 2 4 4 9  
+     C a p C o l o r   =   5 0 6 4 7 6 7  
+     F i l l C o l o r   =   8 8 9 1 6 4 1  
+     F i l l P r e s s e d C o l o r   =   1 3 1 0 2 3 3 5  
+     R a i l C o l o r   =   5 0 6 4 7 6 7  
+ e n d  
+ ;  ô       c o n t r o l   T V e c t o r W h e e l  
+     M i n   =   - 6 5 5 3 6  
+     M a x   =   6 5 5 3 6  
+     M o v e S p e e d   =   2 7 3 0  
+     R u l e r B i g S t e p s   =   0  
+     R u l e r S m a l l S t e p s   =   8  
+ e n d  
+ 5          4                                          7         A # 8          €˜C  %C  HB  HB6         ÀĞ@?   ?
+   9  b      c o n t r o l   T V e c t o r W h e e l  
+     P a u s e S t e p S t y l e   =   V W P S _ A r c  
+     R a i l S t y l e   =   V W R _ S o l i d R u l e r O u t  
+     G e a r S t y l e   =   V W G _ D e n t e d  
+     G e a r T e x t u r e   =   V W G T _ U n d e r C o l o r  
+     C a p S t y l e   =   V W C _ S o f t B u m p 2  
+     P o i n t e r S t y l e   =   V W P _ L o n g L i n e  
+     V e c t o r O p t i o n s   =   [ ]  
+     G e a r S i z e   =   0 . 8 5 7 3 1 5 0 6 3 4 7 6 5 6 3  
+     C a p S i z e   =   0 . 9 4 5 4 8 0 3 4 6 6 7 9 6 8 8  
+     D e n t S i z e   =   0  
+     P o i n t e r D e n t S i z e   =   0 . 7 3 3 8 4 0 9 4 2 3 8 2 8 1 3  
+     D e n t G a p   =   - 0 . 5 6 6 4 6 7 2 8 5 1 5 6 2 5  
+     G e a r S h a d o w S i z e   =   0 . 1 0 0 0 0 6 1 0 3 5 1 5 6 2 5  
+     G e a r C o l o r   =   - 1 1 7 1 2 4 4 9  
+     C a p S h a d o w S i z e   =   0 . 1 9 9 9 9 6 9 4 8 2 4 2 1 8 7  
+     C a p C o l o r   =   5 0 6 4 7 6 7  
+     D e n t C o u n t   =   6  
+     F i l l C o l o r   =   8 8 9 1 6 4 1  
+     F i l l P r e s s e d C o l o r   =   1 3 1 0 2 3 3 5  
+     R a i l C o l o r   =   5 0 6 4 7 6 7  
+     R u l e r B i g S t e p s   =   0  
+     R u l e r S m a l l S t e p s   =   8  
+     M i n   =   - 6 5 5 3 6  
+     M a x   =   6 5 5 3 6  
+     M o v e S p e e d   =   2 7 3 0  
+ e n d  
+ :  .      c o n t r o l   T V e c t o r W h e e l  
+     G e a r C o l o r   =   - 1 1 7 1 2 4 4 9  
+     C a p C o l o r   =   5 0 6 4 7 6 7  
+     F i l l C o l o r   =   8 8 9 1 6 4 1  
+     F i l l P r e s s e d C o l o r   =   1 3 1 0 2 3 3 5  
+     R a i l C o l o r   =   5 0 6 4 7 6 7  
+ e n d  
+ ;  ô       c o n t r o l   T V e c t o r W h e e l  
+     M i n   =   - 6 5 5 3 6  
+     M a x   =   6 5 5 3 6  
+     M o v e S p e e d   =   2 7 3 0  
+     R u l e r B i g S t e p s   =   0  
+     R u l e r S m a l l S t e p s   =   8  
+ e n d  
+ 5          4                                          7         B 8          €¶C  %C  HB  HB6         
+\k?   ?   9  b      c o n t r o l   T V e c t o r W h e e l  
+     P a u s e S t e p S t y l e   =   V W P S _ A r c  
+     R a i l S t y l e   =   V W R _ S o l i d R u l e r O u t  
+     G e a r S t y l e   =   V W G _ D e n t e d  
+     G e a r T e x t u r e   =   V W G T _ U n d e r C o l o r  
+     C a p S t y l e   =   V W C _ S o f t B u m p 2  
+     P o i n t e r S t y l e   =   V W P _ L o n g L i n e  
+     V e c t o r O p t i o n s   =   [ ]  
+     G e a r S i z e   =   0 . 8 5 7 3 1 5 0 6 3 4 7 6 5 6 3  
+     C a p S i z e   =   0 . 9 4 5 4 8 0 3 4 6 6 7 9 6 8 8  
+     D e n t S i z e   =   0  
+     P o i n t e r D e n t S i z e   =   0 . 7 3 3 8 4 0 9 4 2 3 8 2 8 1 3  
+     D e n t G a p   =   - 0 . 5 6 6 4 6 7 2 8 5 1 5 6 2 5  
+     G e a r S h a d o w S i z e   =   0 . 1 0 0 0 0 6 1 0 3 5 1 5 6 2 5  
+     G e a r C o l o r   =   - 1 1 7 1 2 4 4 9  
+     C a p S h a d o w S i z e   =   0 . 1 9 9 9 9 6 9 4 8 2 4 2 1 8 7  
+     C a p C o l o r   =   5 0 6 4 7 6 7  
+     D e n t C o u n t   =   6  
+     F i l l C o l o r   =   8 8 9 1 6 4 1  
+     F i l l P r e s s e d C o l o r   =   1 3 1 0 2 3 3 5  
+     R a i l C o l o r   =   5 0 6 4 7 6 7  
+     R u l e r B i g S t e p s   =   0  
+     R u l e r S m a l l S t e p s   =   8  
+     M i n   =   - 6 5 5 3 6  
+     M a x   =   6 5 5 3 6  
+     M o v e S p e e d   =   2 7 3 0  
+ e n d  
+ :  .      c o n t r o l   T V e c t o r W h e e l  
+     G e a r C o l o r   =   - 1 1 7 1 2 4 4 9  
+     C a p C o l o r   =   5 0 6 4 7 6 7  
+     F i l l C o l o r   =   8 8 9 1 6 4 1  
+     F i l l P r e s s e d C o l o r   =   1 3 1 0 2 3 3 5  
+     R a i l C o l o r   =   5 0 6 4 7 6 7  
+ e n d  
+ ;  ô       c o n t r o l   T V e c t o r W h e e l  
+     M i n   =   - 6 5 5 3 6  
+     M a x   =   6 5 5 3 6  
+     M o v e S p e e d   =   2 7 3 0  
+     R u l e r B i g S t e p s   =   0  
+     R u l e r S m a l l S t e p s   =   8  
+ e n d  
+ 5          4                                          7         P i t c h  S h i f t 8          @ÜC  ñB  ¢B  ¢B6            ?   ?   9  b      c o n t r o l   T V e c t o r W h e e l  
+     P a u s e S t e p S t y l e   =   V W P S _ A r c  
+     R a i l S t y l e   =   V W R _ S o l i d R u l e r O u t  
+     G e a r S t y l e   =   V W G _ D e n t e d  
+     G e a r T e x t u r e   =   V W G T _ U n d e r C o l o r  
+     C a p S t y l e   =   V W C _ S o f t B u m p 2  
+     P o i n t e r S t y l e   =   V W P _ L o n g L i n e  
+     V e c t o r O p t i o n s   =   [ ]  
+     G e a r S i z e   =   0 . 8 5 7 3 1 5 0 6 3 4 7 6 5 6 3  
+     C a p S i z e   =   0 . 9 4 5 4 8 0 3 4 6 6 7 9 6 8 8  
+     D e n t S i z e   =   0  
+     P o i n t e r D e n t S i z e   =   0 . 7 3 3 8 4 0 9 4 2 3 8 2 8 1 3  
+     D e n t G a p   =   - 0 . 5 6 6 4 6 7 2 8 5 1 5 6 2 5  
+     G e a r S h a d o w S i z e   =   0 . 1 0 0 0 0 6 1 0 3 5 1 5 6 2 5  
+     G e a r C o l o r   =   - 1 1 7 1 2 4 4 9  
+     C a p S h a d o w S i z e   =   0 . 1 9 9 9 9 6 9 4 8 2 4 2 1 8 7  
+     C a p C o l o r   =   5 0 6 4 7 6 7  
+     D e n t C o u n t   =   6  
+     F i l l C o l o r   =   8 8 9 1 6 4 1  
+     F i l l P r e s s e d C o l o r   =   1 3 1 0 2 3 3 5  
+     R a i l C o l o r   =   5 0 6 4 7 6 7  
+     R u l e r B i g S t e p s   =   0  
+     R u l e r S m a l l S t e p s   =   8  
+     M i n   =   - 6 5 5 3 6  
+     M a x   =   6 5 5 3 6  
+     M o v e S p e e d   =   2 7 3 0  
+ e n d  
+ :  .      c o n t r o l   T V e c t o r W h e e l  
+     G e a r C o l o r   =   - 1 1 7 1 2 4 4 9  
+     C a p C o l o r   =   5 0 6 4 7 6 7  
+     F i l l C o l o r   =   8 8 9 1 6 4 1  
+     F i l l P r e s s e d C o l o r   =   1 3 1 0 2 3 3 5  
+     R a i l C o l o r   =   5 0 6 4 7 6 7  
+ e n d  
+ ;  ô       c o n t r o l   T V e c t o r W h e e l  
+     M i n   =   - 6 5 5 3 6  
+     M a x   =   6 5 5 3 6  
+     M o v e S p e e d   =   2 7 3 0  
+     R u l e r B i g S t e p s   =   0  
+     R u l e r S m a l l S t e p s   =   8  
+ e n d  
+ 5                                                                                                                                                                                                                                                                                                                                                 l
+ ´â‹‚ À§Á2l  <àá™0ÄVHû‹RKO§ã‹=4/aâálå ”DˆŸ  ì ğø¦€P4Ü?OiJ ù*Òá'Jâ;t¤lZ (s‘W¶á*h|JBŸ|RJü>l" Z (sN ÏeŒˆª¤Ä;·„-Na>Ï¢ŒJŒ DÒñÎš³ : é†¾Ğ…sôT	 
+(sOFËÒÛğJ".Q• D/JTà.ù "(¼Ë“
+´Â‹®)°Î‰l ş <¾…ÒH€ ùXÑ8|ˆõêê8R+¸ —J X¨v§pu {êÖ.   DQ¢©WgàgŸ àqĞë¸¿.<î™øš½„ d”Ï™0¤wñ?yl®…+ü.QáJ—O¿¾…+J.D¼ÛèšSÚ0ñJŸWÄ—|}JOŒå|`Jş—|±àJ! ´ƒª; \>Áá˜Å ô€—Î•›iP „NJ- N aİJ&¶uÜUË¾JçÒ0‘J£ <¼H±‰jÈ Âóhàx‹Çl÷9—|0ÿ¢NáJC à8Ê³#0ù ˜ÏRJ`Óhi æJDÀCĞ·µ`.A ñ	¾Và#±®ñJ€†À7*¯Z Q±ÒñRJ˜ àCpª²İB”Ï6Jñ)Öyç>½€BàĞ:ŒVìO£ìOJ-àÄ@H„5Û,ĞÓÒŸ|JÚ0Ó°J; Ú±Jà€gàÌoKOá|®ll9<¤wul±  xîrk*àv€	h @äa†ªäWXçôŸ`J;ìÓÒÅJrW; :æçJàÓàÓJD  ÁÃà Ó€ô@ ©øõ;¢¯JƒŞáä/ÓJ1 Zî—¢î °pˆ¦ø1p1ü8ù ,i·. ®è—|Xç²J‘ZY°^lŒ ^DÓæ˜D | ¯–‡îğ­/×»>"Â|á#lÒñÎ-Na>JT¢p#l|[pˆVl şHùÏ—hÄâXÑ8ˆ4v´G>øp§úÀ%ÀûV.cbZƒlUñhšÏ;J?¦•ÿ-\làO~10J«ª?ÓJá  ˆùl›ñ —PZIO, ‡‚N›. DíÂ®xÁ4†®ó9+ê2(Ÿ]l	¸wQø9İ ÒJØâË.;¾÷:J*²—|ë:JR”ÏÎ¿J—|0­ÓJ™ˆ¢'¬è8” ğÌeDXË
+    ¦ñŞfÙ  ã                   ó  — d dl mZ d dl mZ ddlmZ ddlmZ ddlmZ ddlmZ ddlm	Z	 dd	lm
+Z
+ dd
+lmZ ddlmZ ddlmZ ddlmZ ddlmZ ddlmZ ddlmZ ddlmZ ddlmZ ddlmZ ddlmZ  ej.                  d«      d„ «       Z ej.                  d«      d„ «       Z ej.                  d«      d„ «       Z ej.                  d«      d„ «       Zd„ Z ej.                  d«      d„ «       Z ej.                  d«      d„ «       Z ej.                  d«      d„ «       Z ej.                  d«      d„ «       Z ej.                  d«      d„ «       Zy )!é    )Úinspect)ÚIntegeré   )Úcreate_engine)Úexc)ÚColumn)ÚDropConstraint)ÚForeignKeyConstraint)ÚMetaData)ÚTable)Ú	create_db)Ú"drop_all_schema_objects_pre_tables)Údrop_db)Úgenerate_driver_url)Úget_temp_table_name)Úlog)Únormalize_sequence)Úpost_configure_engine)Úrun_reap_dbs)Útemp_table_keyword_argsÚmssqlc                 óZ   — |j                   dk(  rd|j                  j                  _        y y )NÚpyodbcF)ÚdriverÚdialectÚdbapiÚpooling)ÚurlÚengineÚfollower_idents      ú8Lib\site-packages\sqlalchemy\dialects\mssql\provision.pyr   r      s%   € à‡}}˜Ò Ø',ˆ‰×ÑÕ$ğ !ó    c                 ó*  — | j                  «       }| j                  |›d|›¬«      }|dvr|j                  d¬«      }|dk(  r|j                  ddi«      }|r|j                  |«      }	 |j	                  «        |S # t
+        j                  $ r Y y w xY w)	Nú+)Ú
+drivername)r   ÚaioodbcÚ )Úqueryr&   ÚMARS_ConnectionÚYes)Úget_backend_nameÚsetÚupdate_query_dictÚupdate_query_stringÚget_dialectr   ÚNoSuchModuleError)r   r   Ú	query_strÚbackendÚnew_urls        r!   r   r   $   s¡   € à×"Ñ"Ó$€Gàg‰gªG±VĞ!<ˆgÓ=€GàĞ*Ñ*Ø—+‘+ B+Ó'ˆàÒØ×+Ñ+Ğ->ÀĞ,FÓGˆáØ×-Ñ-¨iÓ8ˆğØ×ÑÔğ ˆøô × Ñ ò Ùğús   Á*A< Á<BÂBc                 óR  — |j                  «       j                  d¬«      5 }|j                  d|z  «       |j                  d|z  «       |j                  d|z  «       |j                  d|z  «       |j                  d«       |j                  d«       d d d «       y # 1 sw Y   y xY w)	NÚ
+AUTOCOMMIT©Úisolation_levelzcreate database %sz1ALTER DATABASE %s SET ALLOW_SNAPSHOT_ISOLATION ONz0ALTER DATABASE %s SET READ_COMMITTED_SNAPSHOT ONzuse %szcreate schema test_schemazcreate schema test_schema_2)ÚconnectÚexecution_optionsÚexec_driver_sql©ÚcfgÚengÚidentÚconns       r!   Ú_mssql_create_dbr@   ;   s¥   € à	‰‹×	(Ñ	(¸Ğ	(Ó	Fğ 
+<È$Ø×ÑĞ1°EÑ9Ô:Ø×ÑØ?À%ÑGô	
+ğ 	×ÑØ>ÀÑFô	
+ğ 	×Ñ˜X¨Ñ-Ô.Ø×ÑĞ8Ô9Ø×ÑĞ:Ô;÷
+<÷ 
+<ñ 
+<ús   ¡A3BÂB&c                 ó†   — |j                  «       j                  d¬«      5 }t        ||«       d d d «       y # 1 sw Y   y xY w)Nr5   r6   )r8   r9   Ú_mssql_drop_ignorer;   s       r!   Ú_mssql_drop_dbrC   J   s:   € à	‰‹×	(Ñ	(¸Ğ	(Ó	Fğ (È$Ü˜4 Ô'÷(÷ (ñ (ús	   ¡7·A c                 óÆ   — 	 | j                  d|z  «       t        j                  d|«       y# t        j                  $ r }t        j
+                  d|«       Y d }~yd }~ww xY w)Nzdrop database %szReaped db: %sTzcouldn't drop db: %sF)r:   r   Úinfor   ÚDatabaseErrorÚwarning)r?   r>   Úerrs      r!   rB   rB   P   sV   € ğğ 	×ÑĞ/°%Ñ7Ô8Ü‰ %Ô(ØøÜ×Ñò Ü‰Ğ*¨CÔ0Üûğús   ‚*- ­A Á AÁA c                 ó4  — t        j                  d| «       t        | «      }|j                  «       j	                  d¬«      5 }t        j                  ddj                  |«      «       |j                  d«      }|D ch c]  \  }|j                  «       ’Œ }}t        «       }|D ]  }||v sŒ|j                  |«       Œ dx}	}
+t        |d«      D ]  \  }
+}t        ||«      sŒ|	dz  }	Œ t        j                  d	|	|
+«       d d d «       y c c}w # 1 sw Y   y xY w)
+Nzdb reaper connecting to %rr5   r6   zidentifiers in file: %sz, z›select d.name from sys.databases as d where name like 'TEST_%' and not exists (select session_id from sys.dm_exec_sessions where database_id=d.database_id)r   é   z-Dropped %d out of %d stale databases detected)r   rE   r   r8   r9   Újoinr:   Úlowerr,   ÚaddÚ	enumeraterB   )r   Úidentsr=   r?   Úto_reapÚdbnameÚ	all_namesÚto_dropÚnameÚdroppedÚtotals              r!   Ú_reap_mssql_dbsrW   a   s  € ä‡HHĞ)¨3Ô/Ü
+˜Ó
+€CØ	‰‹×	(Ñ	(¸Ğ	(Ó	Fğ 
+È$Ü‰Ğ*¨D¯I©I°fÓ,=Ô>à×&Ñ&ğ/ó
+ˆğ 6=Ö=©	¨V—\‘\•^Ğ=ˆ	Ğ=Ü“%ˆØò 	"ˆDØvŠ~Ø—‘˜DÕ!ğ	"ğ Ğˆ%Ü& w°Ó2ò 	‰MˆE6Ü! $¨Õ/Ø˜1‘‘ğ	ô 	‰Ø;¸WÀeô	
+÷'
+ğ 
+ùò >÷
+ğ 
+ús*   Á;DÁ=D	ÂDÂ,5DÃ"DÄ	DÄDc                 ó   — i S )N© )r<   r=   s     r!   Ú_mssql_temp_table_keyword_argsrZ   }   s   € à€Ir"   c                 ó   — d|z   S )Nz##rY   )r<   r=   Ú	base_names      r!   Ú_mssql_get_temp_table_namer]   ‚   s   € à)ÑĞr"   c                 óB  — |j                  «       j                  d¬«      5 }t        |«      }d d| j                  | j                  fD ]Á  }|j                  |¬«      D ]ª  }t        |t        «       t        dt        «      t        dt        «      |¬«      }t        |«      j                  ||¬«      D ]U  }|j                  t        t        |j                  j                  g|j                  j                   g|d   ¬«      «      «       ŒW Œ¬ ŒÃ 	 d d d «       y # 1 sw Y   y xY w)	Nr5   r6   Údbo)ÚschemaÚxÚyrT   )rT   )r8   r9   r   Útest_schemaÚtest_schema_2Úget_table_namesr   r   r   r   Úget_foreign_keysÚexecuter	   r
+   Úcra   rb   )r<   r=   r?   Ú	inspectorr`   ÚtnameÚtbÚfks           r!   r   r   ‡   s  € à	‰‹×	(Ñ	(¸Ğ	(Ó	Fğ È$Ü˜D“Mˆ	Ø˜U C§O¡O°S×5FÑ5FĞGò 	ˆFØ"×2Ñ2¸&Ğ2ÓAò ÜØÜ“JÜ˜3¤Ó(Ü˜3¤Ó(Ø!ôô " $›-×8Ñ8¸ÀvĞ8ÓNò BØ—L‘LÜ&Ü0Ø!#§¡§¡ ¨2¯4©4¯6©6¨(¸¸F¹ôóõñññ	÷÷ ñ ús   ¡C*DÄDc                 ó,   — |j                   €d|_         |S )NrJ   )Ústart)r<   Úsequences     r!   r   r      s   € à‡~~ĞØˆŒØ€Or"   N)Ú
+sqlalchemyr   r   r'   r   r   r`   r   r	   r
+   r   r   Útesting.provisionr   r   r   r   r   r   r   r   r   r   Úfor_dbr@   rC   rB   rW   rZ   r]   rY   r"   r!   ú<module>rs      sr  ğõ İ İ İ İ İ $İ *İ İ İ *İ Cİ (İ 4İ 4İ $İ 3İ 6İ -İ 8ğ Ğ×Ñ˜gÓ&ñ-ó 'ğ-ğ
+ Ğ×Ñ˜GÓ$ñó %ğğ, €×Ñ'Óñ<ó ğ<ğ €‡Óñ(ó ğ(ò
+ğ" €×ÑWÓñ
+ó ğ
+ğ6  Ğ×Ñ Ó(ñó )ğğ Ğ×Ñ˜GÓ$ñó %ğğ +Ğ#×*Ñ*¨7Ó3ñó 4ğğ, Ğ×Ñ˜7Ó#ñó $ñr"                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          FGRK                         RCT3 StaticShape    shs RCT3 SceneryItemVisual    svd                     >                                       A  ÀL  ”-                                             Invmedslope2straight_HI Invmedslope2straight_ME Invmedslope2straight_LO Invmedslope2straight_HI:shs Invmedslope2straight_LO:shs Invmedslope2straight_ME:shs Invmedslope2straight:svd invimpulse:ftx SIOpaqueSpecular50Reflection:txs SIAlphaMaskLow:txs invimpulsestruts:ftx SIOpaqueSpecular50:txs coaster_LO_textures05:ftx   €¿    1½»³          €?        1½»3      €¿    pªR¨z@Ş¡4  €?ÍuŠ¿Âu@‘¸>™™™>™™Y¿ÌÌÌ¾ÿÿÿÿSXu?    æË¿»?x@ÒÄÓ>ff&¿      @?ÿÿÿÿ  €?    czş¿].|@Ôb°¾ff&¿      @?ÿÿÿÿ  €?  €?û ü¿Éy@Ö¾ffæ>333¿ÌÌ¿ÿÿÿÿSXu?  €?8Š¿f½z@÷ä¹>33³>™™Y?33³¾ÿÿÿÿ–°j?    f›û¿qÄ~@;ÃÔ¾   ?333?   ¿ÿÿÿÿ–°j?  €?æË¿»?x@ÒÄÓ>ff&¿      @?ÿÿÿÿé`?    czş¿].|@Ôb°¾ff&¿      @?ÿÿÿÿé`?  €?DÀQ¾ßgj@$É¾ÌÌÌ¾™™Y¿™™™¾ÿÿÿÿSXu?    ê ¾&ßl@c°¾ff&?      @?ÿÿÿÿ  €?    ~jˆ¿»?x@°ÄÓ>ff&?      @?ÿÿÿÿ  €?  €?3…¿KÈu@!»>ÌÌÌ¾™™Y¿™™™¾ÿÿÿÿSXu?  €?‹¥H¾–Vo@oÒÌ¾ÌÌL¾™™Y?ffæ¾ÿÿÿÿ–°j?    äa¿,·z@6U·>ÌÌL¾™™Y?ffæ¾ÿÿÿÿ–°j?  €?ê ¾&ßl@c°¾ff&?      @?ÿÿÿÿé`?    ~jˆ¿»?x@°ÄÓ>ff&?      @?ÿÿÿÿé`?  €?S°6?scX@€E¶>™™>™™Y¿   ¿ÿÿÿÿSXu?    ŒG-?ĞZ@¢Ó>ff&¿      @?ÿÿÿÿ  €?    ¡G\¾&ßl@…°¾ff&¿      @?ÿÿÿÿ  €?  €?‡¤6¾†rj@ãÍ¾™™>™™Y¿   ¿ÿÿÿÿSXu?  €?c@:?İ<]@ÒS¼>   ?™™Y?  €¾ÿÿÿÿ–°j?    Ed(¾ğKo@éÒÇ¾   ?™™Y?  €¾ÿÿÿÿ–°j?  €?ŒG-?ĞZ@¢Ó>ff&¿      @?ÿÿÿÿé`?    ¡G\¾&ßl@…°¾ff&¿      @?ÿÿÿÿé`?  €?ùÁ?mQ@@¶Æ¾ff&¿333¿33³¾ÿÿÿÿSXu?    ñïÇ? °B@Ç°¾333?™™>333?ÿÿÿÿ  €?    1Y<?ĞZ@`Ó>333?      @?ÿÿÿÿ  €?  €?0™.?ŠqX@‰½>ÌÌ¿ÌÌL¿ÌÌL¾ÿÿÿÿSXu?  €?×†Æ?MbD@ªîÙ¾™™¾ÌÌL?ÌÌ¿ÿÿÿÿ–°j?    àE3?Æ.]@ÖQµ>ÌÌÌ½™™Y?ÌÌ¿ÿÿÿÿ–°j?  €?ñïÇ? °B@Ç°¾333?™™>333?ÿÿÿÿé`?    1Y<?ĞZ@`Ó>333?      @?ÿÿÿÿé`?  €?)  ÀßÛ~@ÚŠ¿  €¿        ÿÿÿÿ        )  À&kx@ä,Ô¾  €¿        ÿÿÿÿ        )  ÀßÛ~@Jêä¾  €¿        ÿÿÿÿ        )  Àdpt@   ¿  €¿        ÿÿÿÿ        )  À&kx@é¿  €¿        ÿÿÿÿ        )  ÀßÛ~@Jêä>  €¿        ÿÿÿÿ        )  À&kx@é?  €¿        ÿÿÿÿ        )  ÀßÛ~@ÚŠ?  €¿        ÿÿÿÿ        )  Àdpt@   ?  €¿        ÿÿÿÿ        )  À&kx@ä,Ô>  €¿        ÿÿÿÿ           ÀïÄš@ëŠ?  €¿        ÿÿÿÿ           ÀKı@é?  €¿        ÿÿÿÿ           ÀïÄš@lêä>  €¿        ÿÿÿÿ           ÀKı@-Ô>  €¿        ÿÿÿÿ           ÀKıŸ@  ?  €¿        ÿÿÿÿ           ÀïÄš@(êä¾  €¿        ÿÿÿÿ           ÀKı@Â,Ô¾  €¿        ÿÿÿÿ           ÀïÄš@ÉŠ¿  €¿        ÿÿÿÿ           ÀÁúŸ@Şÿÿ¾  €¿        ÿÿÿÿ           ÀKı@}é¿  €¿        ÿÿÿÿ        0*Å?ú\?@ä,Ô¾fff?ffæ¾    ÿÿÿÿ        ¿ìÊ?ŠE@ÚŠ¿fff?ffæ¾    ÿÿÿÿ        ¿ìÊ?ŠE@(êä¾fff?ffæ¾    ÿÿÿÿ        éšÁ?³Í;@   ¿fff?ffæ¾    ÿÿÿÿ        0*Å?ú\?@é¿fff?ffæ¾    ÿÿÿÿ        0*Å?ú\?@é?fff?ffæ¾    ÿÿÿÿ        ¿ìÊ?ŠE@Jêä>fff?ffæ¾    ÿÿÿÿ        ¿ìÊ?ŠE@ëŠ?fff?ffæ¾    ÿÿÿÿ        éšÁ?³Í;@   ?fff?ffæ¾    ÿÿÿÿ        0*Å?ú\?@ä,Ô>fff?ffæ¾    ÿÿÿÿ        ÑË @lÊ{@é?fff?ffæ¾    ÿÿÿÿ        Õû?İv@üŠ?fff?ffæ¾    ÿÿÿÿ        Õû?İv@lêä>fff?ffæ¾    ÿÿÿÿ        ÑË @lÊ{@-Ô>fff?ffæ¾    ÿÿÿÿ        ¿•@t^@  ?fff?ffæ¾    ÿÿÿÿ        §Ë @lÊ{@Â,Ô¾fff?ffæ¾    ÿÿÿÿ        ¿Ôû?İv@êä¾fff?ffæ¾    ÿÿÿÿ        ¿Ôû?İv@ÉŠ¿fff?ffæ¾    ÿÿÿÿ        t“@İY@Şÿÿ¾fff?ffæ¾    ÿÿÿÿ        §Ë @lÊ{@}é¿fff?ffæ¾    ÿÿÿÿ         ˜‹¿)Ëz@Jêä¾ÌÌÌ=ÌÌL?™™?ÿÿÿÿ    ıÀ?)  ÀßÛ~@Jêä¾    ÌÌL?™™?ÿÿÿÿ       @)  À&kx@ä,Ô¾    ™™™¾33s?ÿÿÿÿ¼ÿO=   @DL¿¾et@ä,Ô¾ÌÌL½™™™¾33s?ÿÿÿÿ¼ÿO=ıÀ?~¨4¾‘ao@Jêä¾ÌÌL>ÌÌL?™™?ÿÿÿÿ      €?XRN¾)"i@ä,Ô¾ÌÌÌ½™™™¾33s?ÿÿÿÿ¼ÿO=  €?è8?0]@(êä¾™™™>  @?™™?ÿÿÿÿ       ?_Ï/?='W@ä,Ô¾ÌÌÌ½™™™¾33s?ÿÿÿÿ¼ÿO=   ?¿ìÊ?ŠE@(êä¾33³>  @?™™?ÿÿÿÿ        0*Å?ú\?@ä,Ô¾™™¾™™™¾33s?ÿÿÿÿ¼ÿO=    )  Àdpt@   ¿      €¿    ÿÿÿÿŞÿÇ=   @Y¿Şqp@   ¿™™¾  €¿    ÿÿÿÿŞÿÇ=ıÀ?±.^¾ŒEe@   ¿  €¾33s¿    ÿÿÿÿŞÿÇ=  €?30*?‹lS@   ¿33³¾33s¿    ÿÿÿÿŞÿÇ=   ?éšÁ?³Í;@   ¿ffæ¾fff¿    ÿÿÿÿŞÿÇ=    _Ï/?='W@é¿ÌÌÌ½™™™¾33s¿ÿÿÿÿ! >   ?0*Å?ú\?@é¿™™¾™™™¾33s¿ÿÿÿÿ! >    )  À&kx@é¿    ™™™¾33s¿ÿÿÿÿ! >   @DL¿¾et@é¿ÌÌL½™™™¾33s¿ÿÿÿÿ! >ıÀ?XRN¾)"i@é¿ÌÌÌ½™™™¾33s¿ÿÿÿÿ! >  €?~¨4¾‘ao@ÚŠ¿ÌÌL>ÌÌL?™™¿ÿÿÿÿïÿC>  €?è8?0]@ÚŠ¿™™™>  @?™™¿ÿÿÿÿïÿC>   ?¿ìÊ?ŠE@ÚŠ¿33³>  @?™™¿ÿÿÿÿïÿC>    è8?0]@(êä¾™™™>  @?™™?ÿÿÿÿ! x>   ?¿ìÊ?ŠE@(êä¾33³>  @?™™?ÿÿÿÿ! x>    )  ÀßÛ~@ÚŠ¿    ÌÌL?™™¿ÿÿÿÿïÿC>   @ ˜‹¿)Ëz@ÚŠ¿ÌÌÌ=ÌÌL?™™¿ÿÿÿÿïÿC>ıÀ? ˜‹¿)Ëz@Jêä¾ÌÌÌ=ÌÌL?™™?ÿÿÿÿ! x>ıÀ?~¨4¾‘ao@Jêä¾ÌÌL>ÌÌL?™™?ÿÿÿÿ! x>  €?)  ÀßÛ~@Jêä¾    ÌÌL?™™?ÿÿÿÿ! x>   @ ˜‹¿)Ëz@Jêä>ÌÌÌ=ÌÌL?™™¿ÿÿÿÿ    ıÀ?)  ÀßÛ~@Jêä>    ÌÌL?™™¿ÿÿÿÿ       @)  ÀßÛ~@ÚŠ?    ÌÌL?™™?ÿÿÿÿ¼ÿO=   @ ˜‹¿)Ëz@ÚŠ?ÌÌÌ=ÌÌL?™™?ÿÿÿÿ¼ÿO=ıÀ?~¨4¾‘ao@Jêä>ÌÌL>ÌÌL?™™¿ÿÿÿÿ      €?~¨4¾‘ao@ÚŠ?ÌÌL>ÌÌL?™™?ÿÿÿÿ¼ÿO=  €?è8?0]@Jêä>™™™>  @?™™¿ÿÿÿÿ       ?è8?0]@ÚŠ?™™™>  @?™™?ÿÿÿÿ¼ÿO=   ?¿ìÊ?ŠE@Jêä>33³>  @?™™¿ÿÿÿÿ        ¿ìÊ?ŠE@ëŠ?33³>  @?™™?ÿÿÿÿ¼ÿO=    )  À&kx@é?    ™™™¾33s?ÿÿÿÿŞÿÇ=   @DL¿èet@é?ÌÌL½™™™¾33s?ÿÿÿÿŞÿÇ=ıÀ?XRN¾)"i@é?ÌÌÌ½™™™¾33s?ÿÿÿÿŞÿÇ=  €?_Ï/?='W@é?ÌÌÌ½™™™¾33s?ÿÿÿÿŞÿÇ=   ?0*Å?ú\?@é?™™¾™™™¾33s?ÿÿÿÿŞÿÇ=    30*?‹lS@   ?33³¾33s¿    ÿÿÿÿ! >   ?éšÁ?³Í;@   ?ffæ¾fff¿    ÿÿÿÿ! >    )  Àdpt@   ?      €¿    ÿÿÿÿ! >   @Y¿Şqp@   ?™™¾  €¿    ÿÿÿÿ! >ıÀ?±.^¾ŒEe@   ?  €¾33s¿    ÿÿÿÿ! >  €?XRN¾)"i@ä,Ô>ÌÌÌ½™™™¾33s¿ÿÿÿÿïÿC>  €?_Ï/?='W@ä,Ô>ÌÌÌ½™™™¾33s¿ÿÿÿÿïÿC>   ?0*Å?ú\?@ä,Ô>™™¾™™™¾33s¿ÿÿÿÿïÿC>    è8?0]@Jêä>™™™>  @?™™¿ÿÿÿÿ! x>   ?¿ìÊ?ŠE@Jêä>33³>  @?™™¿ÿÿÿÿ! x>    )  À&kx@ä,Ô>    ™™™¾33s¿ÿÿÿÿïÿC>   @DL¿èet@ä,Ô>ÌÌL½™™™¾33s¿ÿÿÿÿïÿC>ıÀ? ˜‹¿)Ëz@Jêä>ÌÌÌ=ÌÌL?™™¿ÿÿÿÿ! x>ıÀ?~¨4¾‘ao@Jêä>ÌÌL>ÌÌL?™™¿ÿÿÿÿ! x>  €?)  ÀßÛ~@Jêä>    ÌÌL?™™¿ÿÿÿÿ! x>   @Bz¿˜@lêä>ÌÌÌ½ÌÌL¿™™¿ÿÿÿÿ    ıÀ?   ÀïÄš@lêä>    ÌÌL¿™™¿ÿÿÿÿ       @   ÀKı@-Ô>    ™™™>33s¿ÿÿÿÿ¼ÿO=   @ßÙv¿Æ¿›@-Ô>ÌÌL=™™™>33s¿ÿÿÿÿ¼ÿO=ıÀ?kÿ=â6’@lêä>ÌÌL¾ÌÌL¿™™¿ÿÿÿÿ      €?
+§{=–V•@-Ô>ÌÌÌ=™™™>33s¿ÿÿÿÿ¼ÿO=  €?nƒ?¤6ˆ@lêä>™™™¾  @¿™™¿ÿÿÿÿ       ?­‡?%;‹@-Ô>ÌÌÌ=™™™>33s¿ÿÿÿÿ¼ÿO=   ?Õû?İv@lêä>33³¾333¿™™¿ÿÿÿÿ        ÑË @lÊ{@-Ô>™™>™™™>33s¿ÿÿÿÿ¼ÿO=       ÀKıŸ@  ?      €?    ÿÿÿÿŞÿÇ=   @¼t¿U¼@  ?™™>  €?    ÿÿÿÿŞÿÇ=ıÀ?Øµ=ZG—@  ?  €>33s?    ÿÿÿÿŞÿÇ=  €?ŞqŠ?ó@  ?33³>33s?    ÿÿÿÿŞÿÇ=   ?¿•@t^@  ?ffæ>fff?    ÿÿÿÿŞÿÇ=    ­‡?%;‹@é?ÌÌÌ=™™™>33s?ÿÿÿÿ! >   ?ÑË @lÊ{@é?™™>™™™>33s?ÿÿÿÿ! >       ÀKı@é?    ™™™>33s?ÿÿÿÿ! >   @ßÙv¿Æ¿›@é?ÌÌL=™™™>33s?ÿÿÿÿ! >ıÀ?
+§{=–V•@é?ÌÌÌ=™™™>33s?ÿÿÿÿ! >  €?kÿ=â6’@ëŠ?ÌÌL¾ÌÌL¿™™?ÿÿÿÿïÿC>  €?nƒ?¤6ˆ@üŠ?™™™¾  @¿™™?ÿÿÿÿïÿC>   ?Õû?İv@üŠ?33³¾333¿™™?ÿÿÿÿïÿC>    nƒ?¤6ˆ@lêä>™™™¾  @¿™™¿ÿÿÿÿ! x>   ?Õû?İv@lêä>33³¾333¿™™¿ÿÿÿÿ! x>       ÀïÄš@ëŠ?    ÌÌL¿™™?ÿÿÿÿïÿC>   @Bz¿˜@ëŠ?ÌÌÌ½ÌÌL¿™™?ÿÿÿÿïÿC>ıÀ?Bz¿˜@lêä>ÌÌÌ½ÌÌL¿™™¿ÿÿÿÿ! x>ıÀ?kÿ=â6’@lêä>ÌÌL¾ÌÌL¿™™¿ÿÿÿÿ! x>  €?   ÀïÄš@lêä>    ÌÌL¿™™¿ÿÿÿÿ! x>   @JBz¿˜@ÉŠ¿ÌÌÌ½ÌÌL¿™™¿ÿÿÿÿ    ıÀ?   ÀïÄš@ÉŠ¿    ÌÌL¿™™¿ÿÿÿÿ       @   ÀKı@}é¿    ™™™>33s¿ÿÿÿÿ¼ÿO=   @Úv¿Æ¿›@}é¿ÌÌL=™™™>33s¿ÿÿÿÿ¼ÿO=ıÀ?aü=â6’@ÉŠ¿ÌÌL¾ÌÌL¿™™¿ÿÿÿÿ      €?¤{=–V•@}é¿ÌÌÌ=™™™>33s¿ÿÿÿÿ¼ÿO=  €?ƒ?¸6ˆ@ÉŠ¿™™™¾  @¿™™¿ÿÿÿÿ       ?­‡?%;‹@}é¿ÌÌÌ=™™™>33s¿ÿÿÿÿ¼ÿO=   ?¿Ôû?İv@ÉŠ¿33³¾333¿™™¿ÿÿÿÿ        §Ë @lÊ{@}é¿™™>™™™>33s¿ÿÿÿÿ¼ÿO=       ÀÁúŸ@Şÿÿ¾      €?    ÿÿÿÿŞÿÇ=   @ø¾t¿¶¹@Şÿÿ¾™™>  €?    ÿÿÿÿŞÿÇ=ıÀ?èŠ=åD—@Şÿÿ¾  €>33s?    ÿÿÿÿŞÿÇ=  €?CnŠ?~@Şÿÿ¾33³>33s?    ÿÿÿÿŞÿÇ=   ?t“@İY@Şÿÿ¾ffæ>fff?    ÿÿÿÿŞÿÇ=    ­‡?%;‹@Â,Ô¾ÌÌÌ=™™™>33s?ÿÿÿÿ! >   ?§Ë @lÊ{@Â,Ô¾™™>™™™>33s?ÿÿÿÿ! >       ÀKı@Â,Ô¾    ™™™>33s?ÿÿÿÿ! >   @Úv¿Æ¿›@Â,Ô¾ÌÌL=™™™>33s?ÿÿÿÿ! >ıÀ?¤{=–V•@Â,Ô¾ÌÌÌ=™™™>33s?ÿÿÿÿ! >  €?aü=â6’@(êä¾ÌÌL¾ÌÌL¿™™?ÿÿÿÿïÿC>  €?ƒ?¸6ˆ@êä¾™™™¾  @¿™™?ÿÿÿÿïÿC>   ?¿Ôû?İv@êä¾33³¾333¿™™?ÿÿÿÿïÿC>    ƒ?¸6ˆ@ÉŠ¿™™™¾  @¿™™¿ÿÿÿÿ! x>   ?¿Ôû?İv@ÉŠ¿33³¾333¿™™¿ÿÿÿÿ! x>       ÀïÄš@(êä¾    ÌÌL¿™™?ÿÿÿÿïÿC>   @JBz¿˜@(êä¾ÌÌÌ½ÌÌL¿™™?ÿÿÿÿïÿC>ıÀ?JBz¿˜@ÉŠ¿ÌÌÌ½ÌÌL¿™™¿ÿÿÿÿ! x>ıÀ?aü=â6’@ÉŠ¿ÌÌL¾ÌÌL¿™™¿ÿÿÿÿ! x>  €?   ÀïÄš@ÉŠ¿    ÌÌL¿™™¿ÿÿÿÿ! x>   @                                                            	   
+   
+                                                                                                                                                             !   "       #   !       $   #   %   &   '   %   (   &   %   )   (   *   +   ,   +   -   ,   +   .   -   /   0   1   0   2   1   2   3   1   4   5   6   7   5   4   8   5   7   9   :   ;   <   :   9   =   :   <   >   ?   @   A   >   @   B   >   A   C   D   E   F   C   E   G   F   E   H   I   J   J   K   H   L   H   K   K   M   L   N   L   M   M   O   N   P   N   O   O   Q   P   K   J   R   R   S   K   M   K   S   S   T   M   O   M   T   T   U   O   Q   O   U   U   V   Q   V   U   W   W   X   V   S   R   Y   Y   Z   S   T   S   Z   Z   [   T   U   T   [   [   W   U   W   [   \   \   ]   W   X   W   ]   ]   ^   X   ^   ]   _   _   `   ^   Z   Y   a   a   b   Z   [   Z   b   b   \   [   \   b   c   c   d   \   ]   \   d   d   _   ]   b   a   e   e   c   b   f   g   h   h   i   f   j   f   i   i   k   j   l   j   k   k   m   l   n   l   m   m   o   n   i   h   p   p   q   i   k   i   q   q   r   k   m   k   r   r   s   m   o   m   s   s   t   o   t   s   u   u   v   t   q   p   w   w   x   q   r   q   x   x   y   r   s   r   y   y   u   s   u   y   z   z   {   u   v   u   {   {   |   v   |   {   }   }   ~   |   x   w         €   x   y   x   €   €   z   y   z   €         ‚   z   {   z   ‚   ‚   }   {   €      ƒ   ƒ      €   „   …   †   †   ‡   „   ˆ   „   ‡   ‡   ‰   ˆ   Š   ˆ   ‰   ‰   ‹   Š   Œ   Š   ‹   ‹      Œ   ‡   †            ‡   ‰   ‡            ‰   ‹   ‰         ‘   ‹      ‹   ‘   ‘   ’      ’   ‘   “   “   ”   ’         •   •   –            –   –   —      ‘      —   —   “   ‘   “   —   ˜   ˜   ™   “   ”   “   ™   ™   š   ”   š   ™   ›   ›   œ   š   –   •            –   —   –         ˜   —   ˜      Ÿ   Ÿ       ˜   ™   ˜           ›   ™         ¡   ¡   Ÿ      ¢   £   ¤   ¤   ¥   ¢   ¦   ¢   ¥   ¥   §   ¦   ¨   ¦   §   §   ©   ¨   ª   ¨   ©   ©   «   ª   ¥   ¤   ¬   ¬   ­   ¥   §   ¥   ­   ­   ®   §   ©   §   ®   ®   ¯   ©   «   ©   ¯   ¯   °   «   °   ¯   ±   ±   ²   °   ­   ¬   ³   ³   ´   ­   ®   ­   ´   ´   µ   ®   ¯   ®   µ   µ   ±   ¯   ±   µ   ¶   ¶   ·   ±   ²   ±   ·   ·   ¸   ²   ¸   ·   ¹   ¹   º   ¸   ´   ³   »   »   ¼   ´   µ   ´   ¼   ¼   ¶   µ   ¶   ¼   ½   ½   ¾   ¶   ·   ¶   ¾   ¾   ¹   ·   ¼   »   ¿   ¿   ½   ¼   ±ù @ª&|@ær¿fff?ffæ¾    ÿÿÿÿ  T?÷ÿ}?ã÷ @|'|@•b?fff?ffæ¾    ÿÿÿÿ †>÷ÿ}?cÅ?àî>@o¿fff?ffæ¾    ÿÿÿÿ  T?÷ÿÙ>ÈÅ?²ï>@„b?fff?ffæ¾    ÿÿÿÿ †>÷ÿÙ>niı?+H}@øn¿fff¿ffæ>    ÿÿÿÿ  T?÷ÿ}?À?@@øn¿fff¿ffæ>    ÿÿÿÿ  T?÷ÿÙ>niı?+H}@•b?fff¿ffæ>    ÿÿÿÿ †>÷ÿ}?À?@@„b?fff¿ffæ>    ÿÿÿÿ †>÷ÿÙ>ÚÄ?oD@ÎÙ¾          €¿ÿÿÿÿ ??¼ÿÏ=Ğù?üŞx@ÎÙ¾          €¿ÿÿÿÿ †>¼ÿÏ=„dÉ? RC@»ÏÙ¾          €¿ÿÿÿÿ ??   >ÒŒı? ¾w@İÏÙ¾          €¿ÿÿÿÿ †>   >Èù?Éàx@?oª¾          €?ÿÿÿÿ †>  À=‡ÜÄ?6qD@lª¾          €?ÿÿÿÿ ??  À=Éı?˜Àw@?oª¾          €?ÿÿÿÿ †>¼ÿ=„dÉ? RC@lª¾          €?ÿÿÿÿ ??¼ÿ=hWÉ?EC@ôˆÙ>          €?ÿÿÿÿ ??  0>Èù?Ÿàx@ëŠÙ>          €?ÿÿÿÿ †>ŞÿG>»ĞÄ?jeD@ëŠÙ>          €?ÿÿÿÿ ??ŞÿG>!ı?ğ¿w@‰Ù>          €?ÿÿÿÿ †>  0>Àı?Âw@+ª>          €¿ÿÿÿÿ †>yÿŸ<²ÒÄ?8gD@w(ª>          €¿ÿÿÿÿ ??C 0=¿	ù?Áâx@+ª>          €¿ÿÿÿÿ †>C 0=_YÉ?GC@w(ª>          €¿ÿÿÿÿ ??yÿŸ<cÅ?àî>@o¿ffæ¾fff¿    ÿÿÿÿ  T?÷ÿ©>À?@@„b?ffæ¾fff¿    ÿÿÿÿ †> ¶>À?@@øn¿ffæ¾fff¿    ÿÿÿÿ  T? ¶>ÈÅ?²ï>@„b?fff?ffæ¾    ÿÿÿÿ †>÷ÿ©>²€É?XnC@„b?ffæ>fff?    ÿÿÿÿ †>ïÿc>±ùÄ?´D@ m¿ffæ>fff?    ÿÿÿÿ  T? |>±ùÄ?´D@„b?ffæ>fff?    ÿÿÿÿ †> |>M„É?†mC@>r¿ffæ>fff?    ÿÿÿÿ  T?ïÿc>niı?+H}@øn¿ffæ>fff?    ÿÿÿÿ  T?ïÿ»>niı?+H}@•b?ffæ>fff?    ÿÿÿÿ †>ïÿ»>±ù @ª&|@.r¿ffæ>fff?    ÿÿÿÿ  T?  È>ã÷ @|'|@•b?ffæ>fff?    ÿÿÿÿ †>  È>kÏø?C¨x@„b?ffæ¾fff¿    ÿÿÿÿ †>÷ÿ™>kÏø?C¨x@øn¿ffæ¾fff¿    ÿÿÿÿ  T?÷ÿ™>lVı?ç‡w@„b?ffæ¾fff¿    ÿÿÿÿ †> >³Yı?‡w@>r¿ffæ¾fff¿    ÿÿÿÿ  T? >^Œ?¬ÿŠ@ær¿33s?33³¾    ÿÿÿÿ  T?÷ÿ}?pZŒ?  ‹@•b?33s?33³¾    ÿÿÿÿ †>÷ÿ}?•8?ãüU@o¿33s?33³¾    ÿÿÿÿ  T?÷ÿÙ>â8?ŠıU@„b?33s?33³¾    ÿÿÿÿ †>÷ÿÙ>>ã‚?¼ã‹@øn¿33s¿33³>    ÿÿÿÿ  T?÷ÿ}?<Ÿ%?°ÄW@øn¿33s¿33³>    ÿÿÿÿ  T?÷ÿÙ>>ã‚?¼ã‹@„b?33s¿33³>    ÿÿÿÿ †>÷ÿ}?<Ÿ%?°ÄW@„b?33s¿33³>    ÿÿÿÿ †>÷ÿÙ>Ø|,?ÕV\@ÎÙ¾          €¿ÿÿÿÿ ??¼ÿÏ=Ù~?W•‰@ÎÙ¾          €¿ÿÿÿÿ †>¼ÿÏ=Íp?? “Z@»ÏÙ¾          €¿ÿÿÿÿ ??ïÿ>äˆ?Ù±ˆ@İÏÙ¾          €¿ÿÿÿÿ †>ïÿ>	Ü~?R–‰@?oª¾          €?ÿÿÿÿ †>  À=Q€,?÷X\@lª¾          €?ÿÿÿÿ ??  À=`åˆ?Ô²ˆ@?oª¾          €?ÿÿÿÿ †>¼ÿO=Íp?? “Z@lª¾          €?ÿÿÿÿ ??¼ÿO=[\??‡…Z@ôˆÙ>          €?ÿÿÿÿ ?? >µÛ~?=–‰@ëŠÙ>          €?ÿÿÿÿ †>ŞÿG>Åm,?­L\@ëŠÙ>          €?ÿÿÿÿ ??ŞÿG>åˆ?€²ˆ@ôˆÙ>          €?ÿÿÿÿ †> >çˆ?Ğ³ˆ@+ª>          €¿ÿÿÿÿ †>    †p,?zN\@w(ª>          €¿ÿÿÿÿ ??C 0=ß~?c—‰@+ª>          €¿ÿÿÿÿ †>C 0=__??~‡Z@w(ª>          €¿ÿÿÿÿ ??    •8?ãüU@o¿33³¾33s¿    ÿÿÿÿ  T?   ><Ÿ%?°ÄW@„b?33³¾33s¿    ÿÿÿÿ †> ¶><Ÿ%?°ÄW@øn¿33³¾33s¿    ÿÿÿÿ  T? ¶>â8?ŠıU@„b?33s?33³¾    ÿÿÿÿ †>   >M??È°Z@„b?33³>33s?    ÿÿÿÿ †>  P>t®,?Äw\@ m¿33³>33s?    ÿÿÿÿ  T? |>t®,?Äw\@„b?33³>33s?    ÿÿÿÿ †> |>ƒ¤?? °Z@>r¿33³>33s?    ÿÿÿÿ  T?  P>>ã‚?¼ã‹@øn¿33³>33s?    ÿÿÿÿ  T?ïÿ»>>ã‚?¼ã‹@„b?33³>33s?    ÿÿÿÿ †>ïÿ»>^Œ?¬ÿŠ@.r¿33³>33s?    ÿÿÿÿ  T?÷ÿÑ>pZŒ?  ‹@•b?33³>33s?    ÿÿÿÿ †>÷ÿÑ>+ƒ~?Àx‰@„b?33³¾33s¿    ÿÿÿÿ †>÷ÿ™>+ƒ~?Àx‰@øn¿33³¾33s¿    ÿÿÿÿ  T?÷ÿ™>#¹ˆ?B•ˆ@„b?33³¾33s¿    ÿÿÿÿ †>ïÿƒ>¾¼ˆ?Ù”ˆ@>r¿33³¾33s¿    ÿÿÿÿ  T?ïÿƒ>åîÓ=‹2•@ær¿33s?  €¾    ÿÿÿÿ  T?÷ÿ}?š²Ó=Ê2•@•b?33s?  €¾    ÿÿÿÿ †>÷ÿ}?>['¾U0h@o¿33s?  €¾    ÿÿÿÿ  T?÷ÿÙ>cy'¾Ó0h@„b?33s?  €¾    ÿÿÿÿ †>÷ÿÙ>´4Ü<ªÔ•@øn¿33s¿  €>    ÿÿÿÿ  T?÷ÿ}?NÍu¾>ti@øn¿33s¿  €>    ÿÿÿÿ  T?÷ÿÙ>İ3Ü<ªÔ•@„b?33s¿  €>    ÿÿÿÿ †>÷ÿ}?NÍu¾>ti@„b?33s¿  €>    ÿÿÿÿ †>÷ÿÙ>Ib¾‡.n@ÎÙ¾          €¿ÿÿÿÿ ??¼ÿÏ=·˜ú;r“@ÎÙ¾          €¿ÿÿÿÿ †>¼ÿÏ=ûå¾·îl@»ÏÙ¾          €¿ÿÿÿÿ ??ïÿ>ÌR¬=RĞ’@İÏÙ¾          €¿ÿÿÿÿ †>ïÿ>ú£û;s“@?oª¾          €?ÿÿÿÿ †>  À=g?b¾Ó0n@;lª¾          €?ÿÿÿÿ ??  À=xc¬=cÑ’@?oª¾          €?ÿÿÿÿ †>¼ÿO=ûå¾·îl@lª¾          €?ÿÿÿÿ ??¼ÿO=- ¾Ÿàl@ôˆÙ>          €?ÿÿÿÿ ?? >^†û;ïr“@ëŠÙ>          €?ÿÿÿÿ †>ŞÿG>tb¾$n@ëŠÙ>          €?ÿÿÿÿ ??ŞÿG>^¬=Ñ’@ôˆÙ>          €?ÿÿÿÿ †> >u¬=sÒ’@+ª>          €¿ÿÿÿÿ †>    ;lb¾&n@w(ª>          €¿ÿÿÿÿ ??C 0=~¼ü;)t“@+ª>          €¿ÿÿÿÿ †>C 0=‡¾—âl@w(ª>          €¿ÿÿÿÿ ??    >['¾U0h@o¿  €¾33s¿    ÿÿÿÿ  T?   >NÍu¾>ti@„b?  €¾33s¿    ÿÿÿÿ †> ¶>NÍu¾>ti@øn¿  €¾33s¿    ÿÿÿÿ  T? ¶>cy'¾Ó0h@„b?33s?  €¾    ÿÿÿÿ †>   > g¾Zm@„b?  €>33s?    ÿÿÿÿ †>  P>¼a¾›Pn@ m¿  €>33s?    ÿÿÿÿ  T? |>¼a¾›Pn@„b?  €>33s?    ÿÿÿÿ †> |>{I¾Üm@>r¿  €>33s?    ÿÿÿÿ  T?  P>´4Ü<ªÔ•@øn¿  €>33s?    ÿÿÿÿ  T?ïÿ»>İ3Ü<ªÔ•@„b?  €>33s?    ÿÿÿÿ †>ïÿ»>åîÓ=‹2•@>r¿  €>33s?    ÿÿÿÿ  T?÷ÿÑ>š²Ó=Ê2•@•b?  €>33s?    ÿÿÿÿ †>÷ÿÑ>ZÜ;uT“@sb?  €¾33s¿    ÿÿÿÿ †>÷ÿ™>´Ü;uT“@øn¿  €¾33s¿    ÿÿÿÿ  T?÷ÿ™>jª=¿²’@sb?  €¾33s¿    ÿÿÿÿ †>ïÿƒ>à¥ª=€²’@>r¿  €¾33s¿    ÿÿÿÿ  T?ïÿƒ><ck¿~Á›@ær¿  €?™™¾    ÿÿÿÿ  T?÷ÿ}?çjk¿¨Á›@•b?  €?™™¾    ÿÿÿÿ †>÷ÿ}?Hˆ¿;Âs@o¿  €?™™¾    ÿÿÿÿ  T?÷ÿÙ>ãˆ¿eÂs@„b?  €?™™¾    ÿÿÿÿ †>÷ÿÙ>ît¿çœ@øn¿  €¿™™>    ÿÿÿÿ  T?÷ÿ}?÷’¿¸pt@øn¿  €¿™™>    ÿÿÿÿ  T?÷ÿÙ>ÿt¿çœ@„b?  €¿™™>    ÿÿÿÿ †>÷ÿ}?÷’¿¸pt@„b?  €¿™™>    ÿÿÿÿ †>÷ÿÙ>ÄÎ¿0Gy@ÎÙ¾          €¿ÿÿÿÿ ??¼ÿÏ=®¿¨™@ÎÙ¾          €¿ÿÿÿÿ †>¼ÿÏ=´È†¿¡œx@»ÏÙ¾          €¿ÿÿÿÿ ??ïÿ>4n¿ïP™@İÏÙ¾          €¿ÿÿÿÿ †>ïÿ>Z¿ ©™@?oª¾          €?ÿÿÿÿ †>  À=Î¿{Iy@;lª¾          €?ÿÿÿÿ ??  À=n¿ R™@?oª¾          €?ÿÿÿÿ †>¼ÿO=´È†¿¡œx@;lª¾          €?ÿÿÿÿ ??¼ÿO=¢Ì†¿6x@ôˆÙ>          €?ÿÿÿÿ ?? >Z¿ë¨™@ëŠÙ>          €?ÿÿÿÿ †>ŞÿG>·Ñ¿‰<y@ëŠÙ>          €?ÿÿÿÿ ??ŞÿG>jn¿¬Q™@ôˆÙ>          €?ÿÿÿÿ †> >èn¿S™@+ª>          €¿ÿÿÿÿ †>    Ñ¿>y@w(ª>          €¿ÿÿÿÿ ??C 0=²¿%ª™@+ª>          €¿ÿÿÿÿ †>C 0=ûË†¿Wx@w(ª>          €¿ÿÿÿÿ ??    Hˆ¿;Âs@o¿™™¾  €¿    ÿÿÿÿ  T?   >÷’¿¸pt@„b?™™¾  €¿    ÿÿÿÿ †> ¶>÷’¿¸pt@øn¿™™¾  €¿    ÿÿÿÿ  T? ¶>ãˆ¿eÂs@„b?  €?™™¾    ÿÿÿÿ †>   >/À†¿¼x@„b?™™>  €?    ÿÿÿÿ †>  P>CÅ¿jy@ m¿™™>  €?    ÿÿÿÿ  T? |>CÅ¿jy@„b?™™>  €?    ÿÿÿÿ †> |>@¼†¿Â»x@>r¿™™>  €?    ÿÿÿÿ  T?  P>ît¿çœ@øn¿™™>  €?    ÿÿÿÿ  T?ïÿ»>ÿt¿çœ@„b?™™>  €?    ÿÿÿÿ †>ïÿ»><ck¿~Á›@>r¿™™>  €?    ÿÿÿÿ  T?÷ÿÑ>çjk¿¨Á›@•b?™™>  €?    ÿÿÿÿ †>÷ÿÑ>¿µ‰™@sb?™™¾  €¿    ÿÿÿÿ †>÷ÿ™>¿µ‰™@øn¿™™¾  €¿    ÿÿÿÿ  T?÷ÿ™>2n¿µ2™@sb?™™¾  €¿    ÿÿÿÿ †>ïÿƒ>o*n¿‹2™@>r¿™™¾  €¿    ÿÿÿÿ  T?ïÿƒ>¿ìú¿ì/@ær¿  €?        ÿÿÿÿ  T?÷ÿ}?Zğú¿×/@„b?  €?        ÿÿÿÿ †>÷ÿ}?Oû¿  x@o¿  €?        ÿÿÿÿ  T?÷ÿÙ>¨Rû¿  x@„b?  €?        ÿÿÿÿ †>÷ÿÙ>°şÿ¿ü0@øn¿  €¿        ÿÿÿÿ  T?÷ÿ}?0 À÷x@øn¿  €¿        ÿÿÿÿ  T?÷ÿÙ>°şÿ¿ü0@„b?  €¿        ÿÿÿÿ †>÷ÿ}?0 À÷x@„b?  €¿        ÿÿÿÿ †>÷ÿÙ>- À¼ã|@ÎÙ¾          €¿ÿÿÿÿ ??! ø=ò À^º›@ÎÙ¾          €¿ÿÿÿÿ †>! ø=ÆKû¿Šå|@»ÏÙ¾          €¿ÿÿÿÿ ??ïÿ>÷ú¿w¹›@şÏÙ¾          €¿ÿÿÿÿ †>ïÿ>ò Àn»›@?oª¾          €?ÿÿÿÿ †>! ˜=- À1æ|@lª¾          €?ÿÿÿÿ ??! ˜=÷ú¿ˆº›@?oª¾          €?ÿÿÿÿ †>¼ÿO=ÆKû¿Šå|@lª¾          €?ÿÿÿÿ ??¼ÿO=ÆKû¿õÖ|@ôˆÙ>          €?ÿÿÿÿ ?? >ò ÀY»›@ëŠÙ>          €?ÿÿÿÿ †>ïÿ3>- ÀÙ|@ëŠÙ>          €?ÿÿÿÿ ??ïÿ3>÷ú¿4º›@ôˆÙ>          €?ÿÿÿÿ †> >÷ú¿˜»›@+ª>          €¿ÿÿÿÿ †>    - ÀÛ|@w(ª>          €¿ÿÿÿÿ ??óş¿<ò À¼›@+ª>          €¿ÿÿÿÿ †>óş¿<ÆKû¿@Ù|@w(ª>          €¿ÿÿÿÿ ??    Oû¿  x@o¿      €¿    ÿÿÿÿ  T?   >0 À÷x@„b?      €¿    ÿÿÿÿ †>ïÿ«>0 À÷x@øn¿      €¿    ÿÿÿÿ  T?ïÿ«>¨Rû¿  x@„b?  €?        ÿÿÿÿ †>   >rKû¿)}@„b?      €?    ÿÿÿÿ †>  P>ä, Àö}@ m¿      €?    ÿÿÿÿ  T?Şÿg>ä, Àö}@„b?      €?    ÿÿÿÿ †>Şÿg>ØGû¿)}@>r¿      €?    ÿÿÿÿ  T?  P>°şÿ¿ü0@øn¿      €?    ÿÿÿÿ  T? Æ>°şÿ¿ü0@„b?      €?    ÿÿÿÿ †> Æ>¿ìú¿ì/@>r¿      €?    ÿÿÿÿ  T?÷ÿÑ>Zğú¿×/@„b?      €?    ÿÿÿÿ †>÷ÿÑ> ÀÏ››@sb?      €¿    ÿÿÿÿ †>  > ÀÏ››@øn¿      €¿    ÿÿÿÿ  T?  >ã÷ú¿éš›@sb?      €¿    ÿÿÿÿ †>ïÿƒ>õóú¿éš›@>r¿      €¿    ÿÿÿÿ  T?ïÿƒ>  €¿    1½»³          €?        1½»3      €¿    pªR¨z@Ş¡4  €?Ï¼L¿çŒr@häÓ>          €¿ÿÿÿÿ     «?)  Ài¤y@GäÓ>          €¿ÿÿÿÿ       @)  Àæã~@  ?      €?    ÿÿÿÿ  €=   @¸I¿©¼w@  ?™™>  €?    ÿÿÿÿ  €= «?6oÌ>ˆï^@häÓ>          €¿ÿÿÿÿ     +?ÎŞÙ>ìc@  ?™™™>33s?    ÿÿÿÿ  €= +?ZBÆ?%u@@häÓ>          €¿ÿÿÿÿ        õóÊ?é&E@  ?ffæ>fff?    ÿÿÿÿ  €=    6oÌ>ˆï^@µ÷?          €?ÿÿÿÿ! ø= +?ZBÆ?%u@@µ÷?          €?ÿÿÿÿ! ø=    )  Ài¤y@µ÷?          €?ÿÿÿÿ! ø=   @Ï¼L¿çŒr@µ÷?          €?ÿÿÿÿ! ø= «?Ô^P¿N]m@  ?™™¾  €¿    ÿÿÿÿ <> «?Ÿÿ¾>óY@  ?™™™¾33s¿    ÿÿÿÿ <> +?ÀÁ?‹Ã;@  ?ffæ¾fff¿    ÿÿÿÿ <>    6oÌ>ˆï^@häÓ>          €¿ÿÿÿÿ! x> +?ZBÆ?%u@@häÓ>          €¿ÿÿÿÿ! x>    )  Àìdt@  ?      €¿    ÿÿÿÿ <>   @)  Ài¤y@GäÓ>          €¿ÿÿÿÿ! x>   @Ï¼L¿çŒr@häÓ>          €¿ÿÿÿÿ! x> «?îÈL¿Ü{r@Ë¿          €¿ÿÿÿÿ     «?)  À5“y@Ü¿          €¿ÿÿÿÿ       @)  À²Ò~@Şÿÿ¾      €?    ÿÿÿÿ  €=   @é&I¿u«w@Şÿÿ¾™™>  €?    ÿÿÿÿ  €= «?„BÌ>&ß^@Ë¿          €¿ÿÿÿÿ     +?²Ù> Ûc@Şÿÿ¾™™™>33s?    ÿÿÿÿ  €= +? 2Æ?¾e@@Ë¿          €¿ÿÿÿÿ        äÊ?XE@Şÿÿ¾ffæ>fff?    ÿÿÿÿ  €=    „BÌ>&ß^@”Ô¾          €?ÿÿÿÿ! ø= +? 2Æ?¾e@@”Ô¾          €?ÿÿÿÿ! ø=    )  À5“y@”Ô¾          €?ÿÿÿÿ! ø=   @îÈL¿Ü{r@”Ô¾          €?ÿÿÿÿ! ø= «?kP¿Lm@Şÿÿ¾™™¾  €¿    ÿÿÿÿ <> «?íÒ¾>‚âY@Şÿÿ¾™™™¾33s¿    ÿÿÿÿ <> +?Á?$´;@Şÿÿ¾ffæ¾fff¿    ÿÿÿÿ <>    „BÌ>&ß^@Ë¿          €¿ÿÿÿÿ! x> +? 2Æ?¾e@@Ë¿          €¿ÿÿÿÿ! x>    )  À¸St@Şÿÿ¾      €¿    ÿÿÿÿ <>   @)  À5“y@Ü¿          €¿ÿÿÿÿ! x>   @îÈL¿Ü{r@Ë¿          €¿ÿÿÿÿ! x> «?]¥¿Íu™@häÓ>          €¿ÿÿÿÿ     «?   Àc@GäÓ>          €¿ÿÿÿÿ       @   À[ @  ?      €?    ÿÿÿÿ  €=   @F¿™œ@  ?™™>  €?    ÿÿÿÿ  €= «?™9?˜i@häÓ>          €¿ÿÿÿÿ     +?ßP@?Õç@  ?™™™>33s?    ÿÿÿÿ  €= +?ZB @ª·z@häÓ>          €¿ÿÿÿÿ        (›@Di@  ?ffæ>fff?    ÿÿÿÿ  €=    ™9?˜i@µ÷?          €?ÿÿÿÿ! ø= +?ZB @ª·z@µ÷?          €?ÿÿÿÿ! ø=       Àc@µ÷?          €?ÿÿÿÿ! ø=   @]¥¿Íu™@µ÷?          €?ÿÿÿÿ! ø= «?bG#¿ëİ–@  ?™™¾  €¿    ÿÿÿÿ <> «?Gá2?[ë‹@  ?™™™¾33s¿    ÿÿÿÿ <> +?Óû?åv@  ?ffæ¾fff¿    ÿÿÿÿ <>    ™9?˜i@häÓ>          €¿ÿÿÿÿ! x> +?ZB @ª·z@häÓ>          €¿ÿÿÿÿ! x>       ÀŞÃš@  ?      €¿    ÿÿÿÿ <>   @   Àc@GäÓ>          €¿ÿÿÿÿ! x>   @]¥¿Íu™@häÓ>          €¿ÿÿÿÿ! x> «?|±¿3m™@Ë¿          €¿ÿÿÿÿ     «?   À[@Ü¿          €¿ÿÿÿÿ       @   ÀÁúŸ@Şÿÿ¾      €?    ÿÿÿÿ  €=   @w¿œ@Şÿÿ¾™™>  €?    ÿÿÿÿ  €= «?º‚9?ga@Ë¿          €¿ÿÿÿÿ     +?†:@?¤ß@Şÿÿ¾™™™>33s?    ÿÿÿÿ  €= +?§: @¨z@Ë¿          €¿ÿÿÿÿ        t“@İY@Şÿÿ¾ffæ>fff?    ÿÿÿÿ  €=    º‚9?ga@”Ô¾          €?ÿÿÿÿ! ø= +?§: @¨z@”Ô¾          €?ÿÿÿÿ! ø=       À[@”Ô¾          €?ÿÿÿÿ! ø=   @|±¿3m™@”Ô¾          €?ÿÿÿÿ! ø= «?“S#¿fÕ–@Şÿÿ¾™™¾  €¿    ÿÿÿÿ <> «?îÊ2?ã‹@Şÿÿ¾™™™¾33s¿    ÿÿÿÿ <> +?aÃû?öu@Şÿÿ¾ffæ¾fff¿    ÿÿÿÿ <>    º‚9?ga@Ë¿          €¿ÿÿÿÿ! x> +?§: @¨z@Ë¿          €¿ÿÿÿÿ! x>       ÀD»š@Şÿÿ¾      €¿    ÿÿÿÿ <>   @   À[@Ü¿          €¿ÿÿÿÿ! x>   @|±¿3m™@Ë¿          €¿ÿÿÿÿ! x> «?                                                                     	            
+   
+                                             	               	                        
+                                                                                                                                                                             !            !   !   "      "   !   #   #   $   "         %   %              %   &   &   '       !       '   '   #   !   (   )   *   *   +   (   ,   (   +   +   -   ,   .   ,   -   -   /   .   /   -   0   0   1   /   +   *   2   2   3   +   -   +   3   3   0   -   0   3   4   4   5   0   1   0   5   5   6   1   6   5   7   7   8   6   3   2   9   9   4   3   4   9   :   :   ;   4   5   4   ;   ;   7   5   <   =   >   >   ?   <   @   <   ?   ?   A   @   B   @   A   A   C   B   C   A   D   D   E   C   ?   >   F   F   G   ?   A   ?   G   G   D   A   D   G   H   H   I   D   E   D   I   I   J   E   J   I   K   K   L   J   G   F   M   M   H   G   H   M   N   N   O   H   I   H   O   O   K   I      ÀxÌœ@’®Ù>ÌÌL½  €¿    ÿÿÿÿ ¶>  €?   ÀxÌœ@p®Ù¾ÌÌL½  €¿    ÿÿÿÿ  (?  €?`x¿ÿš@’®Ù>™™¾  €¿    ÿÿÿÿ ¶>  @?`x¿ÿš@p®Ù¾™™¾  €¿    ÿÿÿÿ  (?  @?È±U=ğ.”@p®Ù¾  €¾33s¿    ÿÿÿÿ  (?   ?È±U=ğ.”@³®Ù>  €¾33s¿    ÿÿÿÿ ¶>   ?ğ…?}Š@³®Ù>33³¾33s¿    ÿÿÿÿ ¶>  €>ğ…?}Š@p®Ù¾33³¾33s¿    ÿÿÿÿ  (?  €>_vÿ?*©y@p®Ù¾ÌÌÌ¾fff¿    ÿÿÿÿ  (?    _vÿ?*©y@³®Ù>ÌÌÌ¾fff¿    ÿÿÿÿ ¶>    -ÊŒ¿üMv@p®Ù¾          €?ÿÿÿÿ '?  @?   ÀxÌœ@p®Ù¾          €?ÿÿÿÿ ?  €?)  À«Vz@p®Ù¾          €?ÿÿÿÿ '?  €?`x¿ÿš@p®Ù¾          €?ÿÿÿÿ ?  @?È±U=ğ.”@p®Ù¾          €?ÿÿÿÿ ?   ?›«F¾ïşj@p®Ù¾          €?ÿÿÿÿ '?   ?˜…2?ËóX@p®Ù¾          €?ÿÿÿÿ '?  €>ğ…?}Š@p®Ù¾          €?ÿÿÿÿ ?  €>_vÿ?*©y@p®Ù¾          €?ÿÿÿÿ ?    ïáÆ?A@p®Ù¾          €?ÿÿÿÿ '?    -ÊŒ¿üMv@’®Ù>™™>  €?    ÿÿÿÿ ¶>  @?)  À«Vz@p®Ù¾ÌÌL=  €?    ÿÿÿÿ '?  €?)  À«Vz@’®Ù>ÌÌL=  €?    ÿÿÿÿ ¶>  €?-ÊŒ¿üMv@p®Ù¾™™>  €?    ÿÿÿÿ '?  @?›«F¾ïşj@p®Ù¾  €>33s?    ÿÿÿÿ '?   ?›«F¾ïşj@’®Ù>  €>33s?    ÿÿÿÿ ¶>   ?˜…2?ËóX@³®Ù>33³>33s?    ÿÿÿÿ ¶>  €>˜…2?ËóX@p®Ù¾33³>33s?    ÿÿÿÿ '?  €>ïáÆ?A@p®Ù¾ÌÌÌ>fff?    ÿÿÿÿ '?    ïáÆ?A@³®Ù>ÌÌÌ>fff?    ÿÿÿÿ ¶>    )  À«Vz@’®Ù>          €¿ÿÿÿÿ ¶>  €?   ÀxÌœ@’®Ù>          €¿ÿÿÿÿ      €?-ÊŒ¿üMv@’®Ù>          €¿ÿÿÿÿ ¶>  @?`x¿ÿš@’®Ù>          €¿ÿÿÿÿ    ğL@?È±U=ğ.”@³®Ù>          €¿ÿÿÿÿ    & ?›«F¾ïşj@’®Ù>          €¿ÿÿÿÿ ¶>   ?˜…2?ËóX@³®Ù>          €¿ÿÿÿÿ ¶>  €>ğ…?}Š@³®Ù>          €¿ÿÿÿÿ    z>_vÿ?*©y@³®Ù>          €¿ÿÿÿÿ        ïáÆ?A@³®Ù>          €¿ÿÿÿÿ ¶>       ÀxÌœ@’®Ù>ÌÌL=  €?    ÿÿÿÿ ¶>  €?`x¿ÿš@’®Ù>™™>  €?    ÿÿÿÿ ¶>  @?   ÀxÌœ@p®Ù¾ÌÌL=  €?    ÿÿÿÿ  (?  €?`x¿ÿš@p®Ù¾™™>  €?    ÿÿÿÿ  (?  @?È±U=ğ.”@p®Ù¾  €>33s?    ÿÿÿÿ  (?   ?È±U=ğ.”@³®Ù>  €>33s?    ÿÿÿÿ ¶>   ?ğ…?}Š@³®Ù>33³>33s?    ÿÿÿÿ ¶>  €>ğ…?}Š@p®Ù¾33³>33s?    ÿÿÿÿ  (?  €>_vÿ?*©y@p®Ù¾ÌÌÌ>fff?    ÿÿÿÿ  (?    _vÿ?*©y@³®Ù>ÌÌÌ>fff?    ÿÿÿÿ ¶>    -ÊŒ¿üMv@p®Ù¾          €¿ÿÿÿÿ '?  @?)  À«Vz@p®Ù¾          €¿ÿÿÿÿ '?  €?   ÀxÌœ@p®Ù¾          €¿ÿÿÿÿ ?  €?`x¿ÿš@p®Ù¾          €¿ÿÿÿÿ ?  @?È±U=ğ.”@p®Ù¾          €¿ÿÿÿÿ ?   ?›«F¾ïşj@p®Ù¾          €¿ÿÿÿÿ '?   ?˜…2?ËóX@p®Ù¾          €¿ÿÿÿÿ '?  €>ğ…?}Š@p®Ù¾          €¿ÿÿÿÿ ?  €>_vÿ?*©y@p®Ù¾          €¿ÿÿÿÿ ?    ïáÆ?A@p®Ù¾          €¿ÿÿÿÿ '?    -ÊŒ¿üMv@’®Ù>™™¾  €¿    ÿÿÿÿ ¶>  @?)  À«Vz@’®Ù>ÌÌL½  €¿    ÿÿÿÿ ¶>  €?)  À«Vz@p®Ù¾ÌÌL½  €¿    ÿÿÿÿ '?  €?-ÊŒ¿üMv@p®Ù¾™™¾  €¿    ÿÿÿÿ '?  @?›«F¾ïşj@p®Ù¾  €¾33s¿    ÿÿÿÿ '?   ?›«F¾ïşj@’®Ù>  €¾33s¿    ÿÿÿÿ ¶>   ?˜…2?ËóX@³®Ù>33³¾33s¿    ÿÿÿÿ ¶>  €>˜…2?ËóX@p®Ù¾33³¾33s¿    ÿÿÿÿ '?  €>ïáÆ?A@p®Ù¾ÌÌÌ¾fff¿    ÿÿÿÿ '?    ïáÆ?A@³®Ù>ÌÌÌ¾fff¿    ÿÿÿÿ ¶>    )  À«Vz@’®Ù>          €?ÿÿÿÿ ¶>  €?-ÊŒ¿üMv@’®Ù>          €?ÿÿÿÿ ¶>  @?   ÀxÌœ@’®Ù>          €?ÿÿÿÿ      €?`x¿ÿš@’®Ù>          €?ÿÿÿÿ    ğL@?È±U=ğ.”@³®Ù>          €?ÿÿÿÿ    & ?›«F¾ïşj@’®Ù>          €?ÿÿÿÿ ¶>   ?˜…2?ËóX@³®Ù>          €?ÿÿÿÿ ¶>  €>ğ…?}Š@³®Ù>          €?ÿÿÿÿ    z>_vÿ?*©y@³®Ù>          €?ÿÿÿÿ        ïáÆ?A@³®Ù>          €?ÿÿÿÿ ¶>             F   G   H             >   ?   <   
+         2   3   4   <   =   >            !          +   *   )   4   5   2      
+                         (   )   *   I   H   G   A   <   @   7   2   6            5   6   2       "   #      
+            
+   ?   @   <            G   K   J   J   I   G   "       !            ,   +   )   )   -   ,                     8   7   6            B   A   @   @   C   B            #   "   $   K   L   J   -   .   ,   /   ,   .            6   9   8                     %   $   "   M   J   L   $   &   '            L   O   N   9   :   8            ;   8   :            C   D   B   E   B   D   N   M   L   &   $   %                  	   0   /   .   .   1   0                              L   O   N   C   D   B   $   &   '   ;   8   :   E   B   D            B   A   @            #   "   $   8   7   6   6   9   8   N   M   L   @   C   B                     %   $   "   K   L   J            9   :   8   &   $   %            M   J   L   A   <   @   7   2   6                "   #         
+   ?   @   <            G   K   J            >   ?   <   <   =   >   !          5   6   2   
+            
+      4   5   2   F   G   H      
+      J   I   G   2   3   4   I   H   G   "       !                                     	   0   /   .   .   1   0   -   .   ,   /   ,   .                                       ,   +   )   )   -   ,   +   *   )                      (   )   *         	   ,   +   )   0   /   .   /   ,   .   (   )   *            .   1   0   -   .   ,                     ;   8   :   6   9   8            @   C   B                     +   *   )   C   D   B                                        8   7   6   A   <   @   7   2   6            E   B   D         
+   ?   @   <                              >   ?   <   <   =   >   B   A   @   5   6   2   
+            
+      4   5   2               
+      9   :   8   2   3   4   )   -   ,                                       G   K   J   !          K   L   J   F   G   H   J   I   G   I   H   G   #   "   $   "       !                 "   #   %   $   "   &   $   %   $   &   '   M   J   L   N   M   L   L   O   N   ¿ìú¿ì/@ær¿  €?        ÿÿÿÿ  T?÷ÿ}?Zğú¿×/@„b?  €?        ÿÿÿÿ †>÷ÿ}?Oû¿  x@o¿  €?        ÿÿÿÿ  T?÷ÿÙ>¨Rû¿  x@„b?  €?        ÿÿÿÿ †>÷ÿÙ>- À¼ã|@ÎÙ¾          €¿ÿÿÿÿ ??! ø=ò À^º›@ÎÙ¾          €¿ÿÿÿÿ †>! ø=ÆKû¿Šå|@»ÏÙ¾          €¿ÿÿÿÿ ??ïÿ>÷ú¿w¹›@şÏÙ¾          €¿ÿÿÿÿ †>ïÿ>ò Àn»›@?oª¾          €?ÿÿÿÿ †>! ˜=- À1æ|@lª¾          €?ÿÿÿÿ ??! ˜=÷ú¿ˆº›@?oª¾          €?ÿÿÿÿ †>¼ÿO=ÆKû¿Šå|@lª¾          €?ÿÿÿÿ ??¼ÿO=ÆKû¿õÖ|@ôˆÙ>          €?ÿÿÿÿ ?? >ò ÀY»›@ëŠÙ>          €?ÿÿÿÿ †>ïÿ3>- ÀÙ|@ëŠÙ>          €?ÿÿÿÿ ??ïÿ3>÷ú¿4º›@ôˆÙ>          €?ÿÿÿÿ †> >÷ú¿˜»›@+ª>          €¿ÿÿÿÿ †>    - ÀÛ|@w(ª>          €¿ÿÿÿÿ ??óş¿<ò À¼›@+ª>          €¿ÿÿÿÿ †>óş¿<ÆKû¿@Ù|@w(ª>          €¿ÿÿÿÿ ??    Oû¿  x@o¿      €¿    ÿÿÿÿ  T?   >0 À÷x@„b?      €¿    ÿÿÿÿ †>ïÿ«>0 À÷x@øn¿      €¿    ÿÿÿÿ  T?ïÿ«>¨Rû¿  x@„b?  €?        ÿÿÿÿ †>   >rKû¿)}@„b?      €?    ÿÿÿÿ †>  P>ä, Àö}@ m¿      €?    ÿÿÿÿ  T?Şÿg>ä, Àö}@„b?      €?    ÿÿÿÿ †>Şÿg>ØGû¿)}@>r¿      €?    ÿÿÿÿ  T?  P>°şÿ¿ü0@øn¿      €?    ÿÿÿÿ  T? Æ>°şÿ¿ü0@„b?      €?    ÿÿÿÿ †> Æ>¿ìú¿ì/@>r¿      €?    ÿÿÿÿ  T?÷ÿÑ>Zğú¿×/@„b?      €?    ÿÿÿÿ †>÷ÿÑ> ÀÏ››@sb?      €¿    ÿÿÿÿ †>  > ÀÏ››@øn¿      €¿    ÿÿÿÿ  T?  >ã÷ú¿éš›@sb?      €¿    ÿÿÿÿ †>ïÿƒ>õóú¿éš›@>r¿      €¿    ÿÿÿÿ  T?ïÿƒ>niı?+H}@øn¿fff¿ffæ>    ÿÿÿÿ  T?÷ÿ}?À?@@øn¿fff¿ffæ>    ÿÿÿÿ  T?÷ÿÙ>niı?+H}@•b?fff¿ffæ>    ÿÿÿÿ †>÷ÿ}?À?@@„b?fff¿ffæ>    ÿÿÿÿ †>÷ÿÙ>ÚÄ?oD@ÎÙ¾          €¿ÿÿÿÿ ??¼ÿÏ=Ğù?üŞx@ÎÙ¾          €¿ÿÿÿÿ †>¼ÿÏ=„dÉ? RC@»ÏÙ¾          €¿ÿÿÿÿ ??   >ÒŒı? ¾w@İÏÙ¾          €¿ÿÿÿÿ †>   >Èù?Éàx@?oª¾          €?ÿÿÿÿ †>  À=‡ÜÄ?6qD@lª¾          €?ÿÿÿÿ ??  À=Éı?˜Àw@?oª¾          €?ÿÿÿÿ †>¼ÿ=„dÉ? RC@lª¾          €?ÿÿÿÿ ??¼ÿ=hWÉ?EC@ôˆÙ>          €?ÿÿÿÿ ??  0>Èù?Ÿàx@ëŠÙ>          €?ÿÿÿÿ †>ŞÿG>»ĞÄ?jeD@ëŠÙ>          €?ÿÿÿÿ ??ŞÿG>!ı?ğ¿w@‰Ù>          €?ÿÿÿÿ †>  0>Àı?Âw@+ª>          €¿ÿÿÿÿ †>yÿŸ<²ÒÄ?8gD@w(ª>          €¿ÿÿÿÿ ??C 0=¿	ù?Áâx@+ª>          €¿ÿÿÿÿ †>C 0=_YÉ?GC@w(ª>          €¿ÿÿÿÿ ??yÿŸ<cÅ?àî>@o¿ffæ¾fff¿    ÿÿÿÿ  T?÷ÿ©>À?@@„b?ffæ¾fff¿    ÿÿÿÿ †> ¶>À?@@øn¿ffæ¾fff¿    ÿÿÿÿ  T? ¶>ÈÅ?²ï>@„b?ffæ¾fff¿    ÿÿÿÿ †>÷ÿ©>²€É?XnC@„b?ffæ>fff?    ÿÿÿÿ †>ïÿc>±ùÄ?´D@ m¿ffæ>fff?    ÿÿÿÿ  T? |>±ùÄ?´D@„b?ffæ>fff?    ÿÿÿÿ †> |>M„É?†mC@>r¿ffæ>fff?    ÿÿÿÿ  T?ïÿc>niı?+H}@øn¿ffæ>fff?    ÿÿÿÿ  T?ïÿ»>niı?+H}@•b?ffæ>fff?    ÿÿÿÿ †>ïÿ»>±ù @ª&|@.r¿ffæ>fff?    ÿÿÿÿ  T?  È>ã÷ @|'|@•b?ffæ>fff?    ÿÿÿÿ †>  È>kÏø?C¨x@„b?ffæ¾fff¿    ÿÿÿÿ †>÷ÿ™>kÏø?C¨x@øn¿ffæ¾fff¿    ÿÿÿÿ  T?÷ÿ™>lVı?ç‡w@„b?ffæ¾fff¿    ÿÿÿÿ †> >³Yı?‡w@>r¿ffæ¾fff¿    ÿÿÿÿ  T? >–Ê‹?ˆŠ@ær¿33s?33³¾    ÿÿÿÿ  T?÷ÿ}?ûÆ‹?ÜŠ@•b?33s?33³¾    ÿÿÿÿ †>÷ÿ}?.n7?q8U@o¿33s?33³¾    ÿÿÿÿ  T?÷ÿÙ>ùf7?9U@„b?33s?33³¾    ÿÿÿÿ †>÷ÿÙ>ÊO‚?˜‹@øn¿33s¿33³>    ÿÿÿÿ  T?÷ÿ}?Rx$?h W@øn¿33s¿33³>    ÿÿÿÿ  T?÷ÿÙ>ÊO‚?˜‹@„b?33s¿33³>    ÿÿÿÿ †>÷ÿ}?Rx$?h W@„b?33s¿33³>    ÿÿÿÿ †>÷ÿÙ>ïU+?d’[@ÎÙ¾          €¿ÿÿÿÿ ??¼ÿÏ=-²}?33‰@ÎÙ¾          €¿ÿÿÿÿ †>¼ÿÏ=äI>?ÙÎY@»ÏÙ¾          €¿ÿÿÿÿ ??ïÿ>›Pˆ?µOˆ@İÏÙ¾          €¿ÿÿÿÿ †>ïÿ> µ}?.4‰@?oª¾          €?ÿÿÿÿ †>  À=hY+?¯”[@lª¾          €?ÿÿÿÿ ??  À=ëQˆ?›Pˆ@?oª¾          €?ÿÿÿÿ †>¼ÿO=äI>?ÙÎY@lª¾          €?ÿÿÿÿ ??¼ÿO=q5>??ÁY@ôˆÙ>          €?ÿÿÿÿ ?? >Ì´}?4‰@ëŠÙ>          €?ÿÿÿÿ †>ŞÿG>ÜF+?eˆ[@ëŠÙ>          €?ÿÿÿÿ ??ŞÿG>—Qˆ?]Pˆ@ôˆÙ>          €?ÿÿÿÿ †> >Sˆ?¬Qˆ@+ª>          €¿ÿÿÿÿ †>    I+?2Š[@w(ª>          €¿ÿÿÿÿ ??C 0=E¸}?*5‰@+ª>          €¿ÿÿÿÿ †>C 0=u8>?7ÃY@w(ª>          €¿ÿÿÿÿ ??    .n7?q8U@o¿33³¾33s¿    ÿÿÿÿ  T?   >Rx$?h W@„b?33³¾33s¿    ÿÿÿÿ †> ¶>Rx$?h W@øn¿33³¾33s¿    ÿÿÿÿ  T? ¶>ùf7?9U@„b?33s?33³¾    ÿÿÿÿ †>   >dv>?VìY@„b?33³>33s?    ÿÿÿÿ †>  P>‹‡+?|³[@ m¿33³>33s?    ÿÿÿÿ  T? |>‹‡+?|³[@„b?33³>33s?    ÿÿÿÿ †> |>™}>?¯ëY@>r¿33³>33s?    ÿÿÿÿ  T?  P>ÊO‚?˜‹@øn¿33³>33s?    ÿÿÿÿ  T?ïÿ»>ÊO‚?˜‹@„b?33³>33s?    ÿÿÿÿ †>ïÿ»>–Ê‹?ˆŠ@.r¿33³>33s?    ÿÿÿÿ  T?÷ÿÑ>ûÆ‹?ÜŠ@•b?33³>33s?    ÿÿÿÿ †>÷ÿÑ>B\}?œ‰@„b?33³¾33s¿    ÿÿÿÿ †>÷ÿ™>B\}?œ‰@øn¿33³¾33s¿    ÿÿÿÿ  T?÷ÿ™>®%ˆ?	3ˆ@„b?33³¾33s¿    ÿÿÿÿ †>ïÿƒ>I)ˆ?µ2ˆ@>r¿33³¾33s¿    ÿÿÿÿ  T?ïÿƒ>Ş¥É= “”@ær¿33s?  €¾    ÿÿÿÿ  T?÷ÿ}?ÖiÉ=_“”@•b?33s?  €¾    ÿÿÿÿ †>÷ÿ}?º,¾€ñf@o¿33s?  €¾    ÿÿÿÿ  T?÷ÿÙ>à,¾Óñf@„b?33s?  €¾    ÿÿÿÿ †>÷ÿÙ>9³<?5•@øn¿33s¿  €>    ÿÿÿÿ  T?÷ÿ}?ˆñz¾i5h@øn¿33s¿  €>    ÿÿÿÿ  T?÷ÿÙ>˜³<?5•@„b?33s¿  €>    ÿÿÿÿ †>÷ÿ}?Ëñz¾i5h@„b?33s¿  €>    ÿÿÿÿ †>÷ÿÙ>—mg¾²ïl@ÎÙ¾          €¿ÿÿÿÿ ??¼ÿÏ=É,;Ò’@ÎÙ¾          €¿ÿÿÿÿ †>¼ÿÏ=x
+¾·¯k@»ÏÙ¾          €¿ÿÿÿÿ ??ïÿ>í	¢=ç0’@İÏÙ¾          €¿ÿÿÿÿ †>ïÿ>$-.;™Ó’@?oª¾          €?ÿÿÿÿ †>  À=äcg¾ıñl@;lª¾          €?ÿÿÿÿ ??  À=§¢=ø1’@?oª¾          €?ÿÿÿÿ †>¼ÿO=x
+¾·¯k@lª¾          €?ÿÿÿÿ ??¼ÿO=ªD¾ ¡k@ôˆÙ>          €?ÿÿÿÿ ?? >ëñ-;„Ó’@ëŠÙ>          €?ÿÿÿÿ †>ŞÿG>•˜g¾6ål@ëŠÙ>          €?ÿÿÿÿ ??ŞÿG>@¢=¤1’@ôˆÙ>          €?ÿÿÿÿ †> >*,¢=	3’@+ª>          €¿ÿÿÿÿ †>    ¸g¾-çl@w(ª>          €¿ÿÿÿÿ ??C 0=,^0;ªÔ’@+ª>          €¿ÿÿÿÿ †>C 0=<¾Â£k@w(ª>          €¿ÿÿÿÿ ??    º,¾€ñf@o¿  €¾33s¿    ÿÿÿÿ  T?   >Ëñz¾i5h@„b?  €¾33s¿    ÿÿÿÿ †> ¶>ˆñz¾i5h@øn¿  €¾33s¿    ÿÿÿÿ  T? ¶>à,¾Óñf@„b?33s?  €¾    ÿÿÿÿ †>   >Ú‹¾[Îk@„b?  €>33s?    ÿÿÿÿ †>  P>àf¾Æm@ m¿  €>33s?    ÿÿÿÿ  T? |>àf¾Æm@„b?  €>33s?    ÿÿÿÿ †> |>øm¾İÍk@>r¿  €>33s?    ÿÿÿÿ  T?  P>9³<?5•@øn¿  €>33s?    ÿÿÿÿ  T?ïÿ»>˜³<?5•@„b?  €>33s?    ÿÿÿÿ †>ïÿ»>Ş¥É= “”@>r¿  €>33s?    ÿÿÿÿ  T?÷ÿÑ>ÖiÉ=_“”@•b?  €>33s?    ÿÿÿÿ †>÷ÿÑ>Éûİ:µ’@sb?  €¾33s¿    ÿÿÿÿ †>÷ÿ™>.Ş:µ’@øn¿  €¾33s¿    ÿÿÿÿ  T?÷ÿ™>/! =U’@sb?  €¾33s¿    ÿÿÿÿ †>ïÿƒ>] =’@>r¿  €¾33s¿    ÿÿÿÿ  T?ïÿƒ>8ók¿ò<›@ær¿  €?™™¾    ÿÿÿÿ  T?÷ÿ}?ãúk¿=›@•b?  €?™™¾    ÿÿÿÿ †>÷ÿ}?^ˆ¿ù¸r@o¿  €?™™¾    ÿÿÿÿ  T?÷ÿÙ>ùaˆ¿M¹r@„b?  €?™™¾    ÿÿÿÿ †>÷ÿÙ>Ÿ€¿[”›@øn¿  €¿™™>    ÿÿÿÿ  T?÷ÿ}?g’¿wgs@øn¿  €¿™™>    ÿÿÿÿ  T?÷ÿÙ>Ÿ€¿[”›@„b?  €¿™™>    ÿÿÿÿ †>÷ÿ}?g’¿wgs@„b?  €¿™™>    ÿÿÿÿ †>÷ÿÙ>Û‘¿î=x@ÎÙ¾          €¿ÿÿÿÿ ??¼ÿÏ=ÅU¿c#™@ÎÙ¾          €¿ÿÿÿÿ †>¼ÿÏ=Ë‡¿‰“w@»ÏÙ¾          €¿ÿÿÿÿ ??ïÿ>/¡n¿cÌ˜@İÏÙ¾          €¿ÿÿÿÿ †>ïÿ>U¿t$™@?oª¾          €?ÿÿÿÿ †>  À=3‘¿c@x@;lª¾          €?ÿÿÿÿ ??  À= n¿_Í˜@?oª¾          €?ÿÿÿÿ †>¼ÿO=Ë‡¿‰“w@;lª¾          €?ÿÿÿÿ ??¼ÿO=¹‡¿…w@ôˆÙ>          €?ÿÿÿÿ ?? >U¿_$™@ëŠÙ>          €?ÿÿÿÿ †>ŞÿG>Î‘¿H3x@ëŠÙ>          €?ÿÿÿÿ ??ŞÿG>f n¿Í˜@ôˆÙ>          €?ÿÿÿÿ †> >Ón¿…Î˜@+ª>          €¿ÿÿÿÿ †>    &‘¿?5x@w(ª>          €¿ÿÿÿÿ ??C 0=uT¿„%™@+ª>          €¿ÿÿÿÿ †>C 0=‡¿?‡w@w(ª>          €¿ÿÿÿÿ ??    ^ˆ¿ù¸r@o¿™™¾  €¿    ÿÿÿÿ  T?   >g’¿wgs@„b?™™¾  €¿    ÿÿÿÿ †> ¶>g’¿wgs@øn¿™™¾  €¿    ÿÿÿÿ  T? ¶>ùaˆ¿M¹r@„b?  €?™™¾    ÿÿÿÿ †>   >F‡¿Ô²w@„b?™™>  €?    ÿÿÿÿ †>  P>Z‘¿ş`x@ m¿™™>  €?    ÿÿÿÿ  T? |>Z‘¿ş`x@„b?™™>  €?    ÿÿÿÿ †> |>W‡¿ª²w@>r¿™™>  €?    ÿÿÿÿ  T?  P>Ÿ€¿[”›@øn¿™™>  €?    ÿÿÿÿ  T?ïÿ»>Ÿ€¿[”›@„b?™™>  €?    ÿÿÿÿ †>ïÿ»>8ók¿ò<›@>r¿™™>  €?    ÿÿÿÿ  T?÷ÿÑ>ãúk¿=›@•b?™™>  €?    ÿÿÿÿ †>÷ÿÑ>'f¿)™@sb?™™¾  €¿    ÿÿÿÿ †>÷ÿ™>'f¿)™@øn¿™™¾  €¿    ÿÿÿÿ  T?÷ÿ™>Ân¿®˜@sb?™™¾  €¿    ÿÿÿÿ †>ïÿƒ>jºn¿ÿ­˜@>r¿™™¾  €¿    ÿÿÿÿ  T?ïÿƒ>                                       
+   	               	   
+                                  !   "   #   "   !                                                             Ÿ      °   ±   ²   ±   °   ³   œ         ¨   ©   ª   ­   ¬   ¯   ¬   ­   ®       ¡   ¢   §   ¦   ¥   ¤   ¥   ¦   µ   ´   ·   ´   µ   ¶   ™   ›   š   ˜   ™   š   ©   ¨   «   £   ¢   ¡   ¼   ½   ¾   ¿   ¾   ½   ¸   ¹   º   »   º   ¹   ‰   ˆ   ‹   u   w   v   ˆ   ‰   Š   t   u   v   €      ‚   „   …   †   …   „   ‡   x   y   z      ~   }   |   }   ~   Œ            Œ      q   s   r   p   q   r      €   ƒ   {   z   y   ”   •   –   —   –   •      ‘   ’   “   ’   ‘   L   M   N   M   O   N   `   a   b   a   `   c   X   Y   Z   \   ]   ^   ]   \   _   P   Q   R   T   U   V   W   V   U   d   e   f   e   d   g   I   K   J   H   I   J   Y   X   [   S   R   Q   l   m   n   o   n   m   h   i   j   k   j   i   $   %   &   %   '   &   8   9   :   9   8   ;   0   1   2   4   5   6   5   4   7   (   )   *   ,   -   .   /   .   -   =   <   ?   <   =   >   1   0   3   +   *   )   D   E   F   G   F   E   @   A   B   C   B   A   8   9   :   9   8   ;   $   %   &   %   '   &   0   1   2   1   0   3   5   4   7   (   )   *   +   *   )   /   .   -   =   <   ?   <   =   >   4   5   6   ,   -   .   I   K   J   H   I   J   `   a   b   a   `   c   L   M   N   M   O   N   Y   X   [   X   Y   Z   ]   \   _   S   R   Q   P   Q   R   W   V   U   e   d   g   d   e   f   \   ]   ^   T   U   V   ‰   ˆ   ‹   ˆ   ‰   Š   q   s   r   p   q   r   u   w   v   t   u   v   €      ‚      €   ƒ   …   „   ‡   x   y   z   {   z   y      ~   }      Œ      Œ         „   …   †   |   }   ~   ˜   ™   š   °   ±   ²   ±   °   ³   ™   ›   š      Ÿ      œ         ©   ¨   «   ¨   ©   ª   G   F   E   ­   ¬   ¯   D   E   F   £   ¢   ¡       ¡   ¢   §   ¦   ¥   µ   ´   ·   ´   µ   ¶                                        ¬   ­   ®   ¤   ¥   ¦   @   A   B   C   B   A                                                   
+   	               	   
+                     o   n   m   l   m   n   h   i   j   k   j   i   —   –   •   ”   •   –      ‘   ’   “   ’   ‘   ¿   ¾   ½   ¼   ½   ¾   ¸   ¹   º   »   º   ¹       !   "   #   "   !                     H   I   J             ˜   ™   š   p   q   r   ¿   ¾   ½   e   d   g   ¸   ¹   º   #   "   !            =   <   ?   »   º   ¹   o   n   m      ‘   ’            µ   ´   ·   G   F   E   —   –   •      Œ               “   ’   ‘   C   B   A   @   A   B   k   j   i   h   i   j            q   s   r   `   a   b            9   8   ;   ±   °   ³   ˆ   ‰   Š   ™   ›   š   8   9   :   a   `   c   I   K   J   ‰   ˆ   ‹            °   ±   ²   M   O   N   u   w   v   %   '   &   l   m   n   t   u   v   ”   •   –   ¼   ½   ¾       !   "      Ÿ      œ         $   %   &   D   E   F   L   M   N            Œ         <   =   >   d   e   f   ´   µ   ¶            +   *   )   {   z   y   S   R   Q   £   ¢   ¡   (   )   *            x   y   z   P   Q   R       ¡   ¢   ¤   ¥   ¦      
+   	      	   
+      ~   }   /   .   -   |   }   ~   W   V   U   ,   -   .   §   ¦   ¥   T   U   V   ¬   ­   ®                     …   „   ‡   „   …   †   ]   \   _   4   5   6   ­   ¬   ¯   \   ]   ^   5   4   7                     €      ‚      €   ƒ   Y   X   [   X   Y   Z   0   1   2   ©   ¨   «   ¨   ©   ª   1   0   3     €?                  €?                  €?                  €?÷VP¿rhm@Yù¿1½»3      €¿ÿÿÿÿÑo?+÷ª?)  Àdpt@Yù¿1½»3      €¿ÿÿÿÿÑo?   @   ÀKıŸ@Yù¿1½»3      €¿ÿÿÿÿ  €?   @ª¿œ@Yù¿1½»3      €¿ÿÿÿÿ  €?+÷ª?¸¿>´ıY@Yù¿1½»3      €¿ÿÿÿÿÑo?:“*?VA@?â@Yù¿1½»3      €¿ÿÿÿÿ  €?:“*?éšÁ?³Í;@Yù¿1½»3      €¿ÿÿÿÿÑo?    ¿•@t^@Yù¿1½»3      €¿ÿÿÿÿ  €?    ÷VP¿rhm@NÍ?e‰.¾A|¿iş²ÿÿÿÿ¢`?+÷ª?)  Àdpt@NÍ?£Û¼½Àè~¿ş
+²ÿÿÿÿ¢`?   @)  Àdpt@Yù¿£Û¼½Àè~¿ş
+²ÿÿÿÿÑo?   @÷VP¿rhm@Yù¿e‰.¾A|¿iş²ÿÿÿÿÑo?+÷ª?¸¿>´ıY@NÍ?º¡¾Ÿär¿í4í²ÿÿÿÿ¢`?:“*?¸¿>´ıY@Yù¿º¡¾Ÿär¿í4í²ÿÿÿÿÑo?:“*?éšÁ?³Í;@NÍ?]ÛÃ¾v‡l¿ú¡³ÿÿÿÿ¢`?    éšÁ?³Í;@Yù¿]ÛÃ¾v‡l¿ú¡³ÿÿÿÿÑo?    ª¿œ@NÍ?1½»³      €?ÿÿÿÿtQ?+÷ª?   ÀKıŸ@NÍ?1½»³      €?ÿÿÿÿtQ?   @)  Àdpt@NÍ?1½»³      €?ÿÿÿÿ¢`?   @÷VP¿rhm@NÍ?1½»³      €?ÿÿÿÿ¢`?+÷ª?VA@?â@NÍ?1½»³      €?ÿÿÿÿtQ?:“*?¸¿>´ıY@NÍ?1½»³      €?ÿÿÿÿ¢`?:“*?¿•@t^@NÍ?1½»³      €?ÿÿÿÿtQ?    éšÁ?³Í;@NÍ?1½»³      €?ÿÿÿÿ¢`?    ª¿œ@Yù¿sğ,>¤R|?õ¦}2ÿÿÿÿE@?+÷ª?   ÀKıŸ@Yù¿vŠµ=üı~?C"2ÿÿÿÿE@?   @   ÀKıŸ@NÍ?vŠµ=üı~?C"2ÿÿÿÿtQ?   @ª¿œ@NÍ?sğ,>¤R|?õ¦}2ÿÿÿÿtQ?+÷ª?VA@?â@Yù¿Yi¢>dÇr?ş5î2ÿÿÿÿE@?:“*?VA@?â@NÍ?Yi¢>dÇr?ş5î2ÿÿÿÿtQ?:“*?¿•@t^@Yù¿mıÄ>+Kl?»v3ÿÿÿÿE@?    ¿•@t^@NÍ?mıÄ>+Kl?»v3ÿÿÿÿtQ?    ÷VP¿rhm@Yù¿1½»³      €?ÿÿÿÿÑo?+÷ª?   ÀKıŸ@Yù¿1½»³      €?ÿÿÿÿ  €?   @)  Àdpt@Yù¿1½»³      €?ÿÿÿÿÑo?   @ª¿œ@Yù¿1½»³      €?ÿÿÿÿ  €?+÷ª?¸¿>´ıY@Yù¿1½»³      €?ÿÿÿÿÑo?:“*?VA@?â@Yù¿1½»³      €?ÿÿÿÿ  €?:“*?éšÁ?³Í;@Yù¿1½»³      €?ÿÿÿÿÑo?    ¿•@t^@Yù¿1½»³      €?ÿÿÿÿ  €?    ÷VP¿rhm@NÍ?e‰.>A|?iş2ÿÿÿÿ¢`?+÷ª?)  Àdpt@Yù¿£Û¼=Àè~?ş
+2ÿÿÿÿÑo?   @)  Àdpt@NÍ?£Û¼=Àè~?ş
+2ÿÿÿÿ¢`?   @÷VP¿rhm@Yù¿e‰.>A|?iş2ÿÿÿÿÑo?+÷ª?¸¿>´ıY@NÍ?º¡>Ÿär?í4í2ÿÿÿÿ¢`?:“*?¸¿>´ıY@Yù¿º¡>Ÿär?í4í2ÿÿÿÿÑo?:“*?éšÁ?³Í;@NÍ?]ÛÃ>v‡l?ú¡3ÿÿÿÿ¢`?    éšÁ?³Í;@Yù¿]ÛÃ>v‡l?ú¡3ÿÿÿÿÑo?    ª¿œ@NÍ?1½»3      €¿ÿÿÿÿtQ?+÷ª?)  Àdpt@NÍ?1½»3      €¿ÿÿÿÿ¢`?   @   ÀKıŸ@NÍ?1½»3      €¿ÿÿÿÿtQ?   @÷VP¿rhm@NÍ?1½»3      €¿ÿÿÿÿ¢`?+÷ª?VA@?â@NÍ?1½»3      €¿ÿÿÿÿtQ?:“*?¸¿>´ıY@NÍ?1½»3      €¿ÿÿÿÿ¢`?:“*?¿•@t^@NÍ?1½»3      €¿ÿÿÿÿtQ?    éšÁ?³Í;@NÍ?1½»3      €¿ÿÿÿÿ¢`?    ª¿œ@Yù¿sğ,¾¤R|¿õ¦}²ÿÿÿÿE@?+÷ª?   ÀKıŸ@NÍ?vŠµ½üı~¿C"²ÿÿÿÿtQ?   @   ÀKıŸ@Yù¿vŠµ½üı~¿C"²ÿÿÿÿE@?   @ª¿œ@NÍ?sğ,¾¤R|¿õ¦}²ÿÿÿÿtQ?+÷ª?VA@?â@Yù¿Yi¢¾dÇr¿ş5î²ÿÿÿÿE@?:“*?VA@?â@NÍ?Yi¢¾dÇr¿ş5î²ÿÿÿÿtQ?:“*?¿•@t^@Yù¿mıÄ¾+Kl¿»v³ÿÿÿÿE@?    ¿•@t^@NÍ?mıÄ¾+Kl¿»v³ÿÿÿÿtQ?    1   0   3   )   (   +   
+             !   "      	   
+             (   )   *   0   1   2                                       9   8   ;             8   9   :   !       #            +   ,   -            4   3   0   3   4   5             $   #                         ,   +   (                              <   ;   8   #   $   %   ;   <   =   .   -   ,            -   .   /            6   5   4   5   6   7                              &   %   $   >   =   <            =   >   ?                     %   &   '   5   6   7   .   -   ,            %   &   '   -   .   /            &   %   $                                       +   ,   -            $   #       6   5   4            ,   +   (                     3   4   5   #   $   %             !       #       !   "   4   3   0               	   
+            1   0   3                       (   )   *   
+         )   (   +   0   1   2            >   =   <            =   >   ?            ;   <   =                     <   ;   8                     9   8   ;   8   9   :                     =   >   ?            <   ;   8                     ;   <   =   .   -   ,   -   .   /                     9   8   ;   &   %   $                     %   &   '                     #   $   %             !       #       !   "   +   ,   -               	   
+   8   9   :   $   #                           (   )   *   
+         )   (   +   ,   +   (            >   =   <   0   1   2                     3   4   5            4   3   0                     1   0   3   6   5   4            5   6   7   "Ÿ  invmedslope2straight_lo ¹   ¸   »   ¤   ¥   ¦   ¥   §   ¦   ¸   ¹   º   ´   µ   ¶   µ   ´   ·   ¨   ©   ª   °   ±   ²   ¬   ­   ®   ¯   ®   ­   ½   ¼   ¿   ¼   ½   ¾   Ä   Å   Æ   Ç   Æ   Å   ±   °   ³   «   ª   ©   À   Á   Â   Ã   Â   Á   ¡   £   ¢       ¡   ¢   }      ~   ‘      “   |   }   ~      ‘   ’   ˆ   ‰   Š   Œ            Œ      €      ‚   „   …   †   ‡   †   …   ”   •   –   •   ”   —   y   {   z   x   y   z   ‰   ˆ   ‹   ƒ   ‚      œ         Ÿ         ˜   ™   š   ›   š   ™   T   U   V   U   W   V   h   i   j   i   h   k   `   a   b   d   e   f   e   d   g   X   Y   Z   \   ]   ^   _   ^   ]   l   m   n   m   l   o   Q   S   R   P   Q   R   a   `   c   [   Z   Y   t   u   v   w   v   u   p   q   r   s   r   q   @   A   B   A   @   C   ,   -   .   -   /   .   8   9   :   =   <   ?   <   =   >   0   1   2   4   5   6   7   6   5   D   E   F   E   D   G   )   +   *   (   )   *   9   8   ;   3   2   1   L   M   N   O   N   M   H   I   J   K   J   I                                                                     	   
+                                                                      
+   	   $   %   &   '   &   %       !   "   #   "   !                                                                                        
+   	      	   
+                                                )   +   *   (   )   *   @   A   B   A   @   C   -   /   .   ,   -   .   8   9   :   9   8   ;   =   <   ?   3   2   1   7   6   5   0   1   2   E   D   G   D   E   F   <   =   >   4   5   6   h   i   j   i   h   k   P   Q   R   Q   S   R   T   U   V   U   W   V   `   a   b   a   `   c   e   d   g   _   ^   ]   X   Y   Z   [   Z   Y   m   l   o   l   m   n   d   e   f   \   ]   ^   y   {   z   x   y   z      ‘   ’   ‘      “   }      ~   |   }   ~   '   &   %   $   %   &   ¸   ¹   º   ¹   ¸   »   ¡   £   ¢       ¡   ¢   ¤   ¥   ¦   ¥   §   ¦   ‰   ˆ   ‹   ˆ   ‰   Š      Œ      ƒ   ‚      €      ‚   ‡   †   …   •   ”   —   ”   •   –   Œ         „   …   †       !   "   #   "   !   °   ±   ²   ±   °   ³   µ   ´   ·   ´   µ   ¶   ¨   ©   ª   «   ª   ©   ¯   ®   ­   ¬   ­   ®   ½   ¼   ¿   ¼   ½   ¾   O   N   M   L   M   N   H   I   J   K   J   I   w   v   u   t   u   v   p   q   r   s   r   q   Ÿ         œ         Ä   Å   Æ   Ç   Æ   Å   ˜   ™   š   ›   š   ™   Ã   Â   Á   À   Á   Â   (   )   *   P   Q   R   x   y   z       ¡   ¢             p   q   r   m   l   o   ½   ¼   ¿   O   N   M   Ç   Æ   Å   À   Á   Â   ˜   ™   š   ›   š   ™   Ÿ                  E   D   G   •   ”   —   s   r   q   w   v   u   Ã   Â   Á   '   &   %       !   "   H   I   J   #   "   !   K   J   I   h   i   j   i   h   k   Q   S   R   ¹   ¸   »                     @   A   B   )   +   *   y   {   z      ‘   ’   A   @   C   ‘      “   ¸   ¹   º   ¡   £   ¢            Ä   Å   Æ   œ         -   /   .   T   U   V   U   W   V   L   M   N   ,   -   .   t   u   v                     }      ~   |   }   ~   $   %   &   ¤   ¥   ¦   ¥   §   ¦   ”   •   –   ¼   ½   ¾   l   m   n            D   E   F   «   ª   ©   ƒ   ‚         
+   	   [   Z   Y   3   2   1   €      ‚   ¨   ©   ª   X   Y   Z      	   
+   0   1   2   4   5   6            ‡   †   …   „   …   †   ¯   ®   ­   ¬   ­   ®   _   ^   ]   \   ]   ^            7   6   5      Œ      Œ         µ   ´   ·            ´   µ   ¶   e   d   g   d   e   f   =   <   ?   <   =   >            ˆ   ‰   Š            °   ±   ²   ±   °   ³   `   a   b   a   `   c   8   9   :   9   8   ;   ‰   ˆ   ‹               ÀxÌœ@’®Ù>ÌÌL½  €¿    ÿÿÿÿ ¶>  €?   ÀxÌœ@p®Ù¾ÌÌL½  €¿    ÿÿÿÿ  (?  €?`x¿ÿš@’®Ù>™™¾  €¿    ÿÿÿÿ ¶>  @?`x¿ÿš@p®Ù¾™™¾  €¿    ÿÿÿÿ  (?  @?È±U=ğ.”@p®Ù¾  €¾33s¿    ÿÿÿÿ  (?   ?È±U=ğ.”@³®Ù>  €¾33s¿    ÿÿÿÿ ¶>   ?ğ…?}Š@³®Ù>33³¾33s¿    ÿÿÿÿ ¶>  €>ğ…?}Š@p®Ù¾33³¾33s¿    ÿÿÿÿ  (?  €>_vÿ?*©y@p®Ù¾ÌÌÌ¾fff¿    ÿÿÿÿ  (?    _vÿ?*©y@³®Ù>ÌÌÌ¾fff¿    ÿÿÿÿ ¶>    -ÊŒ¿üMv@p®Ù¾          €?ÿÿÿÿ '?  @?   ÀxÌœ@p®Ù¾          €?ÿÿÿÿ ?  €?)  À«Vz@p®Ù¾          €?ÿÿÿÿ '?  €?`x¿ÿš@p®Ù¾          €?ÿÿÿÿ ?  @?È±U=ğ.”@p®Ù¾          €?ÿÿÿÿ ?   ?›«F¾ïşj@p®Ù¾          €?ÿÿÿÿ '?   ?˜…2?ËóX@p®Ù¾          €?ÿÿÿÿ '?  €>ğ…?}Š@p®Ù¾          €?ÿÿÿÿ ?  €>_vÿ?*©y@p®Ù¾          €?ÿÿÿÿ ?    ïáÆ?A@p®Ù¾          €?ÿÿÿÿ '?    )  À«Vz@’®Ù>          €¿ÿÿÿÿ ¶>  €?   ÀxÌœ@’®Ù>          €¿ÿÿÿÿ      €?-ÊŒ¿üMv@’®Ù>          €¿ÿÿÿÿ ¶>  @?`x¿ÿš@’®Ù>          €¿ÿÿÿÿ    ğL@?È±U=ğ.”@³®Ù>          €¿ÿÿÿÿ    & ?›«F¾ïşj@’®Ù>          €¿ÿÿÿÿ ¶>   ?˜…2?ËóX@³®Ù>          €¿ÿÿÿÿ ¶>  €>ğ…?}Š@³®Ù>          €¿ÿÿÿÿ    z>_vÿ?*©y@³®Ù>          €¿ÿÿÿÿ        ïáÆ?A@³®Ù>          €¿ÿÿÿÿ ¶>       ÀxÌœ@’®Ù>ÌÌL=  €?    ÿÿÿÿ ¶>  €?`x¿ÿš@’®Ù>™™>  €?    ÿÿÿÿ ¶>  @?   ÀxÌœ@p®Ù¾ÌÌL=  €?    ÿÿÿÿ  (?  €?`x¿ÿš@p®Ù¾™™>  €?    ÿÿÿÿ  (?  @?È±U=ğ.”@p®Ù¾  €>33s?    ÿÿÿÿ  (?   ?È±U=ğ.”@³®Ù>  €>33s?    ÿÿÿÿ ¶>   ?ğ…?}Š@³®Ù>33³>33s?    ÿÿÿÿ ¶>  €>ğ…?}Š@p®Ù¾33³>33s?    ÿÿÿÿ  (?  €>_vÿ?*©y@p®Ù¾ÌÌÌ>fff?    ÿÿÿÿ  (?    _vÿ?*©y@³®Ù>ÌÌÌ>fff?    ÿÿÿÿ ¶>    -ÊŒ¿üMv@p®Ù¾          €¿ÿÿÿÿ '?  @?)  À«Vz@p®Ù¾          €¿ÿÿÿÿ '?  €?   ÀxÌœ@p®Ù¾          €¿ÿÿÿÿ ?  €?`x¿ÿš@p®Ù¾          €¿ÿÿÿÿ ?  @?È±U=ğ.”@p®Ù¾          €¿ÿÿÿÿ ?   ?›«F¾ïşj@p®Ù¾          €¿ÿÿÿÿ '?   ?˜…2?ËóX@p®Ù¾          €¿ÿÿÿÿ '?  €>ğ…?}Š@p®Ù¾          €¿ÿÿÿÿ ?  €>_vÿ?*©y@p®Ù¾          €¿ÿÿÿÿ ?    ïáÆ?A@p®Ù¾          €¿ÿÿÿÿ '?    )  À«Vz@’®Ù>          €?ÿÿÿÿ ¶>  €?-ÊŒ¿üMv@’®Ù>          €?ÿÿÿÿ ¶>  @?   ÀxÌœ@’®Ù>          €?ÿÿÿÿ      €?`x¿ÿš@’®Ù>          €?ÿÿÿÿ    ğL@?È±U=ğ.”@³®Ù>          €?ÿÿÿÿ    & ?›«F¾ïşj@’®Ù>          €?ÿÿÿÿ ¶>   ?˜…2?ËóX@³®Ù>          €?ÿÿÿÿ ¶>  €>ğ…?}Š@³®Ù>          €?ÿÿÿÿ    z>_vÿ?*©y@³®Ù>          €?ÿÿÿÿ        ïáÆ?A@³®Ù>          €?ÿÿÿÿ ¶>    (   )   *            
+         2   3   4      
+                                  5   4   3             !          *   +   (   +   ,   (      
+            
+                     3   7   6   6   5   3   -   (   ,            "   !         #   "            .   -   ,            7   8   6            ,   /   .                     9   6   8            #   $   "            %   "   $            /   0   .   1   .   0   :   9   8            8   ;   :                     $   '   &         	   &   %   $            1   .   0                     8   ;   :   /   0   .            .   -   ,            :   9   8                     7   8   6            ,   /   .   9   6   8                     -   (   ,   3   7   6         
+            2   3   4   5   4   3   6   5   3      
+               
+         (   )   *   +   ,   (      
+               *   +   (   $   '   &   &   %   $         	                     #   $   "   %   "   $                     "   !         #   "                               !                    &   %   $                  	   #   $   "                                        %   "   $            "   !      1   .   0   ,   /   .                              -   (   ,                   
+            !          /   0   .      #   "      
+               
+         (   )   *   +   ,   (      
+      .   -   ,   *   +   (   $   '   &                     3   7   6            2   3   4   5   4   3   6   5   3   7   8   6                     :   9   8   8   ;   :                              9   6   8   ~¼  invmedslope2straight_hi š¼  invmedslope2straight_me    Ÿ  z¼  –¼      >  Ö   FilesAndLines       J c:\coding\safari\resource\tracks\coasters\Track60\Invmedslope2straight.SVD    H      M c:\coding\safari\resource\tracks\coasters\Track60\Invmedslope2straight_HI.SHS œ      J c:\coding\safari\resource\tracks\coasters\Track60\Invmedslope2straight.SVD    µ      M c:\coding\safari\resource\tracks\coasters\Track60\Invmedslope2straight_HI.SHS >     J c:\coding\safari\resource\tracks\coasters\Track60\Invmedslope2straight.SVD    ÿÿÿÿ>  >  n    FilesAndLines       J c:\coding\safari\resource\tracks\coasters\Track60\Invmedslope2straight.SVD    ÿÿÿÿ>  >  n    FilesAndLines       J c:\coding\safari\resource\tracks\coasters\Track60\Invmedslope2straight.SVD    ÿÿÿÿ>  ~  l    FilesAndLines       M c:\coding\safari\resource\tracks\coasters\Track60\Invmedslope2straight_HI.SHS ÿÿÿÿ~  ~  l    FilesAndLines       M c:\coding\safari\resource\tracks\coasters\Track60\Invmedslope2straight_HI.SHS ÿÿÿÿ~  >&  l    FilesAndLines       M c:\coding\safari\resource\tracks\coasters\Track60\Invmedslope2straight_HI.SHS ÿÿÿÿ>&  ^B  l    FilesAndLines       M c:\coding\safari\resource\tracks\coasters\Track60\Invmedslope2straight_HI.SHS ÿÿÿÿ^B  B  l    FilesAndLines       M c:\coding\safari\resource\tracks\coasters\Track60\Invmedslope2straight_ME.SHS ÿÿÿÿB  ŞM  l    FilesAndLines       M c:\coding\safari\resource\tracks\coasters\Track60\Invmedslope2straight_ME.SHS ÿÿÿÿŞM  ^R  l    FilesAndLines       M c:\coding\safari\resource\tracks\coasters\Track60\Invmedslope2straight_ME.SHS ÿÿÿÿ^R  ]  l    FilesAndLines       M c:\coding\safari\resource\tracks\coasters\Track60\Invmedslope2straight_ME.SHS ÿÿÿÿ]  f  l    FilesAndLines       M c:\coding\safari\resource\tracks\coasters\Track60\Invmedslope2straight_ME.SHS ÿÿÿÿf    l    FilesAndLines       M c:\coding\safari\resource\tracks\coasters\Track60\Invmedslope2straight_ME.SHS ÿÿÿÿ    l    FilesAndLines       M c:\coding\safari\resource\tracks\coasters\Track60\Invmedslope2straight_ME.SHS ÿÿÿÿ    l    FilesAndLines       M c:\coding\safari\resource\tracks\coasters\Track60\Invmedslope2straight_LO.SHS ÿÿÿÿ    l    FilesAndLines       M c:\coding\safari\resource\tracks\coasters\Track60\Invmedslope2straight_LO.SHS ÿÿÿÿ  ^  l    FilesAndLines       M c:\coding\safari\resource\tracks\coasters\Track60\Invmedslope2straight_LO.SHS ÿÿÿÿ^  ^˜  l    FilesAndLines       M c:\coding\safari\resource\tracks\coasters\Track60\Invmedslope2straight_LO.SHS ÿÿÿÿ^˜  Ÿ  l    FilesAndLines       M c:\coding\safari\resource\tracks\coasters\Track60\Invmedslope2straight_LO.SHS ÿÿÿÿŸ  "Ÿ  l    FilesAndLines       M c:\coding\safari\resource\tracks\coasters\Track60\Invmedslope2straight_LO.SHS ÿÿÿÿ"Ÿ  :Ÿ  l    FilesAndLines       M c:\coding\safari\resource\tracks\coasters\Track60\Invmedslope2straight_LO.SHS ÿÿÿÿ:Ÿ  :Ÿ  l    FilesAndLines       M c:\coding\safari\resource\tracks\coasters\Track60\Invmedslope2straight_HI.SHS ÿÿÿÿ:Ÿ  :Ÿ  l    FilesAndLines       M c:\coding\safari\resource\tracks\coasters\Track60\Invmedslope2straight_HI.SHS ÿÿÿÿ:Ÿ  J­  l    FilesAndLines       M c:\coding\safari\resource\tracks\coasters\Track60\Invmedslope2straight_HI.SHS ÿÿÿÿJ­  ºµ  l    FilesAndLines       M c:\coding\safari\resource\tracks\coasters\Track60\Invmedslope2straight_HI.SHS ÿÿÿÿºµ  z¼  l    FilesAndLines       M c:\coding\safari\resource\tracks\coasters\Track60\Invmedslope2straight_HI.SHS ÿÿÿÿz¼  ~¼  l    FilesAndLines       M c:\coding\safari\resource\tracks\coasters\Track60\Invmedslope2straight_HI.SHS ÿÿÿÿ~¼  –¼  l    FilesAndLines       M c:\coding\safari\resource\tracks\coasters\Track60\Invmedslope2straight_HI.SHS ÿÿÿÿ–¼  –¼  l    FilesAndLines       M c:\coding\safari\resource\tracks\coasters\Track60\Invmedslope2straight_ME.SHS ÿÿÿÿ–¼  –¼  l    FilesAndLines       M c:\coding\safari\resource\tracks\coasters\Track60\Invmedslope2straight_ME.SHS ÿÿÿÿ–¼  š¼  l    FilesAndLines       M c:\coding\safari\resource\tracks\coasters\Track60\Invmedslope2straight_ME.SHS ÿÿÿÿš¼  ²¼  l    FilesAndLines       M c:\coding\safari\resource\tracks\coasters\Track60\Invmedslope2straight_ME.SHS ÿÿÿÿ                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      Ë
+    ¦ñŞfı  ã                   óš   — d dl mZ d dl mZ d dl mZ d dl mZ d dl mZ d dlmZ d dlmZ d dl	m
+Z
+ d d	l	mZ  G d
+„ dej                  «      Zy)é    )Údesc)Ú
+ForeignKey)ÚInteger)ÚMetaData)Útesting)Úeq_)Úfixtures)ÚColumn)ÚTablec                   ó<   — e Zd ZdZdZed„ «       Zd„ Zd„ Zd„ Z	d„ Z
+y)	ÚUnicodeSchemaTest)Úunicode_ddlTc                 ór  — t        d|t        dt        d¬«      t        dt        «      d¬«      at        d|t        dt        dd¬	«      t        dt        t	        d
+«      d¬«      d¬«      at        j                  d«      rlt        d|t        dt        dd¬«      t        dt        t	        d«      «      t        dt        t	        d«      «      t        dt        t	        d«      «      d¬«      ay t        d|t        dt        dd¬«      t        dt        «      t        dt        «      t        dt        «      d¬«      ay )NÚ	unitable1õ   mÃ©ilT)Úprimary_keyõ   æ¸¬è©¦)Útest_needs_fku
+   UnitÃ©ble2Úa)r   Úkeyu   unitable1.mÃ©ilÚb)r   Úsqliteõ	   æ¸¬è©¦_idF)r   Úautoincrementõ   unitable1_æ¸¬è©¦u   unitable1.æ¸¬è©¦õ   UnitÃ©ble2_bu   UnitÃ©ble2.bõ   æ¸¬è©¦_selfu   æ¸¬è©¦.æ¸¬è©¦_id)	r   r
+   r   Út1r   Út2r   ÚagainstÚt3)ÚclsÚmetadatas     ú>Lib\site-packages\sqlalchemy\testing\suite\test_unicode_ddl.pyÚdefine_tableszUnicodeSchemaTest.define_tables   s1  € ô ØØÜ7œG°Ô6Ü>¤7Ó+Øô
+ˆô ØØÜ7œG°¸3Ô?ÜØÜÜĞ,Ó-Øô	ğ ô
+ˆô ?‰?˜8Ô$ÜØØÜØ%ÜØ $Ø"'ô	ô Ø,ÜÜĞ7Ó8óô
+ ~¤w´
+¸>Ó0JÓKÜØ'ÜÜĞ=Ó>óğ
+ #ô)‰Bô. ØØÜØ%ÜØ $Ø"'ô	ô Ğ/´Ó9Ü~¤wÓ/ÜĞ*¬GÓ4Ø"ô‰Bó    c                 óZ  — |j                  t        j                  «       dddœ«       |j                  t        j                  «       dddœ«       |j                  t        j                  «       dddddœ«       t        |j                  t        j                  «       «      j                  «       dg«       t        |j                  t        j                  «       «      j                  «       dg«       t        |j                  t        j                  «       «      j                  «       dg«       y )	Né   é   ©r   r   ©r   r   ©r   r   r   r   ©r(   r)   ©r(   r(   ©r(   r)   r(   r(   )Úexecuter   Úinsertr   r!   r   ÚselectÚfetchall)ÚselfÚ
+connections     r$   Útest_insertzUnicodeSchemaTest.test_insertY   sÔ   € Ø×Ñœ2Ÿ9™9›;°!ÀQÑ(GÔHØ×Ñœ2Ÿ9™9›;¨a°aÑ(8Ô9Ø×ÑÜI‰I‹Kà#$Ø*+Ø !Ø%&ñ	ô	
+ô 	ˆJ×ÑœrŸy™y›{Ó+×4Ñ4Ó6¸¸ÔAÜˆJ×ÑœrŸy™y›{Ó+×4Ñ4Ó6¸¸ÔAÜˆJ×ÑœrŸy™y›{Ó+×4Ñ4Ó6¸¸ÕGr&   c                 ó¸  — |j                  t        j                  «       dddœ«       |j                  t        j                  «       dddœ«       |j                  t        j                  «       dddddœ«       |j                  t        j                  «       «      j                  «       }t        |j                  t        j                  d      d«       t        |j                  t        j                  d      d«       |j                  t        j                  «       «      j                  «       }t        |j                  t        j                  d      d«       t        |j                  t        j                  d	      d«       |j                  t        j                  «       «      j                  «       }t        |j                  t        j                  d
+      d«       t        |j                  t        j                  d      d«       t        |j                  t        j                  d      d«       t        |j                  t        j                  d      d«       y )Nr(   r)   r*   r+   r,   r   r   r   r   r   r   r   r   )
+r0   r   r1   r   r!   r2   Úfirstr   Ú_mappingÚc)r4   r5   Úrows      r$   Útest_col_targetingz$UnicodeSchemaTest.test_col_targetingj   sŸ  € Ø×Ñœ2Ÿ9™9›;°!ÀQÑ(GÔHØ×Ñœ2Ÿ9™9›;¨a°aÑ(8Ô9Ø×ÑÜI‰I‹Kà#$Ø*+Ø !Ø%&ñ	ô	
+ğ × Ñ ¤§¡£Ó-×3Ñ3Ó5ˆÜˆCL‰LœŸ™˜g™Ñ'¨Ô+ÜˆCL‰LœŸ™˜nÑ-Ñ.°Ô2à× Ñ ¤§¡£Ó-×3Ñ3Ó5ˆÜˆCL‰LœŸ™˜c™Ñ# QÔ'ÜˆCL‰LœŸ™˜c™Ñ# QÔ'à× Ñ ¤§¡£Ó-×3Ñ3Ó5ˆÜˆCL‰LœŸ™Ğ/Ñ0Ñ1°1Ô5ÜˆCL‰LœŸ™Ğ6Ñ7Ñ8¸!Ô<ÜˆCL‰LœŸ™˜nÑ-Ñ.°Ô2ÜˆCL‰LœŸ™Ğ1Ñ2Ñ3°QÕ7r&   c           	      ój  — |j                  t        j                  «       dddœ«       |j                  t        j                  «       dddœ«       |j                  t        j                  «       dddddœ«       t        «       }t        t        j                  ||¬«      }t        t        j                  ||¬«      }t        t        j                  ||¬«      }|j                  |j                  «       dddœ«       |j                  |j                  «       dddœ«       |j                  |j                  «       dddddœ«       t        |j                  |j                  «       j                  t        d	«      «      «      j                  «       d
+dg«       t        |j                  |j                  «       j                  t        d	«      «      «      j                  «       ddg«       t        |j                  |j                  «       j                  t        d«      «      «      j                  «       ddg«       y )Né   é   r*   r+   r,   )Úautoload_withr(   r)   r   )r>   r?   r-   )r>   r>   r.   r   )r>   r?   r>   r>   r/   )r0   r   r1   r   r!   r   r   Únamer   r2   Úorder_byr   r3   )r4   r5   ÚmetaÚtt1Útt2Útt3s         r$   Útest_reflectzUnicodeSchemaTest.test_reflect…   sº  € Ø×Ñœ2Ÿ9™9›;°!ÀQÑ(GÔHØ×Ñœ2Ÿ9™9›;¨a°aÑ(8Ô9Ø×ÑÜI‰I‹Kà#$Ø*+Ø !Ø%&ñ	ô	
+ô ‹zˆÜ”B—G‘G˜T°Ô<ˆÜ”B—G‘G˜T°Ô<ˆÜ”B—G‘G˜T°Ô<ˆà×Ñ˜3Ÿ:™:›<°1ÀaÑ)HÔIØ×Ñ˜3Ÿ:™:›<°1ÀaÑ)HÔIØ×ÑØJ‰J‹Là#$Ø*+Ø !Ø%&ñ	ô	
+ô 	Ø×Ñ˜sŸz™z›|×4Ñ4´T¸'³]ÓCÓD×MÑMÓOØVĞô	
+ô 	Ø×Ñ˜sŸz™z›|×4Ñ4´T¸'³]ÓCÓD×MÑMÓOØVĞô	
+ô 	Ø×ÑØ—
+‘
+“×%Ñ%¤dĞ+<Ó&=Ó>óç‰h‹jØ˜<Ğ(õ		
+r&   c                 óx   — t        «       }t        d|t        dt        «      «      }t	        t        |«      d«       y )Nr   r   uX   Table('æ¸¬è©¦', MetaData(), Column('æ¸¬è©¦_id', Integer(), table=<æ¸¬è©¦>), schema=None))r   r   r
+   r   r   Úrepr)r4   rC   Úts      r$   Ú	test_reprzUnicodeSchemaTest.test_repr²   s3   € Ü‹zˆÜ. $¬Ğ/@Ä'Ó(JÓKˆÜÜ‹Gğõ	
+r&   N)Ú__name__Ú
+__module__Ú__qualname__Ú__requires__Ú__backend__Úclassmethodr%   r6   r<   rG   rK   © r&   r$   r   r      s5   „ Ø#€LØ€Kàñ=ó ğ=ò~Hò"8ò6+
+óZ
+r&   r   N)Ú
+sqlalchemyr   r   r   r   r   Úsqlalchemy.testingr   r	   Úsqlalchemy.testing.schemar
+   r   Ú
+TablesTestr   rR   r&   r$   ú<module>rW      s6   ğõ İ !İ İ İ İ "İ 'İ ,İ +ôh
+˜×+Ñ+õ h
+r&                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              !<arch>
+/               1526076392  0     0     0       212       `
+       ˜  b  b  	  	  Æ  Æ__lib32_libdbgeng_a_iname __head_lib32_libdbgeng_a _DebugCreate@8 __imp__DebugCreate@8 _DebugConnectWide@12 __imp__DebugConnectWide@12 _DebugConnect@12 __imp__DebugConnect@12  dgzft.o/        1526076392  0     0     100666  580       `
+L            .text                                 0`.data                               @ 0À.bss                                € 0À.idata$4                         @ 0À.idata$5                         @ 0À.idata$7                         @ 0À        dbgeng.dll  .file       şÿ  gfake              .text                            .data                            .bss                             .idata$4                        .idata$5                        .idata$7                                          __lib32_libdbgeng_a_iname dgzfh.o/        1526076392  0     0     100666  653       `
+L     6       .text                                 0`.data                               @ 0À.bss                                € 0À.idata$2                      @ 0À.idata$5                            @ 0À.idata$4                            @ 0À                                          .file       şÿ  gfake              hname           fthunk          .text                            .data                            .bss                             .idata$2                       .idata$4        .idata$5                                       7   __head_lib32_libdbgeng_a __lib32_libdbgeng_a_iname 
+dgzfs00002.o/   1526076392  0     0     100666  621       `
+L     x  
+     .text              ,  P           0`.data                               @ 0À.bss                                € 0À.idata$7           4  Z           0À.idata$5           8  d           0À.idata$4           <  n           0À.idata$6           @                 Àÿ%                 DebugCreate              	                    .text           .data           .bss            .idata$7        .idata$5        .idata$4        .idata$6                                          (            A   _DebugCreate@8 __imp__DebugCreate@8 __head_lib32_libdbgeng_a 
+dgzfs00001.o/   1526076392  0     0     100666  637       `
+L     |  
+     .text              ,  T           0`.data                               @ 0À.bss                                € 0À.idata$7           4  ^           0À.idata$5           8  h           0À.idata$4           <  r           0À.idata$6           @                 Àÿ%                 DebugConnectWide             	                    .text           .data           .bss            .idata$7        .idata$5        .idata$4        .idata$6                                          4            M   _DebugConnectWide@12 __imp__DebugConnectWide@12 __head_lib32_libdbgeng_a 
+dgzfs00000.o/   1526076392  0     0     100666  625       `
+L     x  
+     .text              ,  P           0`.data                               @ 0À.bss                                € 0À.idata$7           4  Z           0À.idata$5           8  d           0À.idata$4           <  n           0À.idata$6           @                 Àÿ%                 DebugConnect             	                    .text           .data           .bss            .idata$7        .idata$5        .idata$4        .idata$6                                          ,            E   _DebugConnect@12 __imp__DebugConnect@12 __head_lib32_libdbgeng_a 
+                                                                                                                                                                                                                                                                                                                                                                                                            Ë
+    ¦ñŞf@  ã                  óª  — d dl mZ d dlZddlmZ ddlmZ ddlmZ ddlm	Z	 ddlm
+Z
+ dd	lmZ dd
+lmZ ddlmZ ddlmZ ddlmZ ddlmZ ddlmZ ddlmZ ddlmZ  ej2                  «       Z G d„ dej6                  «      Z G d„ de«      Z G d„ de«      Z G d„ de«      Z G d„ dee«      Z  G d„ dee«      Z! G d„ d e«      Z" G d!„ d"e
+«      Z#y)#é    )ÚannotationsNé   )ÚARRAY)Ú_DECIMAL_TYPES)Ú_FLOAT_TYPES)Ú
+_INT_TYPES)Ú	PGDialect)ÚPGExecutionContext)ÚHSTORE)Ú_SpaceVector)Ú
+INT2VECTOR)Ú	OIDVECTORé   )Úexc)Útypes)Úutil)Ú
+processorsc                  ó   — e Zd Zd„ Zd„ Zy)Ú_PsycopgNumericc                 ó   — y ©N© )ÚselfÚdialects     úCLib\site-packages\sqlalchemy\dialects\postgresql\_psycopg_common.pyÚbind_processorz_PsycopgNumeric.bind_processor   s   € Øó    c                óZ  — | j                   r_|t        v r.t        j                  t        j
+                  | j                  «      S |t        v s|t        v ry t        j                  d|z  «      ‚|t        v ry |t        v s|t        v rt        j                  S t        j                  d|z  «      ‚)NzUnknown PG numeric type: %d)Ú	asdecimalr   r   Úto_decimal_processor_factoryÚdecimalÚDecimalÚ_effective_decimal_return_scaler   r   r   ÚInvalidRequestErrorÚto_float)r   r   Úcoltypes      r   Úresult_processorz _PsycopgNumeric.result_processor"   s¥   € Ø>Š>Øœ,Ñ&Ü!×>Ñ>Ü—O‘O T×%IÑ%Ióğ ğ œNÑ*¨g¼Ñ.Càä×-Ñ-Ø1°GÑ;óğ ğ œ,Ñ&àØœNÑ*¨g¼Ñ.CÜ!×*Ñ*Ğ*ä×-Ñ-Ø1°GÑ;óğ r   N)Ú__name__Ú
+__module__Ú__qualname__r   r'   r   r   r   r   r      s   „ òór   r   c                  ó   — e Zd ZdZy)Ú_PsycopgFloatÚfloatN)r(   r)   r*   Ú__visit_name__r   r   r   r,   r,   ;   s   „ ØNr   r,   c                  ó(   ‡ — e Zd Zˆ fd„Zˆ fd„Zˆ xZS )Ú_PsycopgHStorec                ó<   •— |j                   ry t        ‰| 	  |«      S r   )Ú_has_native_hstoreÚsuperr   )r   r   Ú	__class__s     €r   r   z_PsycopgHStore.bind_processor@   s   ø€ Ø×%Ò%Øä‘7Ñ)¨'Ó2Ğ2r   c                ó>   •— |j                   ry t        ‰| 	  ||«      S r   )r2   r3   r'   )r   r   r&   r4   s      €r   r'   z_PsycopgHStore.result_processorF   s!   ø€ Ø×%Ò%Øä‘7Ñ+¨G°WÓ=Ğ=r   )r(   r)   r*   r   r'   Ú__classcell__)r4   s   @r   r0   r0   ?   s   ø„ ô3÷>ğ >r   r0   c                  ó   — e Zd ZdZy)Ú_PsycopgARRAYTN)r(   r)   r*   Úrender_bind_castr   r   r   r8   r8   M   s   „ ØÑr   r8   c                  ó   — e Zd Zy)Ú_PsycopgINT2VECTORN©r(   r)   r*   r   r   r   r;   r;   Q   ó   „ Ør   r;   c                  ó   — e Zd Zy)Ú_PsycopgOIDVECTORNr<   r   r   r   r?   r?   U   r=   r   r?   c                  ó   — e Zd Zd„ Zy)Ú"_PGExecutionContext_common_psycopgc                óš   — dt        t        | «      «      dd  ›dt        t        «       «      dd  ›}| j                  j	                  |«      S )NÚc_é   Ú_)ÚhexÚidÚ_server_side_idÚ_dbapi_connectionÚcursor)r   Úidents     r   Úcreate_server_side_cursorz<_PGExecutionContext_common_psycopg.create_server_side_cursorZ   sC    ô !¤ D£›]¨1¨2Ò.´´OÓ4EÓ0FÀqÀrÑ0JĞKˆØ×%Ñ%×,Ñ,¨UÓ3Ğ3r   N)r(   r)   r*   rL   r   r   r   rA   rA   Y   s   „ ó4r   rA   c                  óÚ   — e Zd ZdZdZdZdZ ej                  e	j                  ej                  eej                  eeeej$                  eeeeei«      Z
+	 	 dd„Zd„ Zd„ Zd„ Zd„ Zd	„ Zd
+„ Zy)Ú_PGDialect_common_psycopgTÚpyformatNc                ó^   — t        j                  | fi |¤ |sd| _        || _        || _        y )NF)r	   Ú__init__r2   Úuse_native_hstoreÚclient_encoding)r   rS   rR   Úkwargss       r   rQ   z"_PGDialect_common_psycopg.__init__x   s2   € ô 	×Ñ˜4Ñ* 6Ò*Ù Ø&+ˆDÔ#Ø!2ˆÔØ.ˆÕr   c                óP  — |j                  dd¬«      }| j                  |«      \  }}|s|j                  rm|si }d|v rt        |d   «      |d<   |j	                  |j                  «       |r3dj                  |«      |d<   dj                  d„ |D «       «      }|r||d<   g |fS dg|fS )	NÚuserÚdbname)ÚusernameÚdatabaseÚportú,Úhostc              3  ó:   K  — | ]  }|rt        |«      nd –— Œ y­w)Ú N)Ústr)Ú.0Úps     r   ú	<genexpr>z@_PGDialect_common_psycopg.create_connect_args.<locals>.<genexpr>’   s   è ø€ Ò&O¸q±¤s¨1¤v¸Ó':Ñ&Oùs   ‚r^   )Útranslate_connect_argsÚ_split_multihost_from_urlÚqueryÚintÚupdateÚjoin)r   ÚurlÚoptsÚ
+multihostsÚ
+multiportsÚcomma_portss         r   Úcreate_connect_argsz-_PGDialect_common_psycopg.create_connect_args„   s³   € Ø×)Ñ)°6ÀHĞ)ÓMˆà!%×!?Ñ!?ÀÓ!DÑˆ
+Já3—9’9ÙØØ˜‰~Ü" 4¨¡<Ó0V‘ØK‰K˜Ÿ	™	Ô"áØ"Ÿx™x¨
+Ó3V‘Ø!Ÿh™hÑ&OÀJÔ&OÓOÙØ#.D˜‘LØ˜:Ğğ D˜$<Ğr   c                 ó   — y)N)Ú
+AUTOCOMMITzREAD COMMITTEDzREAD UNCOMMITTEDzREPEATABLE READÚSERIALIZABLEr   )r   Údbapi_connections     r   Úget_isolation_level_valuesz4_PGDialect_common_psycopg.get_isolation_level_values›   s   € ğ
+r   c                ó   — ||_         y r   ©Ú
+deferrable©r   Ú
+connectionÚvalues      r   Úset_deferrablez(_PGDialect_common_psycopg.set_deferrable¤   ó
+   € Ø %ˆ
+Õr   c                ó   — |j                   S r   ru   )r   rx   s     r   Úget_deferrablez(_PGDialect_common_psycopg.get_deferrable§   s   € Ø×$Ñ$Ğ$r   c                ó   — ||_         y r   )Ú
+autocommitrw   s      r   Ú_do_autocommitz(_PGDialect_common_psycopg._do_autocommitª   r{   r   c                ó,  — d }|j                   }|sd|_         |j                  «       }	 |j                  | j                  «       |j	                  «        |s|j
+                  s||_         y# |j	                  «        |s|j
+                  s||_         w w w xY w©NT)r   rJ   ÚexecuteÚ_dialect_specific_select_oneÚcloseÚclosed)r   rr   rJ   Úbefore_autocommits       r   Údo_pingz!_PGDialect_common_psycopg.do_ping­   s‘   € ØˆØ,×7Ñ7Ğá Ø*.ĞÔ'Ø!×(Ñ(Ó*ˆğ	@ØN‰N˜4×<Ñ<Ô=àL‰LŒNÙ$Ğ-=×-DÒ-DØ.?Ğ Ô+àøğ	 L‰LŒNÙ$Ğ-=×-DÒ-DØ.?Ğ Õ+ğ .EĞ$ús   ©A* Á*)Br‚   )r(   r)   r*   Úsupports_statement_cacheÚsupports_server_side_cursorsÚdefault_paramstyler2   r   Úupdate_copyr	   ÚcolspecsÚsqltypesÚNumericr   ÚFloatr,   r   r0   r   r8   r   r;   r   r?   rQ   rn   rs   rz   r}   r€   rˆ   r   r   r   rN   rN   d   s“   „ Ø#ĞØ#'Ğ à#ĞàĞàˆt×ÑØ×Ñà×Ñ˜oØN‰N˜MØNØN‰N˜MØĞ*ØĞ(ğ	
+ó
+€Hğ Øó
+/ò ò.
+ò&ò%ò&ór   rN   )$Ú
+__future__r   r!   Úarrayr   ÚPGARRAYÚbaser   r   r   r	   r
+   Úhstorer   Ú
+pg_catalogr   r   r   r^   r   r   r   r   Úenginer   ÚcounterrH   r   r   r,   r0   r8   r;   r?   rA   rN   r   r   r   ú<module>r™      s±   ğõ #ã å #İ  İ İ İ İ $İ İ $İ "İ !İ İ !İ İ  à$—,‘,“.€ôh×&Ñ&ô ô:Oô ô>Vô >ôGô ô	˜ zô 	ô	˜ iô 	ô4Ğ);ô 4ôW 	õ Wr                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              <?xml version="1.0" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>ENGINE_add</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:" />
+</head>
+
+<body>
+
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a>
+    <ul>
+      <li><a href="#Reference-counting-and-handles">Reference counting and handles</a></li>
+      <li><a href="#Default-implementations">Default implementations</a></li>
+      <li><a href="#Application-requirements">Application requirements</a></li>
+      <li><a href="#Advanced-configuration-support">Advanced configuration support</a></li>
+    </ul>
+  </li>
+  <li><a href="#ENVIRONMENT">ENVIRONMENT</a></li>
+  <li><a href="#RETURN-VALUES">RETURN VALUES</a></li>
+  <li><a href="#SEE-ALSO">SEE ALSO</a></li>
+  <li><a href="#HISTORY">HISTORY</a></li>
+  <li><a href="#COPYRIGHT">COPYRIGHT</a></li>
+</ul>
+
+<h1 id="NAME">NAME</h1>
+
+<p>ENGINE_get_DH, ENGINE_get_DSA, ENGINE_by_id, ENGINE_get_cipher_engine, ENGINE_get_default_DH, ENGINE_get_default_DSA, ENGINE_get_default_RAND, ENGINE_get_default_RSA, ENGINE_get_digest_engine, ENGINE_get_first, ENGINE_get_last, ENGINE_get_next, ENGINE_get_prev, ENGINE_new, ENGINE_get_ciphers, ENGINE_get_ctrl_function, ENGINE_get_digests, ENGINE_get_destroy_function, ENGINE_get_finish_function, ENGINE_get_init_function

@@ -1,0 +1,1413 @@
+chlfo_freq=4.531
+pitchlfo_depth=10
+pitchlfo_delay=1
+pitchlfo_fade=1.0
+
+<region>
+sample=../libs/Iowa/samples/Trombone-solo/Trombone-sus.mf.F#2-PB-loop.wav
+pitch_keycenter=f#2
+lokey=e2
+hikey=a2
+volume=2
+
+<region>
+sample=../libs/Iowa/samples/Trombone-solo/Trombone-sus.mf.C#3-PB-loop.wav
+pitch_keycenter=c#3
+lokey=a#2
+hikey=c#3
+volume=2.5
+
+<region>
+sample=../libs/Iowa/samples/Trombone-solo/Trombone-sus.mf.D3-PB-loop.wav
+pitch_keycenter=d3
+lokey=d3
+hikey=e3
+volume=5
+
+<region>
+sample=../libs/Iowa/samples/Trombone-solo/Trombone-sus.mf.F#3-PB-loop.wav
+pitch_keycenter=f#3
+lokey=f3
+hikey=a3
+volume=6
+
+<region>
+sample=../libs/Iowa/samples/Trombone-solo/Trombone-sus.mf.C#4-PB-loop.wav
+pitch_keycenter=c#4
+lokey=a#3
+hikey=d4
+volume=3.5
+
+<region>
+sample=../libs/Iowa/samples/Trombone-solo/Trombone-sus.mf.E4-PB-loop.wav
+pitch_keycenter=e4
+lokey=d#4
+hikey=e4
+volume=2
+
+<region>
+sample=../libs/Iowa/samples/Trombone-solo/Trombone-sus.mf.F#4-PB-loop.wav
+pitch_keycenter=f#4
+lokey=f4
+hikey=f#4
+volume=0.5
+
+<region>
+sample=../libs/Iowa/samples/Trombone-solo/Trombone-sus.mf.G4-PB-loop.wav
+pitch_keycenter=g4
+lokey=g4
+hikey=g4
+volume=2.5
+
+<region>
+sample=../libs/Iowa/samples/Trombone-solo/Trombone-sus.mf.G#4-PB-loop.wav
+pitch_keycenter=g#4
+lokey=g#4
+hikey=a#4
+volume=-1
+
+<region>
+sample=../libs/Iowa/samples/Trombone-solo/Trombone-sus.mf.C5-PB-loop.wav
+pitch_keycenter=c5
+lokey=b4
+hikey=f5
+volume=0.5
+
+
+
+
+
+
+//==============================================================
+// Solo Trombone : Accent
+//
+//   This is a combination of
+//
+//     trombone-SOLO-sustain.sfz
+//     trombone-SOLO-staccato.sfz
+//
+//   by Paul Battersby - http://virtualplaying.com
+//
+//==============================================================
+
+//==============================================================
+// Trombone Solo : Staccato
+//
+// mapped by Paul Battersby - http://virtualplaying.com
+//
+// The samples from University of Iowa Electronic Music Studios - http://theremin.music.uiowa.edu/index.html
+// are "freely available"
+//
+// This file by Paul Battersby - http://virtualplaying.com
+// is licensed under:
+//
+// Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)
+// https://creativecommons.org/licenses/by-sa/4.0/
+//
+//==============================================================
+
+// -------------- high vel --------------
+<group>
+// sustain by default
+sw_default=c6
+sw_lokey=c6
+sw_hikey=e6
+sw_last=d#6
+sw_label=D#6 Accent
+
+// randomize like a real player(PB)
+pitch_random=12
+amp_random=1.5
+delay_random=0.012
+
+
+
+// create staccato from sustain (PB)
+ampeg_attack=0.03
+ampeg_sustain=0
+ampeg_hold=0.12
+ampeg_decay=0.3
+ampeg_release=0.3
+// randomize like a real player(PB)
+pitch_random=12
+amp_random=1.5
+delay_random=0.012
+
+
+
+xfin_lovel=63
+xfin_hivel=127
+
+
+
+volume=-3
+
+
+
+<region>
+sample=../libs/Iowa/samples/Trombone-solo/Trombone-sus.ff.F#2-PB-loop.wav
+pitch_keycenter=f#2
+lokey=e2
+hikey=a2
+volume=0
+
+<region>
+sample=../libs/Iowa/samples/Trombone-solo/Trombone-sus.ff.C#3-PB-loop.wav
+ampeg_attack=0.01
+// shorten waveform by skipping early part of the attack phase (PB)
+offset=1000
+
+pitch_keycenter=c#3
+lokey=a#2
+hikey=c#3
+volume=4.5
+
+<region>
+sample=../libs/Iowa/samples/Trombone-solo/Trombone-sus.ff.D3-PB-loop.wav
+pitch_keycenter=d3
+lokey=d3
+hikey=e3
+volume=5
+
+<region>
+sample=../libs/Iowa/samples/Trombone-solo/Trombone-sus.ff.F#3-PB-loop.wav
+pitch_keycenter=g3
+lokey=f3
+hikey=a3
+volume=9
+
+<region>
+sample=../libs/Iowa/samples/Trombone-solo/Trombone-sus.ff.C#4-PB-loop.wav
+pitch_keycenter=c#4
+lokey=a#3
+hikey=d4
+volume=6
+
+<region>
+sample=../libs/Iowa/samples/Trombone-solo/Trombone-sus.ff.E4-PB-loop.wav
+pitch_keycenter=e4
+lokey=d#4
+hikey=e4
+volume=3.5
+
+<region>
+sample=../libs/Iowa/samples/Trombone-solo/Trombone-sus.ff.F#4-PB-loop.wav
+pitch_keycenter=f#4
+lokey=f4
+hikey=f#4
+volume=5.5
+
+<region>
+sample=../libs/Iowa/samples/Trombone-solo/Trombone-sus.ff.G4-PB-loop.wav
+pitch_keycenter=g4
+lokey=g4
+hikey=g4
+volume=3
+
+<region>
+sample=../libs/Iowa/samples/Trombone-solo/Trombone-sus.ff.G#4-PB-loop.wav
+pitch_keycenter=g#4
+lokey=g#4
+hikey=a#4
+volume=5.5
+
+<region>
+sample=../libs/Iowa/samples/Trombone-solo/Trombone-sus.ff.C5-PB-loop.wav
+pitch_keycenter=c5
+lokey=b4
+hikey=f5
+volume=1
+
+// -------------- low vel --------------
+<group>
+// sustain by default
+sw_default=c6
+sw_lokey=c6
+sw_hikey=e6
+sw_last=d#6
+sw_label=D#6 Accent
+
+// randomize like a real player(PB)
+pitch_random=12
+amp_random=1.5
+delay_random=0.012
+
+
+
+// create staccato from sustain (PB)
+ampeg_attack=0.03
+ampeg_sustain=0
+ampeg_hold=0.12
+ampeg_decay=0.3
+ampeg_release=0.3
+// randomize like a real player(PB)
+pitch_random=12
+amp_random=1.5
+delay_random=0.012
+
+
+
+
+// fade out
+xfout_lovel=63
+xfout_hivel=127
+
+
+
+volume=-3
+
+
+
+<region>
+sample=../libs/Iowa/samples/Trombone-solo/Trombone-sus.mf.F#2-PB-loop.wav
+pitch_keycenter=f#2
+lokey=e2
+hikey=a2
+volume=-1
+
+<region>
+sample=../libs/Iowa/samples/Trombone-solo/Trombone-sus.mf.C#3-PB-loop.wav
+ampeg_attack=0.01
+// shorten waveform by skipping early part of the attack phase (PB)
+offset=1000
+
+pitch_keycenter=c#3
+lokey=a#2
+hikey=c#3
+volume=5.5
+
+<region>
+sample=../libs/Iowa/samples/Trombone-solo/Trombone-sus.mf.D3-PB-loop.wav
+pitch_keycenter=d3
+lokey=d3
+hikey=e3
+volume=9
+
+<region>
+sample=../libs/Iowa/samples/Trombone-solo/Trombone-sus.mf.F#3-PB-loop.wav
+pitch_keycenter=f#3
+lokey=f3
+hikey=a3
+volume=10
+
+<region>
+sample=../libs/Iowa/samples/Trombone-solo/Trombone-sus.mf.C#4-PB-loop.wav
+pitch_keycenter=c#4
+lokey=a#3
+hikey=d4
+volume=3.5
+
+<region>
+sample=../libs/Iowa/samples/Trombone-solo/Trombone-sus.mf.E4-PB-loop.wav
+pitch_keycenter=e4
+lokey=d#4
+hikey=e4
+volume=-1
+
+<region>
+sample=../libs/Iowa/samples/Trombone-solo/Trombone-sus.mf.F#4-PB-loop.wav
+pitch_keycenter=f#4
+lokey=f4
+hikey=f#4
+volume=0.5
+
+<region>
+sample=../libs/Iowa/samples/Trombone-solo/Trombone-sus.mf.G4-PB-loop.wav
+pitch_keycenter=g4
+lokey=g4
+hikey=g4
+volume=4.5
+
+<region>
+sample=../libs/Iowa/samples/Trombone-solo/Trombone-sus.mf.G#4-PB-loop.wav
+pitch_keycenter=g#4
+lokey=g#4
+hikey=a#4
+volume=3
+
+<region>
+sample=../libs/Iowa/samples/Trombone-solo/Trombone-sus.mf.C5-PB-loop.wav
+pitch_keycenter=c5
+lokey=b4
+hikey=f5
+volume=-0.5
+
+
+
+
+
+//==============================================================
+// Trombone Solo : Sustain
+//
+// mapped by Paul Battersby - http://virtualplaying.com
+//
+// The samples from University of Iowa Electronic Music Studios - http://theremin.music.uiowa.edu/index.html
+// are "freely available"
+//
+// This file by Paul Battersby - http://virtualplaying.com
+// is licensed under:
+//
+// Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)
+// https://creativecommons.org/licenses/by-sa/4.0/
+//
+//==============================================================
+
+// -------------- high vel --------------
+<group>
+// sustain by default
+sw_default=c6
+sw_lokey=c6
+sw_hikey=e6
+sw_last=d#6
+sw_label=D#6 Accent
+
+// allow time for accent before sustain takes over
+delay=0.10
+// randomize like a real player(PB)
+pitch_random=12
+amp_random=1.5
+delay_random=0.012
+
+
+
+xfin_lovel=100
+xfin_hivel=127
+
+ampeg_attack=0.30
+ampeg_release=0.6
+volume=0
+
+// add some vibrato (PB)
+pitchlfo_freq=4.531
+pitchlfo_depth=10
+pitchlfo_delay=1
+pitchlfo_fade=1.0
+
+<region>
+sample=../libs/Iowa/samples/Trombone-solo/Trombone-sus.ff.F#2-PB-loop.wav
+pitch_keycenter=f#2
+lokey=e2
+hikey=a2
+volume=3
+
+<region>
+sample=../libs/Iowa/samples/Trombone-solo/Trombone-sus.ff.C#3-PB-loop.wav
+pitch_keycenter=c#3
+lokey=a#2
+hikey=c#3
+volume=1.5
+
+<region>
+sample=../libs/Iowa/samples/Trombone-solo/Trombone-sus.ff.D3-PB-loop.wav
+pitch_keycenter=d3
+lokey=d3
+hikey=e3
+volume=1
+
+<region>
+sample=../libs/Iowa/samples/Trombone-solo/Trombone-sus.ff.F#3-PB-loop.wav
+pitch_keycenter=g3
+lokey=f3
+hikey=a3
+volume=5
+
+<region>
+sample=../libs/Iowa/samples/Trombone-solo/Trombone-sus.ff.C#4-PB-loop.wav
+pitch_keycenter=c#4
+lokey=a#3
+hikey=d4
+volume=6
+
+<region>
+sample=../libs/Iowa/samples/Trombone-solo/Trombone-sus.ff.E4-PB-loop.wav
+pitch_keycenter=e4
+lokey=d#4
+hikey=e4
+volume=6.5
+
+<region>
+sample=../libs/Iowa/samples/Trombone-solo/Trombone-sus.ff.F#4-PB-loop.wav
+pitch_keycenter=f#4
+lokey=f4
+hikey=f#4
+volume=5.5
+
+<region>
+sample=../libs/Iowa/samples/Trombone-solo/Trombone-sus.ff.G4-PB-loop.wav
+pitch_keycenter=g4
+lokey=g4
+hikey=g4
+volume=1
+
+<region>
+sample=../libs/Iowa/samples/Trombone-solo/Trombone-sus.ff.G#4-PB-loop.wav
+pitch_keycenter=g#4
+lokey=g#4
+hikey=a#4
+volume=1.5
+
+<region>
+sample=../libs/Iowa/samples/Trombone-solo/Trombone-sus.ff.C5-PB-loop.wav
+delay=0.15
+
+pitch_keycenter=c5
+lokey=b4
+hikey=f5
+volume=2
+
+// -------------- low vel --------------
+<group>
+// sustain by default
+sw_default=c6
+sw_lokey=c6
+sw_hikey=e6
+sw_last=d#6
+sw_label=D#6 Accent
+
+// allow time for accent before sustain takes over
+delay=0.10
+// randomize like a real player(PB)
+pitch_random=12
+amp_random=1.5
+delay_random=0.012
+
+
+
+
+// fade out
+xfout_lovel=100
+xfout_hivel=127
+
+ampeg_attack=0.30
+ampeg_release=0.6
+volume=0
+
+// add some vibrato (PB)
+pitchlfo_freq=4.531
+pitchlfo_depth=10
+pitchlfo_delay=1
+pitchlfo_fade=1.0
+
+<region>
+sample=../libs/Iowa/samples/Trombone-solo/Trombone-sus.mf.F#2-PB-loop.wav
+pitch_keycenter=f#2
+lokey=e2
+hikey=a2
+volume=2
+
+<region>
+sample=../libs/Iowa/samples/Trombone-solo/Trombone-sus.mf.C#3-PB-loop.wav
+pitch_keycenter=c#3
+lokey=a#2
+hikey=c#3
+volume=2.5
+
+<region>
+sample=../libs/Iowa/samples/Trombone-solo/Trombone-sus.mf.D3-PB-loop.wav
+pitch_keycenter=d3
+lokey=d3
+hikey=e3
+volume=5
+
+<region>
+sample=../libs/Iowa/samples/Trombone-solo/Trombone-sus.mf.F#3-PB-loop.wav
+pitch_keycenter=f#3
+lokey=f3
+hikey=a3
+volume=6
+
+<region>
+sample=../libs/Iowa/samples/Trombone-solo/Trombone-sus.mf.C#4-PB-loop.wav
+pitch_keycenter=c#4
+lokey=a#3
+hikey=d4
+volume=3.5
+
+<region>
+sample=../libs/Iowa/samples/Trombone-solo/Trombone-sus.mf.E4-PB-loop.wav
+pitch_keycenter=e4
+lokey=d#4
+hikey=e4
+volume=2
+
+<region>
+sample=../libs/Iowa/samples/Trombone-solo/Trombone-sus.mf.F#4-PB-loop.wav
+pitch_keycenter=f#4
+lokey=f4
+hikey=f#4
+volume=0.5
+
+<region>
+sample=../libs/Iowa/samples/Trombone-solo/Trombone-sus.mf.G4-PB-loop.wav
+pitch_keycenter=g4
+lokey=g4
+hikey=g4
+volume=2.5
+
+<region>
+sample=../libs/Iowa/samples/Trombone-solo/Trombone-sus.mf.G#4-PB-loop.wav
+pitch_keycenter=g#4
+lokey=g#4
+hikey=a#4
+volume=-1
+
+<region>
+sample=../libs/Iowa/samples/Trombone-solo/Trombone-sus.mf.C5-PB-loop.wav
+delay=0.15
+
+pitch_keycenter=c5
+lokey=b4
+hikey=f5
+volume=0.5
+
+
+
+
+
+
+//==============================================================
+// Trombone Solo : Staccato
+//
+// mapped by Paul Battersby - http://virtualplaying.com
+//
+// The samples from University of Iowa Electronic Music Studios - http://theremin.music.uiowa.edu/index.html
+// are "freely available"
+//
+// This file by Paul Battersby - http://virtualplaying.com
+// is licensed under:
+//
+// Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)
+// https://creativecommons.org/licenses/by-sa/4.0/
+//
+//==============================================================
+
+// -------------- high vel --------------
+<group>
+// sustain by default
+sw_default=c6
+sw_lokey=c6
+sw_hikey=e6
+sw_last=e6
+sw_label=E6 Staccato
+
+// randomize like a real player(PB)
+pitch_random=12
+amp_random=1.5
+delay_random=0.012
+
+
+
+// create staccato from sustain (PB)
+ampeg_attack=0.03
+ampeg_sustain=0
+ampeg_hold=0.12
+ampeg_decay=0.3
+ampeg_release=0.3
+// randomize like a real player(PB)
+pitch_random=12
+amp_random=1.5
+delay_random=0.012
+
+
+
+xfin_lovel=63
+xfin_hivel=127
+
+
+
+volume=0
+
+
+
+<region>
+sample=../libs/Iowa/samples/Trombone-solo/Trombone-sus.ff.F#2-PB-loop.wav
+pitch_keycenter=f#2
+lokey=e2
+hikey=a2
+volume=3
+
+<region>
+sample=../libs/Iowa/samples/Trombone-solo/Trombone-sus.ff.C#3-PB-loop.wav
+ampeg_attack=0.01
+// shorten waveform by skipping early part of the attack phase (PB)
+offset=1000
+
+pitch_keycenter=c#3
+lokey=a#2
+hikey=c#3
+volume=7.5
+
+<region>
+sample=../libs/Iowa/samples/Trombone-solo/Trombone-sus.ff.D3-PB-loop.wav
+pitch_keycenter=d3
+lokey=d3
+hikey=e3
+volume=8
+
+<region>
+sample=../libs/Iowa/samples/Trombone-solo/Trombone-sus.ff.F#3-PB-loop.wav
+pitch_keycenter=g3
+lokey=f3
+hikey=a3
+volume=12
+
+<region>
+sample=../libs/Iowa/samples/Trombone-solo/Trombone-sus.ff.C#4-PB-loop.wav
+pitch_keycenter=c#4
+lokey=a#3
+hikey=d4
+volume=9
+
+<region>
+sample=../libs/Iowa/samples/Trombone-solo/Trombone-sus.ff.E4-PB-loop.wav
+pitch_keycenter=e4
+lokey=d#4
+hikey=e4
+volume=6.5
+
+<region>
+sample=../libs/Iowa/samples/Trombone-solo/Trombone-sus.ff.F#4-PB-loop.wav
+pitch_keycenter=f#4
+lokey=f4
+hikey=f#4
+volume=8.5
+
+<region>
+sample=../libs/Iowa/samples/Trombone-solo/Trombone-sus.ff.G4-PB-loop.wav
+pitch_keycenter=g4
+lokey=g4
+hikey=g4
+volume=6
+
+<region>
+sample=../libs/Iowa/samples/Trombone-solo/Trombone-sus.ff.G#4-PB-loop.wav
+pitch_keycenter=g#4
+lokey=g#4
+hikey=a#4
+volume=8.5
+
+<region>
+sample=../libs/Iowa/samples/Trombone-solo/Trombone-sus.ff.C5-PB-loop.wav
+pitch_keycenter=c5
+lokey=b4
+hikey=f5
+volume=4
+
+// -------------- low vel --------------
+<group>
+// sustain by default
+sw_default=c6
+sw_lokey=c6
+sw_hikey=e6
+sw_last=e6
+sw_label=E6 Staccato
+
+// randomize like a real player(PB)
+pitch_random=12
+amp_random=1.5
+delay_random=0.012
+
+
+
+// create staccato from sustain (PB)
+ampeg_attack=0.03
+ampeg_sustain=0
+ampeg_hold=0.12
+ampeg_decay=0.3
+ampeg_release=0.3
+// randomize like a real player(PB)
+pitch_random=12
+amp_random=1.5
+delay_random=0.012
+
+
+
+
+// fade out
+xfout_lovel=63
+xfout_hivel=127
+
+
+
+volume=0
+
+
+
+<region>
+sample=../libs/Iowa/samples/Trombone-solo/Trombone-sus.mf.F#2-PB-loop.wav
+pitch_keycenter=f#2
+lokey=e2
+hikey=a2
+volume=2
+
+<region>
+sample=../libs/Iowa/samples/Trombone-solo/Trombone-sus.mf.C#3-PB-loop.wav
+ampeg_attack=0.01
+// shorten waveform by skipping early part of the attack phase (PB)
+offset=1000
+
+pitch_keycenter=c#3
+lokey=a#2
+hikey=c#3
+volume=8.5
+
+<region>
+sample=../libs/Iowa/samples/Trombone-solo/Trombone-sus.mf.D3-PB-loop.wav
+pitch_keycenter=d3
+lokey=d3
+hikey=e3
+volume=12
+
+<region>
+sample=../libs/Iowa/samples/Trombone-solo/Trombone-sus.mf.F#3-PB-loop.wav
+pitch_keycenter=f#3
+lokey=f3
+hikey=a3
+volume=13
+
+<region>
+sample=../libs/Iowa/samples/Trombone-solo/Trombone-sus.mf.C#4-PB-loop.wav
+pitch_keycenter=c#4
+lokey=a#3
+hikey=d4
+volume=6.5
+
+<region>
+sample=../libs/Iowa/samples/Trombone-solo/Trombone-sus.mf.E4-PB-loop.wav
+pitch_keycenter=e4
+lokey=d#4
+hikey=e4
+volume=2
+
+<region>
+sample=../libs/Iowa/samples/Trombone-solo/Trombone-sus.mf.F#4-PB-loop.wav
+pitch_keycenter=f#4
+lokey=f4
+hikey=f#4
+volume=3.5
+
+<region>
+sample=../libs/Iowa/samples/Trombone-solo/Trombone-sus.mf.G4-PB-loop.wav
+pitch_keycenter=g4
+lokey=g4
+hikey=g4
+volume=7.5
+
+<region>
+sample=../libs/Iowa/samples/Trombone-solo/Trombone-sus.mf.G#4-PB-loop.wav
+pitch_keycenter=g#4
+lokey=g#4
+hikey=a#4
+volume=6
+
+<region>
+sample=../libs/Iowa/samples/Trombone-solo/Trombone-sus.mf.C5-PB-loop.wav
+pitch_keycenter=c5
+lokey=b4
+hikey=f5
+volume=2.5
+
+
+
+
+
+                                                                                                                                                     ken"
+CSRF_COOKIE_AGE = 60 * 60 * 24 * 7 * 52
+CSRF_COOKIE_DOMAIN = None
+CSRF_COOKIE_PATH = "/"
+CSRF_COOKIE_SECURE = False
+CSRF_COOKIE_HTTPONLY = False
+CSRF_COOKIE_SAMESITE: Optional[str] = ...
+CSRF_HEADER_NAME = "HTTP_X_CSRFTOKEN"
+CSRF_TRUSTED_ORIGINS: List[str] = ...
+CSRF_USE_SESSIONS = False
+
+############
+# MESSAGES #
+############
+
+# Class to use as messages backend
+MESSAGE_STORAGE = "django.contrib.messages.storage.fallback.FallbackStorage"
+
+# Default values of MESSAGE_LEVEL and MESSAGE_TAGS are defined within
+# django.contrib.messages to avoid imports in this settings file.
+
+###########
+# LOGGING #
+###########
+
+# The callable to use to configure logging
+LOGGING_CONFIG = "logging.config.dictConfig"
+
+# Custom logging configuration.
+LOGGING: Dict[str, Any] = ...
+
+# Default exception reporter filter class used in case none has been
+# specifically assigned to the HttpRequest instance.
+DEFAULT_EXCEPTION_REPORTER_FILTER = "django.views.debug.SafeExceptionReporterFilter"
+
+###########
+# TESTING #
+###########
+
+# The name of the class to use to run the test suite
+TEST_RUNNER = "django.test.runner.DiscoverRunner"
+
+# Apps that don't need to be serialized at test database creation time
+# (only apps with migrations are to start with)
+TEST_NON_SERIALIZED_APPS: List[str] = ...
+
+############
+# FIXTURES #
+############
+
+# The list of directories to search for fixtures
+FIXTURE_DIRS: List[str] = ...
+
+###############
+# STATICFILES #
+###############
+
+# A list of locations of additional static files
+STATICFILES_DIRS: List[str] = ...needed.
+  if (_progressViewOffset == 0.f) {
+    return;
+  }
+
+  // progressViewOffset must be converted from the ScrollView parent's coordinate space to
+  // the coordinate space of the RefreshControl. This ensures that the control respects any
+  // offset in the view hierarchy, and that progressViewOffset is not inadvertently applied
+  // multiple times.
+  UIView *scrollView = self.superview;
+  UIView *target = scrollView.superview;
+  CGPoint rawOffset = CGPointMake(0, _progressViewOffset);
+  CGPoint converted = [self convertPoint:rawOffset fromView:target];
+  self.frame = CGRectOffset(self.frame, 0, converted.y);
+}
+
+- (NSString *)title
+{
+  return _title;
+}
+
+- (void)setTitle:(NSString *)title
+{
+  _title = title;
+  [self _updateTitle];
+}
+
+- (void)setTitleColor:(UIColor *)color
+{
+  _titleColor = color;
+  [self _updateTitle];
+}
+
+- (void)_updateTitle
+{
+  if (!_title) {
+    return;
+  }
+
+  NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
+  if (_titleColor) {
+    attributes[NSForegroundColorAttributeName] = _titleColor;
+  }
+
+  self.attributedTitle = [[NSAttributedString alloc] initWithString:_title attributes:attributes];
+}
+
+- (void)setRefreshing:(BOOL)refreshing
+{
+  if (_currentRefreshingState != refreshing) {
+    [self setCurrentRefreshingState:refreshing];
+
+    if (refreshing) {
+      if (!_isInitialRender) {
+        [self beginRefreshingProgrammatically];
+      }
+    } else {
+      [self endRefreshingProgrammatically];
+    }
+  }
+}
+
+- (void)setCurrentRefreshingState:(BOOL)refreshing
+{
+  _currentRefreshingState = refreshing;
+  _currentRefreshingStateTimestamp = _currentRefreshingStateClock++;
+}
+
+- (void)setProgressViewOffset:(CGFloat)offset
+{
+  _progressViewOffset = offset;
+  [self _applyProgressViewOffset];
+}
+
+- (void)refreshControlValueChanged
+{
+  [self setCurrentRefreshingState:super.refreshing];
+  _refreshingProgrammatically = NO;
+
+  if (_onRefresh) {
+    _onRefresh(nil);
+  }
+}
+
+@end
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 /*
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+#import <React/RCTUIManager.h>
+
+#import "RCTRefreshControl.h"
+#import "RCTRefreshControlManager.h"
+#import "RCTRefreshableProtocol.h"
+
+@implementation RCTRefreshControlManager
+
+RCT_EXPORT_MODULE()
+
+- (UIView *)view
+{
+  return [RCTRefreshControl new];
+}
+
+RCT_EXPORT_VIEW_PROPERTY(onRefresh, RCTDirectEventBlock)
+RCT_EXPORT_VIEW_PROPERTY(refreshing, BOOL)
+RCT_EXPORT_VIEW_PROPERTY(tintColor, UIColor)
+RCT_EXPORT_VIEW_PROPERTY(title, NSString)
+RCT_EXPORT_VIEW_PROPERTY(titleColor, UIColor)
+RCT_EXPORT_VIEW_PROPERTY(progressViewOffset, CGFloat)
+
+RCT_EXPORT_METHOD(setNativeRefreshing : (nonnull NSNumber *)viewTag toRefreshing : (BOOL)refreshing)
+{
+  [self.bridge.uiManager addUIBlock:^(RCTUIManager *uiManager, NSDictionary<NSNumber *, UIView *> *viewRegistry) {
+    UIView *view = viewRegistry[viewTag];
+
+    if ([view conformsToProtocol:@protocol(RCTRefreshableProtocol)]) {
+      [(id<RCTRefreshableProtocol>)view setRefreshing:refreshing];
+    } else {
+      RCTLogError(@"view must conform to protocol RCTRefreshableProtocol");
+    }
+  }];
+}
+
+@end
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       #!/usr/bin/env node
+// Standalone semver comparison program.
+// Exits successfully and prints matching version(s) if
+// any supplied version is valid and passes all tests.
+
+var argv = process.argv.slice(2)
+
+var versions = []
+
+var range = []
+
+var inc = null
+
+var version = require('../package.json').version
+
+var loose = false
+
+var includePrerelease = false
+
+var coerce = false
+
+var identifier
+
+var semver = require('../semver')
+
+var reverse = false
+
+var options = {}
+
+main()
+
+function main () {
+  if (!argv.length) return help()
+  while (argv.length) {
+    var a = argv.shift()
+    var indexOfEqualSign = a.indexOf('=')
+    if (indexOfEqualSign !== -1) {
+      a = a.slice(0, indexOfEqualSign)
+      argv.unshift(a.slice(indexOfEqualSign + 1))
+    }
+    switch (a) {
+      case '-rv': case '-rev': case '--rev': case '--reverse':
+        reverse = true
+        break
+      case '-l': case '--loose':
+        loose = true
+        break
+      case '-p': case '--include-prerelease':
+        includePrerelease = true
+        break
+      case '-v': case '--version':
+        versions.push(argv.shift())
+        break
+      case '-i': case '--inc': case '--increment':
+        switch (argv[0]) {
+          case 'major': case 'minor': case 'patch': case 'prerelease':
+          case 'premajor': case 'preminor': case 'prepatch':
+            inc = argv.shift()
+            break
+          default:
+            inc = 'patch'
+            break
+        }
+        break
+      case '--preid':
+        identifier = argv.shift()
+        break
+      case '-r': case '--range':
+        range.push(argv.shift())
+        break
+      case '-c': case '--coerce':
+        coerce = true
+        break
+      case '-h': case '--help': case '-?':
+        return help()
+      default:
+        versions.push(a)
+        break
+    }
+  }
+
+  var options = { loose: loose, includePrerelease: includePrerelease }
+
+  versions = versions.map(function (v) {
+    return coerce ? (semver.coerce(v) || { version: v }).version : v
+  }).filter(function (v) {
+    return semver.valid(v)
+  })
+  if (!versions.length) return fail()
+  if (inc && (versions.length !== 1 || range.length)) { return failInc() }
+
+  for (var i = 0, l = range.length; i < l; i++) {
+    versions = versions.filter(function (v) {
+      return semver.satisfies(v, range[i], options)
+    })
+    if (!versions.length) return fail()
+  }
+  return success(versions)
+}
+
+function failInc () {
+  console.error('--inc can only be used on a single version with no range')
+  fail()
+}
+
+function fail () { process.exit(1) }
+
+function success () {
+  var compare = reverse ? 'rcompare' : 'compare'
+  versions.sort(function (a, b) {
+    return semver[compare](a, b, options)
+  }).map(function (v) {
+    return semver.clean(v, options)
+  }).map(function (v) {
+    return inc ? semver.inc(v, inc, options, identifier) : v
+  }).forEach(function (v, i, _) { console.log(v) })
+}
+
+function help () {
+  console.log(['SemVer ' + version,
+    '',
+    'A JavaScript implementation of the https://semver.org/ specification',
+    'Copyright Isaac Z. Schlueter',
+    '',
+    'Usage: semver [options] <version> [<version> [...]]',
+    'Prints valid versions sorted by SemVer precedence',
+    '',
+    'Options:',
+    '-r --range <range>',
+    '        Print versions that match the specified range.',
+    '',
+    '-i --increment [<level>]',
+    '        Increment a version by the specified level.  Level can',
+    '        be one of: major, minor, patch, premajor, preminor,',
+    "        prepatch, or prerelease.  Default level is 'patch'.",
+    '        Only one version may be specified.',
+    '',
+    '--preid <identifier>',
+    '        Identifier to be used to prefix premajor, preminor,',
+    '        prepatch or prerelease version increments.',
+    '',
+    '-l --loose',
+    '        Interpret versions and ranges loosely',
+    '',
+    '-p --include-prerelease',
+    '        Always include prerelease versions in range matching',
+    '',
+    '-c --coerce',
+    '        Coerce a string into SemVer if possible',
+    '        (does not imply --loose)',
+    '',
+    'Program exits successfully if any valid version satisfies',
+    'all supplied ranges, and prints all satisfying versions.',
+    '',
+    'If no satisfying versions are found, then exits failure.',
+    '',
+    'Versions are printed in ascending order, so supplying',
+    'multiple versions to the utility will just sort them.'
+  ].join('\n'))
+}
+                                                                                                                                                                                              origin: *
+access-control-allow-methods: GET
+Access-Control-Expose-Headers: Rbx-Cdn-Provider
+Rbx-Cdn-Provider: hw
+Timing-Allow-Origin: *
+ID3    1TPE4    ˛ˇ < M A G I C > < E n c o d e r > M e t a d a t a   e n b e d d e d   b y   O n e   L l a m a   M e d i a   I n c . ,   S o u n d M i n e r < / E n c o d e r > < U R L > f i l e : / / Y : \ p r o c e s s i n g \ n o c o v e r a r t \ K P M \ K P M \ m p 3 _ 1 2 8 \ K P M _ K P M _ 0 8 4 7 \ K P M _ K P M _ 0 8 4 7 _ 0 3 7 0 1 . m p 3 < / U R L > < B W D e s c r i p t i o n > K P M _ K P M _ 0 8 4 7 _ 0 3 7 0 1   C l a s s i c a l   S p e c t a c u l a r   3 0   b y   D a v e   H e w s o n ,   S t u a r t   R o s l y n   o n   A P M     C D   C L A S S I C A L   E V O L U T I O N S :   R E M I X E D ,   K P M   A P M   ( A S C A P ) ,   P o w e r f u l ,   s t i r r i n g   o r c h e s t r a l   r e m i x   w i t h   h e a v y   b e a t s ,   s p i r i t e d   s t r i n g s   a n d   h a r p s i c h o r d   ( s o u r c e   t r a c k :   B a d g e   o f   H o n o u r ,   K P M 8 3 0 - 5 ) .   3 0   s e c o n d   v e r s i o n < / B W D e s c r i p t i o n > < B W O r i g i n a t o r > A P M < / B W O r i g i n a t o r > < B W O r i g i n a t o r R e f > K P M _ K P M _ 0 8 4 7 _ 0 3 7 0 1 < / B W O r i g i n a t o r R e f > < B W D a t e > 2 0 1 3 - 0 1 - 0 7 < / B W D a t e > < B W T i m e > 1 2 : 1 1 : 2 7 < / B W T i m e > < B W C o d i n g H i s t o r y > M e t a d a t a   e m b e d d e d   b y   O n e L l a m a   M e d i a   I n c . ,   N e t m i x   a n d   S o u n d m i n e r < / B W C o d i n g H i s t o r y > < C D T i t l e > C L A S S I C A L   E V O L U T I O N S :   R E M I X E D   -   K P M   8 4 7 < / C D T i t l e > < S o u r c e > K P M _ K P M _ 0 8 4 7 _ 0 3 7 0 1 < / S o u r c e > < T r a c k T i t l e > C l a s s i c a l   S p e c t a c u l a r   3 0 < / T r a c k T i t l e > < C D D e s c r i p t i o n > S u p e r - c h a r g e d   s t r i n g s   a n d   b e a t s < / C D D e s c r i p t i o n > < P u b l i s h e r > K P M   A P M   ( A S C A P ) < / P u b l i s h e r > < C o m p o s e r > H e w s o n ,   D a v e   ( P R S ) ,   R o s l y n ,   S t u a r t   ( P R S ) < / C o m p o s e r > < L i b r a r y > A P M   K P M < / L i b r a r y > < D e s c r i p t i o n > A P M   M O O D S   >   D E T E R M I N E D ,   C O R P O R A T E   >   G E N E R A L   R E C O M M E N D E D   C D S ,   C O R P O R A T E   >   C L A S S I C A L   F U S I O N ,   C O R P O R A T E   >   P R O G R E S S ,   D A N C E   M U S I C   >   D U B S T E P ,   F E A T U R E D   I N S T R U M E N T S   >   H A R P S I C H O R D ,   P R O M O S / C O M M E R C I A L S   -   3 0   >   F I L M   S T Y L E S ,   S P O R T S   >   A C T I O N ,   S P O R T S   >   T E N S I O N ,   M O V E M E N T   >   M A R C H I N G ,   P R O M O S / C O M M E R C I A L S   -   3 0   >   A T M O S P H E R I C ,   T E L E V I S I O N   S T Y L E S   >   I N F O T A I N M E N T ,   C O R P O R A T E   >   P R E S T I G I O U S ,   D A N C E   M U S I C   >   R E M I X E S ,   P o w e r f u l ,   s t i r r i n g   o r c h e s t r a l   r e m i x   w i t h   h e a v y   b e a t s ,   s p i r i t e d   s t r i n g s   a n d   h a r p s i c h o r d   ( s o u r c e   t r a c k :   B a d g e   o f   H o n o u r ,   K P M 8 3 0 - 5 ) .   3 0   s e c o n d   v e r s i o n   -   K P M   8 4 7 < / D e s c r i p t i o n > < L o n g I D > C l a s s i c a l   S p e c t a c u l a r   3 0   3 7 . 0 1 < / L o n g I D > < / M A G I C >TPUB      KPM APM (ASCAP)TOAL      KPM_KPM_0847_03701TALB   (   CLAS# 8.1.0
+* Update `package:dtd` to `2.0.0`
+* Update `package:unified_analytics` to `5.8.8`
+
+# 8.0.1
+* **Breaking change:** rename `ServerApi.getCompleted` to `ServerApi.success` and make the
+`value` parameter optional.
+* **Breaking change:** remove the `String? dtdUri` parameter from `ServerApi.handle` and replace
+it with a parameter `DTDConnectionInfo? dtd`.
+* Introduce a new typedef `DTDConnectionInfo`.
+* Add a new API `apiNotifyForVmServiceConnection` that DevTools will call when a
+VM service connection is connected or disconnected from the client.
+* Add a helper method `packageRootFromFileUriString`.
+* Refactor yaml extension methods.
+* Add intent filters checking functionality for deep link validation.
+
+# 7.0.0
+* **Breaking change:** remove the `ServerApi.setCompleted` method that was a
+duplicate of `ServerApi.getCompleted`.
+* **Breaking change:** add required parameter `analytics` to `ServerApi.handle`, which accepts
+an instance of `Analytics` from `package:unified_analytics`.
+* Add the ability to send debug logs in DevTools server request responses. 
+* Add an optional positional parameter `logs` to the `ServerApi.serverError` method.
+* Include debug logs with the `ExtensionsApi.apiServeAvailableExtensions` API response.
+* Devtools server API `apiGetConsentMessage` added to fetch the consent message from
+  `package:unified_analytics`.
+* Devtools server API `apiMarkConsentMessageAsShown` added to mark the consent message for
+  `package:unified_analytics` as shown to enable telemetry.
+
+# 6.0.4
+* Add `apiGetDtdUri` to the server api.
+* Add a description and link to documentation to the `devtools_options.yaml` file that
+is created in a user's project.
+
+# 6.0.3
+* `CompareMixin` is now generic, implementing `Comparable<T>` instead of
+  `Comparable<dynamic>`, and it's operators each therefore accept a `T`
+  argument.
+* `SemanticVersion` now mixes in `CompareMixin<SemanticVersion>`, and it's
+  `compareTo` method therefore now accepts a `SemanticVersion`.
+* Fix an issue parsing file paths that could prevent extensions from being detected.
+* Bump `package:vm_service` dependency to `>=13.0.0 <15.0.0`.
+
+# 6.0.2
+* Fix an issue parsing file paths on Windows that could prevent extensions from being detected.
+
+# 6.0.1
+* Bump minimum Dart SDK version to `3.3.0-91.0.dev` and minimum Flutter SDK version to `3.17.0-0.0.pre`.
+* Add field `isPublic` to `DevToolsExtensionConfig`.
+* Add validation for `DevToolsExtensionConfig.name` field to ensure it is a valid
+Dart package name.
+* Pass warnings and errors for DevTools extension APIs from the DevTools server to
+DevTools app.
+
+# 6.0.0
+* Bump `package:vm_service` dependency to ^13.0.0.
+* Remove `ServiceCreator` typedef and replace usages with `VmServiceFactory` typedef from `package:vm_service`.
+
+# 5.0.0
+* Split deeplink exports into `devtools_deeplink_io.dart` and `devtools_deeplink.dart`.
+* Bump `package:vm_service` to ^12.0.0.
+* Adds `DeeplinkApi.androidAppLinkSettings`, `DeeplinkApi.iosBuildOptions`, and
+  `DeeplinkApi.iosUniversalLinkSettings` endpoints to ServerApi.
+* Add shared integration test utilities to `package:devtools_shared`. These test
+utilities are exported as part of the existing `devtools_test_utils.dart` library.
+
+# 4.0.1
+* Override equality operator and hashCode for `DevToolsExtensionConfig`
+to be based on the values of its fields.
+
+# 4.0.0
+* Bump `package:extension_discovery` version to ^2.0.0
+* Adds a `DeeplinkApi.androidBuildVariants` endpoint to ServerApi.
+* **BREAKING CHANGE**:
+  - `ServerApi.handle` parameters `extensionsManager` and `api` were converted to named
+    parameters
+  - Adds a new required named parameter `deeplinkManager` to `ServerApi.handle`.
+
+# 3.0.1
+* Bump `package:extension_discovery` version to ^1.0.1
+
+# 3.0.0
+* Separate extension-related libraries into those that require `dart:io` (exported as
+`devtools_extensions_io.dart`) and those that do not (exported as `devtools_extensions.dart`).
+
+Prior to version 3.0.0, `package:devtools_shared` was versioned in lockstep with
+`package:devtools_app`. Both of these packages are developed as part of the broader
+[DevTools project](https://github.com/flutter/devtools). To see changes and commits
+for `package:devtools_shared`, prior to version 3.0.0 please view the git log
+[here](https://github.com/flutter/devtools/commits/master/packages/devtools_shared).
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    FGRK           Track24_Textures        RCT3 StaticShape    shs RCT3 SceneryItemVisual    svd                                   0   W   ôb     u   â`     ñ   }a     ∑   a     P       â`      !_         a      9_         }a      -_        ôb      _     ú   =`  ÿ   E_  A`  Ê   E_  e`  ÿ   E_  i`  ˝   E_  Õ`  ÿ   Y_  —`    Y_  ı`  ÿ   Y_  ˘`  ˝   Y_  Ya    m_  ]a  ˝   m_  …a  u   Å_  b  ∑   Å_  Yb  ñ   Å_  ú  9`  a`  ˇˇˇˇ                   {   ›  w  √  ˇˇˇˇ                  ≥     7  c3  )  ¿Íè>k≠ø˜p@Çã5@Z”Ï?.  Ë        1`     7  Á?  …`  Ò`  ˇˇˇˇ                   K      W@  „J  ˇˇˇˇ                        cO  £Q  )  ¿≈ó>MJ≠ø„ﬂ@ì5@=ÌÏ?[   8        ¡`     @  √R  Ua  ˇˇˇˇ                  0   l   $S  ‰Y  )  ¿¡ã?ÃÃ¨øTR@E_5@ÃÃ¨?0   l         Qa     ‰R  Ù^  ¡a  	b  Qb                                    Ä?  Ä?      Ä?      Ä?  †A                                             Ä?  Ä?      Ä?      Ä?  pB                :                             Ä?  Ä?      Ä?      Ä?  ˙C                      Ä?  Ä?       µa                          V   _  _  !_  %_  -_  1_  9_  =_  I_  Q_  ]_  e_  q_  y_  Ö_  ç_  ï_  ô_  ù_  °_  •_  ©_  ≠_  ±_  µ_  π_  Ω_  ¡_  ≈_  …_  Õ_  —_  ’_  Ÿ_  ›_  ·_  Â_  È_  Ì_  Ò_  ı_  ˘_  ˝_  `  `  	`  `  `  `  `  `  !`  %`  )`  -`  1`  5`  Y`  ]`  Å`  Ö`  ±`  π`  Ω`  ¡`  ≈`  È`  Ì`  a  a  Aa  Ia  Ma  Qa  ua  ya  •a  ≠a  ±a  µa  πa  Ωa  ≈a  b  Ub  ±b  _  E_  +   FilesAndLines       M c:\coding\rct3\resource\tracks\coasters\Track24\Medslopetiltleft2straight.SVD          P c:\coding\rct3\resource\tracks\coasters\Track24\Medslopetiltleft2straight_HI.SHS 0      M c:\coding\rct3\resource\tracks\coasters\Track24\Medslopetiltleft2straight.SVD    ˇˇˇˇE_  ï_  Õ    FilesAndLines       P c:\coding\rct3\resource\tracks\coasters\Track24\Medslopetiltleft2straight_HI.SHS <      M c:\coding\rct3\resource\tracks\coasters\Track24\Medslopetiltleft2straight.SVD    ˇˇˇˇï_  1`  Õ    FilesAndLines       P c:\coding\rct3\resource\tracks\coasters\Track24\Medslopetiltleft2straight_HI.SHS x      M c:\coding\rct3\resource\tracks\coasters\Track24\Medslopetiltleft2straight.SVD    ˇˇˇˇ1`  9`  o    FilesAndLines       P c:\coding\rct3\resource\tracks\coasters\Track24\Medslopetiltleft2straight_HI.SHS ˇˇˇˇ9`  a`  o    FilesAndLines       P c:\coding\rct3\resource\tracks\coasters\Track24\Medslopetiltleft2straight_HI.SHS ˇˇˇˇa`  â`  o    FilesAndLines       P c:\coding\rct3\resource\tracks\coasters\Track24\Medslopetiltleft2straight_HI.SHS ˇˇˇˇâ`  ¡`  o    FilesAndLines       P c:\coding\rct3\resource\tracks\coasters\Track24\Medslopetiltleft2straight_HI.SHS ˇˇˇˇ¡`  …`  o    FilesAndLines       P c:\coding\rct3\resource\tracks\coasters\Track24\Medslopetiltleft2straight_ME.SHS ˇˇˇˇ…`  Ò`  o    FilesAndLines       P c:\coding\rct3\resource\tracks\coasters\Track24\Medslopetiltleft2straight_ME.SHS ˇˇˇˇÒ`  a  o    FilesAndLines       P c:\coding\rct3\resource\tracks\coasters\Track24\Medslopetiltleft2straight_ME.SHS ˇˇˇˇa  Qa  o    FilesAndLines       P c:\coding\rct3\resource\tracks\coasters\Track24\Medslopetiltleft2straight_ME.SHS ˇˇˇˇQa  Ua  o    FilesAndLines       P c:\coding\rct3\resource\tracks\coasters\Track24\Medslopetiltleft2straight_LO.SHS ˇˇˇˇUa  }a  o    FilesAndLines       P c:\coding\rct3\resource\tracks\coasters\Track24\Medslopetiltleft2straight_LO.SHS ˇˇˇˇ}a  µa  o    FilesAndLines       P c:\coding\rct3\resource\tracks\coasters\Track24\Medslopetiltleft2straight_LO.SHS ˇˇˇˇµa  ¡a  q    FilesAndLines       M c:\coding\rct3\resource\tracks\coasters\Track24\Medslopetiltleft2straight.SVD    ˇˇˇˇ¡a  	b  q    FilesAndLines       M c:\coding\rct3\resource\tracks\coasters\Track24\Medslopetiltleft2straight.SVD    ˇˇˇˇ	b  Qb  q    FilesAndLines       M c:\coding\rct3\resource\tracks\coasters\Track24\Medslopetiltleft2straight.SVD    ˇˇˇˇQb  ôb  q    FilesAndLines       M c:\coding\rct3\resource\tracks\coasters\Track24\Medslopetiltleft2straight.SVD    ˇˇˇˇôb  Õb  q    FilesAndLines       M c:\coding\rct3\resource\tracks\coasters\Track24\Medslopetiltleft2straight.SVD    ˇˇˇˇ                                                                                                                                                                                                                                                                                                                                                                                                                                                 ÌÉ˚p   SQLite format 3   @     +              +                                                 + .;Ò   ˚    ˚ùläW&
+ÎN
+∞	(Û˙≈ÔË¶œû                                 É##ÖotableConnectionsConnectionsCREATE TABLE Connections (
+    ID guid NOT NULL, 
+    DATA TEXT,
+    CreationDate Datetime NOT NULL DEFAULT (datetime('now', 'localtime')),
+    ModifiedDate datetime null,
+    ModifiedUsername varchar null,
+    ModifiedLoggedUserName varchar null, SecurityGroup guid REFERENCES GroupInfo(ID), CustomerID guid null REFERENCES Customer(ID),
+    PRIMARY KEY (ID)
+)Ö''â{tableConnectionLogConnectionLogCREATE TABLE ConnectionLog (
+	ID guid NOT NULL,
+    Username varchar,
+    MachineName varchar,
+    Message varchar,
+    MessageType int,
+    ConnectionName varchar, 
+    ConnectionTypeName varchar, 
+    ConnectionID uniqueidentifier,
+    StartDateTime datetime,
+    EndDateTime datetime,
+    CreationDate Datetime NOT NULL DEFAULT (datetime('now', 'localtime')), LoggedUserName varchar NULL, GroupName varchar NULL, StartDateTimeUTC datetime NULL, EndDateTimeUTC datetime NULL, Cost money NULL, Comment text NULL, Prompt text NULL, Data text NULL, CustomerID guid null REFERENCES Customer(ID),
+    PRIMARY KEY (ID)
+  )ÅvÉ?tableCustomerCustomerCREATE TABLE Customer (
+	ID guid NOT NULL,
+    SecurityGroup guid null REFERENCES GroupInfo(ID),
+    Data Text,
+    CreationDate Datetime NOT NULL DEFAULT (datetime('now', 'localtime')),
+    PRIMARY KEY (ID)
+  )/C indexsqlite_autoindex_Customer_1CustomerÉ)Ü%tableUserInfoUserInfoCREATE TABLE UserInfo (
+	ID guid NOT NULL,
+    Name varchar,
+    FullName varchar,
+    IsAdministrator bit NOT NULL,
+    CanAdd bit NOT NULL,
+    CanDelete bit NOT NULL,
+    CanEdit bit NOT NULL,
+    CreationDate Datetime NOT NULL DEFAULT (datetime('now', 'localtime')), ConnectionOverrides text NULL, CustomSecurity text NULL, IsTemplate bit NOT NULL default(0),
+    PRIMARY KEY (ID)
+)3G! indexsqlite_autoindex_Credential_1CredentialÅv!!É7tableCredentialCredentialCREATE TABLE Credential (
+	ID guid NOT NULL,
+    Description varchar,
+    Username varchar,
+    Data Text,
+    CreationDate Datetime NOT NULL DEFAULT (datetime('now', 'localtime')),
+    PRIMARY KEY (ID)
+  )3G! indexsqlite_autoindex_Attachment_1AttachmentÉ!!ÖUtableAttachmentAttachmentCREATE TABLE Attachment (
+	ID guid NOT NULL,
+    Description varchar,
+    ConnectionID uniqueidentifier,
+    CreationDate datetime NOT NULL DEFAULT (datetime('now', 'localtime')),
+    CreationDateTime datetime NOT NULL DEFAULT (datetime('now', 'localtime')),
+    Username varchar, Data text NULL, AttachmentData image NULL,
+    PRIMARY KEY (ID)
+  )9M' indexsqlite_autoindex_ConnectionLog_1ConnectionLog9
+M' indexsqlite_autoindex_UserGroupInfo_1UserGroupInfoÇ.	''ÑtableUserGroupInfoUserGroupInfo
+CREATE TABLE UserGroupInfo (
+	ID guid NOT NULL,
+    UserInfoID guid REFERENCES UserInfo(ID),
+    GroupInfoID guid REFERENCES GroupInfo(ID),
+    CreationDate Datetime NOT NULL DEFAULT (datetime('now', 'localtime')), Settings text NULL,
+    PRIMARY KEY (ID)
+)1E indexsqlite_autoindex_GroupInfo_1GroupInfo	Å_ÉtableGroupInfoGroupInfoCREATE TABLE GroupInfo (
+	ID guid NOT NULL,
+    Name varchar,
+    Description varchar,
+    CreationDate Datetime NOT NULL DEFAULT (datetime('now', 'localtime')),
+    PRIMARY KEY (ID)
+  )/C indexsqlite_autoindex_UserInfo_1UserInfo7K% indexsqlite_autoindex_DatabaseInfo_1DatabaseInfoÅ%%ÅQtableDatabaseInfoDat       GDEFh6l‡ ÔD  ∂GPOS≤…' Ú¸  Ò GSUB˙r∞ ‰»  4bOS/2]v÷ã i‘   `cmaphå∂~ j4  2ÿcvt  ÷Ö ûÿ   *fpgmYú7 ù  sgaspˇˇ  Ô<   glyf“Œ¥   ,˜headæÑ Kÿ   6hhea
+Ü+ i∞   $hmtx¨….  L  †loca±dÕ .4  §maxp	á~ .    name€í5h ü  bpostW;m ¶h  H—prep2§6 ûÄ   V  ^  î  	    q ∏  EX∏ /π  >Y∏  EX∏  /π   >Yπ  Ù∫    9∫    9∏ π  Ù∫    9∫    9∫    9∫    9013!%!/#73?!^º˛Ñ8];==5V˛‰Wyìì`ëî˝l'§ii©\õõ˛Ñ ˝¸˛¸    ì 	  T ∏  EX∏ /π  >Y∏  EX∏ /π  >Y∏  EX∏ /π  >Y∫   9∏ /π  Ù∫   9013'.'#3#'!º*Í*$$»Ë.Ë0M˛˚NÑ{{;l==l˛Aì˝m‚‚  a  ì   # W ∏  EX∏ /π  >Y∏  EX∏  /π   >Y∫ "   9∏ "/∫ 	 " 9π  Ù∏ π  Ù∏  π  Ù01332#32654&+32654&+a≤dv42@N#@Z8ëreY^[wÖcqnfÖìMS4MOE0H0qC:F9˝πJOHD  7ˇÙü ! 9 ∏  EX∏ 
+/π 
+ >Y∏  EX∏  /π   >Y∏ 
+π  Ù∏  π  Ù01".54>32.#"3267K=fI()Jg?:XH-6W=  <U53P$&^0YON~Y/0%*MnEEoN+)(,2  a  %ì   5 ∏  EX∏ /π  >Y∏  EX∏  /π   >Yπ  Ù∏ π  Ù01332#'32>54.+aôLqJ$$JpLlfCa>>aCfì.VxKK{W/'+NkA@jL*  a  ‘ì  M ∏  EX∏ /π  >Y∏  EX∏  /π   >Y∏ π  Ù∫    9∏ /π  Ù∏  π 	 Ù013!!!!!ai˛≈˛¯Eì(˘(˛ﬁ(  a  »ì 	 C ∏  EX∏ /π  >Y∏  EX∏  /π   >Y∏ π  Ù∫    9∏ /π  Ù013!!!!ag˛«	˛˜ì(˛˙(˛√  7ˇÙü ' M ∏  EX∏ 
+/π 
+ >Y∏  EX∏  /π   >Y∏ 
+π  Ù∏  π  Ù∫ " 
+  9∏ "/π $ Ù01".54>32.#"32675#53R@hJ)*LlA!7,#H69Z?" =Y8-Oû c0YON~Y/(*MnEEoN+Õ'˛˚!*  a  ì  I ∏  EX∏ /π  >Y∏  EX∏  /π   >Y∫ 
+   9∏ 
+/π  Ù∏ ∏ –∏  ∏ –0133!3#!a.a..˛üì˛ﬂ!˝mJ˛∂  a   èì  % ∏  EX∏ /π  >Y∏  EX∏  /π   >Y0133a.ì˝m  )ˇÙoì  + ∏  EX∏ /π  >Y∏  EX∏  /π   >Yπ  Ù01"&'732653À7R#=*<:.'>2/*$IQ€˛ (E4  a  $ì  e ∏  EX∏ /π  >Y∏  EX∏ /π  >Y∏  EX∏  /π   >Y∏  EX∏ 	/π 	 >Y∫    9∫   	9∫ 
+  	9013333#a.?7“Ô5⁄Üì˛ínÙ˛a|ô„  a  øì  + ∏  EX∏ /π  >Y∏  EX∏  /π   >Yπ  Ù0133!a.0ì˝ï(  a  aì  ] ∏  EX∏ /π  >Y∏  EX∏  /π   >Y∫   9∫   9∏ ∏ –∏  ∏ –∫    9∫    901333>73#467##'#aAäâB-3é(è4ì˛}$I%%I$É˝m±)_*ì˛xàì*_)˛O  a  ì  [ ∏  EX∏ /π  >Y∏  EX∏ 	/π 	 >Y∏  EX∏  /π   >Y∏  EX∏ /π  >Y∫   	9∫    901333.53#'#a0J,0˛ÍJì˛/É0`0î˝m—É0[0˛g  7ˇÙVü  ' 5 ∏  EX∏ 
+/π 
+ >Y∏  EX∏  /π   >Yπ  Ù∏ 
+π  Ù01".54>32'2>54.#"F;dH((Hd;<dH((Hd<2R;  ;R22S:  :S1ZNN}Y//Y}NNZ1*+OoEDnM**MnDEoO+  a  ˆì   C ∏  EX∏ /π  >Y∏  EX∏  /π   >Y∫    9∏ /π  Ù∏ π  Ù01332+32654&+a¶8Y=!|o|qebefmì,F3a_˛ÂBHQS>  7ˇdXü  6 K ∏  EX∏ #/π # >Y∏  EX∏ /π  >Yª 0   +∏ π   Ù∏ #π 
+ Ù∏ ∏ -–01%2>54.#"".'.54>323267F2R;  ;R22S:  :SÛ*E7)6ZA$(Hd;<dH($A[7W>
++,OqEDnM**MnDEqO,∑'55YzJN}Y//Y}NJzY524'  a  ì   Y ∏  EX∏ /π  >Y∏  EX∏  /π   >Y∫    9∏ /∫ 
+  9∏  ∏ –∏ π  Ù∏ π  Ù01332##32654&+aΩ1P8[N∂5≥åÉX]^WÉì*B/OZ
+˛Œ/˛—UGIJ=  .ˇÙ‡ü 3 I ∏  EX∏ /π  >Y∏  EX∏  /π   >Yπ  Ù∫    9∏ π ! Ù∫ )   901"&'732654./.54>32.#"Hp'$d9LX +d0'3G)<]N2BP"(d2&7N7, )0I;+-	'5%$;+/ %@6(,(7&&A/    Ôì  3 ∏  EX∏ /π  >Y∏  EX∏  /π   >Y∏ π  Ù∏ –013#5!#Ô“““k((˝ï  _ˇÙì  3 ∏  EX∏ /π  >Y∏  EX∏  /π   >Yπ  Ù∏ ∏ –01".5332>53<*P>%.0?#$A1+&>P=fMñ˛oBW55WBë˛jMf=    Áì  @ ∏  EX∏ /π  >Y∏  EX∏ /π  >Y∏  EX∏  /π   >Y∫    901333>73ﬁ⁄1z
+	z/ÿì˛<e<656Å˝m    ‰ì ! v ∏  EX∏ /π  >Y∏  EX∏ /π  >Y∏  EX∏ /π  >Y∏  EX∏  /π   >Y∏  EX∏ /π  >Y∫    9∫   9∫    901333>733>73#.'#≤ñ0Sg/gS-ì3x		vì˛|6k66k6Ñ˛|6k66k6Ñ˝mƒ'G''G'˛<    —ì  [ ∏  EX∏ /π  >Y∏  EX∏ /π  >Y∏  EX∏  /π   >Y∏  EX∏ /π  >Y∫    9∫   901333>?3#'.'#∆∏2ll/∏∆2ssU>¬((¬˛¿˛≠ 22     ºì  @ ∏  EX∏ /π  >Y∏  EX∏ /π  >Y∏  EX∏  /π   >Y∫    901333>?3»≈1d!$d/∆àŒ$F$$F$Œ˛x˛ı  2  Íì 	 E ∏  EX∏ /π  >Y∏  EX∏ 	/π 	 >Yπ  Ù∏ –∏ /∏ π  Ù∏ –∏ /0135!5!!2{˛¶î˛ÑP(˝∞(  :ˇÙúÏ ! / q ∏  EX∏ /π  	>Y∏  EX∏  /π   >Y∫    9∏ /∏ π  Ù∏  ∏ –∏ /∫    9∏  π " Ù∏ π % Ù∏ π & Ù01".54674.#"'>32#'#'2675≈2&ï°,$0P%.6*:$&%U(*L-Jf>% 2"PS7+&!	2C'˛Õ>-&(&£	$.$  \ˇÙÏœ  % z ∏  EX∏ /π  	>Y∏  EX∏ /π  >Y∏  EX∏  /π   >Y∫    9∏ –∏ /∫ 
+   9∏  π  Ù∏ π  Ù∏ 
+π " Ù∏ π # Ù01"&'##3>32'2>54.#"#K"%,%T-``";M,$>,$:)$N+(J!1œ–^,Öp=`C#' :Q1,L7)&˛„"  4ˇÙßÏ ! 9 ∏  EX∏ 
+/π 
+ 	>Y∏  EX∏  /π   >Y∏ 
+π  Ù∏  π  Ù01".54>32.#"3267/O;!$<O,2B8#%?/-A'&AL"@]<<_@"$9N0/N8 $  4ˇÙƒœ  % z ∏  EX∏ /π  	>Y∏  EX∏ /π  >Y∏  EX∏  /π   >Y∫    9∏ –∏ /∫    9∏  π  Ù∏ π  Ù∏ π  Ù∏ π  Ù01"&54>32'53#'#'267.#"˚[l";M+,A$,&O*(I&&C#$>-(;Åz:^B#X∆˝1>-')&"!9O-0N7  4ˇÙΩÏ  % Q ∏  EX∏ 
+/π 
+ 	>Y∏  EX∏  /π   >Y∫  
+  9∏ /∏  π  Ù∏ π  Ù∏ 
+π ! Ù01".54>32!3267!4&#".Q<##;K(Vb˛¶/B)'?EÊ2LA8-"A];;^A#tj		-M7"][0D  !   €  V ∏  EX∏ /π  	>Y∏  EX∏ /π  >Y∏  EX∏ /π  >Y∏ π  Ù∏ –∏ ∏ –∏ π  Ù013#5754632.#"3#cBB>9##&%oo∫"kHH$85h&˛F  4ˇ‹Ï 5 I [ á ∏  EX∏ /π  	>Y∏  EX∏  /π   >Y∫ -   9∏ -/π R Ù∫  - R9∫ $   9∏ $/π 6 Ù∫  6 $9∏ ∏ –∏ /π  Ù∏ π @ Ù∏  π J Ù01"&54675.54675.54>323##"&';22>54.#"2>54&+"&'˘[j&!$%.># £p-=#+&6gQM ;T;-"!.-"#-%(B.96g!!SÁH= <& -D,%>-%?&%>-
+
+ %59;-£$22""12$˛Å"+(!4-8  \  øœ  X ∏  EX∏ /π  	>Y∏  EX∏ /π  >Y∏  EX∏  /π   >Y∫    9∏ –∏ π  Ù∏ π  Ù0133>32#4&#"\,&N2KF,3;+F,œ˛∆&1Z^˛Ã.MI--˛ñ  K   õ£   5 ∏  EX∏ /π  	>Y∏  EX∏  /π   >Y∏ ∏ –∏ /∏ 
+–0133"&54632\,‡˛ T ˇﬂˇ ú£   ; ∏  EX∏ /π  	>Y∏  EX∏  /π   >Yπ  Ù∏ ∏ –∏ /∏ –01"&'732653"&54632"	(-4Â$;.6˝«GE9  \  ƒœ  e ∏  EX∏ /π  	>Y∏  EX∏ /π  >Y∏  EX∏  /π   >Y∏  EX∏ 	/π 	 >Y∫    9∫   	9∫ 
+  	9013333#\,Ì3ú∂1ülœ˝Ó#æ˛ﬁ~É  \ˇÙ ∑œ  + ∏  EX∏ /π  >Y∏  EX∏  /π   >Yπ  Ù01"533:7ó;,	Lè˝k$  \  ÿÏ   â ∏  EX∏ /π  	>Y∏  EX∏  /π   >Y∫    9∏ ∏ –∏ /∫ 
+   9∏ –∏ /∏  ∏ –∏ /∏ –∏ /∏ π  Ù∏ 
+π  Ù∏ π  Ù∏ π  Ù01333>32>32#4&#"#4&#"\& O(:>*O*ê-47AO,48AO‡J%15--5∏˛Ã.MIZ˛ñ.MIZ˛ñ  \  øÏ  [ ∏  EX∏ /π  	>Y∏  EX∏  /π   >Y∫    9∏ ∏ –∏ /∏  ∏ –∏ /∏ π  Ù∏ π  Ù01333>32#4&#"\&%N2KF,3;+F,‡J%1Z^˛Ã.MI--˛ñ  4ˇÙ„Ï  ' 5 ∏  EX∏ 
+/π 
+ 	>Y∏  EX∏  /π   >Yπ  Ù∏ 
+π  Ù01".54>32'2>54.#"+N;##;N++O;##;O+$?--?$$>-->"@]<<_@""@_<<]@"'8N/0N99N0/N8  \ˇ'ÏÏ  $ ~ ∏  EX∏ /π  	>Y∏  EX∏ /π  >Y∏  EX∏  /π   >Y∏ ∏ –∏ /∫   9∫   9∏ π  Ù∏ π  Ù∏ π ! Ù∏ π " Ù0133>32#"&'72>54.#"\&#S-``";M*"H&é$>,$:)$M,*HŸπ<,Öp=`C#˛¯Ù :Q1,L7)&˛„"  4ˇ'ƒÏ  % ~ ∏  EX∏ /π  	>Y∏  EX∏ /π  >Y∏  EX∏  /π   >Y∫   9∫   9∏ ∏ –∏ /∏ π  Ù∏ π  Ù∏ π  Ù∏ π  Ù0157#"&54>32373'267.#"ò O0[l";M+,A"%√(I&&C#$>-(;Ÿπ_,Åz:^B#,˝GÙ)&"!9O-0N7  \  AÏ  I ∏  EX∏ /π  	>Y∏  EX∏  /π   >Y∫    9∏ ∏ –∏ /∏ ‹∏ π  Ù01333>32.#"\&E+
+ G‡Y-8(7D˛π   ˇÙrÏ 3 I ∏  EX∏ /π  	>Y∏  EX∏  /π   >Yπ  Ù∫    9∏ π   Ù∫ *   901"&'732654.'.54>32.#"–6Z F499")7,(9&&I6%( )8-*<'!#9&"
++/#  /#1%  ˇÙ-k  O |∏ /∏  EX∏ 	/π 	 	>Y∏  EX∏  /π   >Y∏ 	π  Ù∏ 	∏ –∏ ∏ –∏  π  Ù01".5#5?33#3267ﬂ#.KL&ãã!*&6 5"ãã&˛«%	$
+  UˇÙµ‡  S ∏  EX∏ /π  	>Y∏  EX∏  /π   >Yπ 	 Ù∫    9∏ π  Ù∏ ∏ –∏  ∏ –∏ /01"&5332673#'#ÊKF,3:+F*,%#NZ^4˛“MI/3b˛ P*2    ¶‡  @ ∏  EX∏ /π  	>Y∏  EX∏ /π  	>Y∏  EX∏  /π   >Y∫    901333>73¿¥0ll-≤‡˛”#F!!F#-˛     ï‡ ! [ ∏  EX∏ /π  	>Y∏  EX∏  /π   >Y∫    9∏ ∏ –∏  ∏ –∏ ∏ –∫   9∫   !901333>733>73#.'#¶é0V		W5W		U-ä:TS‡˛…!?  ?!7˛…!?  ?!7˛ *#C##E#˛ÿ    â‡  I ∏  EX∏ /π  	>Y∏  EX∏  /π   >Y∏ ∏ –∏  ∏ –∫   9∫    90137'33>?3#'.'#£ñ1NK.ï£1UR˚Âz''zÈ˜É,,É  ˇ%®‡  G ∏  EX∏ /π  	>Y∏  EX∏  /π   >Yπ  Ù∫ 
+   9∫    9∏ ∏ –01"'7326?33>73I
+-<≈0t
+g-æ
+'3€
+'H7*È˛“H  H.˝‰:,    z‡ 	 E ∏  EX∏ /π  	>Y∏  EX∏ 	/π 	 >Yπ  Ù∏ –∏ /∏ π  Ù∏ –∏ /0135#5!!˝6˛Â%¢&˛^'ˇˇ   T&    ı  ˇˇ   T&    ¯  ˇˇ   G&    ˚  ˇˇ   B&    ˝  ˇˇ   &      ˇˇ   &    ˇ  ˇˇ   G&      ˇˇ   g&      ˇˇ   I&      ˇˇ ˇ>ì&    ¸Íˇˇ   _&    
+  ˇˇ   t&    G  ˇˇ   t&    I  ˇˇ   É&    K  ˇˇ   ù&    M  ˇˇ ˇ>G&    '˚   ¸Íˇˇ   ù&    O  ˇˇ   ù&    Q  ˇˇ   ´&    S  ˇˇ   û&    U  ˇˇ ˇ>G&    '   ¸Í  ˇ3*ì  % _ ∏  EX∏ /π  >Y∏  EX∏ /π  >Y∫    +∏ ∏ 	–∫   9∏ /∏ 	∏ –∏ π  Ù∫ #  901"&54>7#'!#33273'.'#È#1M˛˚N.Ë.Ë+%˛¬*Í*$$Õ(*$ 	‚‚ì˝mA
+Q{{;l==l    ˙ì   | ∏  EX∏ /π  >Y∏  EX∏ /π  >Y∏  EX∏ /π  >Y∫   9∏ /π  Ù∫   9∏ π 
+ Ù∫   9∏ /π  Ù∏ π  Ù013#	!!3#!!5#I…=˛⁄mn˛Ÿıı1˛°ﬁwÑÖl8s˛@ì(˘(˛ﬁ(ŸŸˇˇ   ˙V& L   ¯D ˇˇ   ˙& L   ˇD   !  #ì   + _ ∏  EX∏ /π  >Y∏  EX∏ /π  >Yπ   Ù∏ *–∏ –∏ *∏ )–∏ –∏ )∏ &–∏ –∫   &9∏ π  Ù0135#5732#32654&+32654&+3#oNN≤cv:;IU#@Z8ëqfY^[wÖbroeÖ¶¶≤¿NR3LPE0H0rBA@9˝∑LPHF|!ˇˇ aˇaì&    ˛#˝ˇˇ 7ˇ%ü&    (S  ˇˇ 7ˇÙT&    ¯C  ˇˇ 7ˇÙG&    ˚C  ˇˇ 7ˇÙI&    C  ˇˇ 7ˇÙ!&    C  ˇˇ a  %I&    .  ˇˇ aˇ>%ì&    ,¸Íˇˇ aˇa%ì&    ˛,˝ˇˇ %  :ì Û  ˇˇ a  ‘T&    ı  ˇˇ a  ‘T&    ¯  ˇˇ a  ‘G&    ˚  ˇˇ a  ‘I&      ˇˇ a  ‘&      ˇˇ a  ‘&    ˇ  ˇˇ a  ‘G&      ˇˇ a  ‘!&      ˇˇ aˇ>‘ì&    (¸Íˇˇ a  ‘_&    
+  ˇˇ a  ‘B&    ˝  ˇˇ a  Ât&    G  ˇˇ a  ‘t&    I  ˇˇ a  ‘É&    K  ˇˇ a  ‘ù&    M  ˇˇ aˇ>‘G&    '˚   (¸Í  aˇ3·ì   ] ∏  EX∏ /π  >Y∏  EX∏ /π  >Y∫    +∏ π 
+ Ù∫   9∏ /π  Ù∏ π  Ù∏ ∏ –01"&5467!!!!!!#327ü#1,˛Õi˛≈˛¯E!%Õ(*&Bì(˘(˛ﬁ('
+ˇˇ a  ‘±&    Y  ˇˇ 7ˇÙT&    ¯Y  ˇˇ 7ˇÙG&    ˚Z  ˇˇ 7ˇÙG&    Z  ˇˇ 7ˇÙ!&    Z  ˇˇ 7ˇ%ü&    %T  ˇˇ 7ˇÙI&    Z  ˇˇ 7ˇÙ&    ˇZ  ˇˇ 7ˇÙB&    ˝Z    7ˇÙS 7 W ∏  EX∏ 
+/π 
+ >Y∏  EX∏  /π   >Yª    +∏ 
+π # Ù∏  π - Ù∫ 2 
+  9∏ 2/π 4 Ù01".54>32&54632.#".#"32675#53R@hJ)*LlA%;7(
+H69Z?" =Y8-Oû c0YON~Y/
+*/$#%*MnEEoN+Õ'˛˚!*ˇˇ a  G& 	   ˚?  ˇˇ aˇ>ì& 	   ?¸Íˇˇ aˇì& 	   ?¸‡  $  {ì   s ∏  EX∏ /π  >Y∏  EX∏ /π  >Y∫   9∏ /∏ ‹π  Ù∏ –∏ ∏ –∏ ∏ 	–∏ ∏ –∏ ∏ –∏ π  Ù∏ ∏ –015753!533##!#!5!$Q.a.II.˛ü..a˛üÔÉÉÉÉ!˛J˛∂Ô}}ˇˇ    °T& 
+   ıx ˇˇ O   ËT& 
+   ¯x ˇˇˇÒ   ˇG& 
+   ˚x ˇˇˇ”  B& 
+   ˝x ˇˇˇÚ   ˛& 
+   x ˇˇˇ¸   Ù& 
+   ˇx ˇˇ P   †!& 
+   x ˇˇˇÒ   ˇI& 
+   x ˇˇ A   æ_& 
+   
+x ˇˇ Sˇ> üì& 
+    y¸Í  ,ˇ3 ¡ì  5 ∏  EX∏ /π  >Y∏  EX∏ /π  >Y∫    +∏ ∏ 
+–01"&5467#3327Ä#1$	." %Õ(*)8ì˝m6!
+ˇˇˇ   G& 
+   x ˇˇ )ˇÙ€G&    ˚T  ˇˇ aˇ%$ì&    %B  ˇˇ aˇ>$ì&    E¸Íˇˇ aˇa$ì&    ˛B˝ˇˇ Q  øT&    ¯z ˇˇ a  ø‘&    ]ˇ‚ˇˇ aˇ%øì&    %  ˇˇ a  øì&    N ¯"ˇˇ aˇ>øì&    ¸Íˇˇˇ˛ˇ>ø&    &ˇz  ¸Íˇˇ aˇaøì&    ˛˝    √ì  M ∏  EX∏ /π  >Y∏  EX∏ /π  >Y∫   9∏ /∏ ‹∏ –∏ ∏ –∏ π 	 Ù017'737!!a.ªÕ0˛¢◊4i˛´c kÓ(ˇˇ a  aT&    ¯`  ˇˇ a  a!&    `  ˇˇ aˇ>aì&    b¸Íˇˇ a  T&    ¯C  ˇˇ a  T&    ıC  ˇˇ a  I&    C  ˇˇ a  B&    ˝C  ˇˇ aˇ%ì&    %?  ˇˇ a  !&    C  ˇˇ aˇ>ì&    ?¸Íˇˇ aˇaì&    ˛?˝ˇˇ 7ˇÙVT&    ıF  ˇˇ 7ˇÙVT&    ¯F  ˇˇ 7ˇÙVG&    ˚F  ˇˇ 7ˇÙVB&    ˝F  ˇˇ 7ˇÙV&    F  ˇˇ 7ˇÙV&    ˇF  ˇˇ 7ˇÙVe&    F  ˇˇ 7ˇÙVI&    F  ˇˇ 7ˇ>Vü&    F¸Íˇˇ 7ˇÙV_&    
+F  ˇˇ 7ˇÙVt&    GF  ˇˇ 7ˇÙVt&    IF  ˇˇ 7ˇÙVÉ&    KF  ˇˇ 7ˇÙVù&    MF  ˇˇ 7ˇ>VG&    '˚F   F¸Íˇˇ 7ˇÙVG&    F  ˇˇ 7ˇÙV±&    YF    8ˇÈZ™  ' 3 } ∏  EX∏ /π  >Y∏  EX∏  /π   >Y∫    9∏ ∏ ‹∫    9∏ ∏ ‹∏ ∏ ‹∏ ∏  ‹∏ π # Ù∏  π ( Ù∏ ∏ 0‹∏ ∏ 1‹01"&''7.54>327.#"2>54&'J6[#BF #(Hd;4Y#<A#%(Hd˛ÂCJ-2S: ﬂ2R; ˛ºM(%X^-xJN}Y/$"QV-yLNZ1X=e&±!*Mn˛é+OoE?f&˛N"%  7  ì  ! U ∏  EX∏ 
+/π 
+ >Y∏  EX∏  /π   >Y∏ 
+π  Ù∏ –∫  
+  9∏ /π  Ù∏  π  Ù∏ –01!".54>3!!3#!%3#"oNuN''OuNò˛Ÿıı1˛b??EeC  Ce/W{KKxV.(˘(˛ﬁ('E*Kk@AkN+  ;ˇÙZ   2 K ∏  EX∏ 
+/π 
+ >Y∏  EX∏  /π   >Y∏ 
+π ) Ù∫  
+ )9∏ ∏ –∏  π  Ù01".54>32654&'7'2>54.#"J;dH((Hd;E8^':-4;(Hd<2R;  ;R22S:  :S1ZNN}Y/ H"$08+è`NZ1*+OoEDnM**MnDEoO+ˇˇ ;ˇÙZT& Ø   ¯F  ˇˇ ;ˇÙZT& Ø   ıF  ˇˇ ;ˇÙZ_& Ø   
+F  ˇˇ ;ˇÙZB& Ø   ˝D  ˇˇ ;ˇ>Z & Ø   F¸Í  7ˇ3Vü # 7 I ∏  EX∏ /π  >Y∏  EX∏ /π  >Y∫    +∏ ∏ –∏ π $ Ù∏ π . Ù01"&5467".54>32327'2>54.#"e#1 AgH'(Hd;<dH(hc+'%02R;  ;R22S:  :SÕ(*:1ZNN}Y//Y}NÑ£->
+Î+OoEDnM**MnDEoO+ˇˇ a  T&    ¯  ˇˇ a  I&      ˇˇ a  !&      ˇˇ aˇ%ì&    %#  ˇˇ aˇ>ì&    #¸Íˇˇ aˇ>&    'ˇ   #¸Íˇˇ aˇaì&    ˛#˝ˇˇ .ˇÙ‡T&    ¯  ˇˇ .ˇÙ‡G&    ˚  ˇˇ .ˇÙ‡I&      ˇˇ .ˇ%‡ü&    (  ˇˇ .ˇ%‡ü&    %  ˇˇ .ˇÙ‡!&      ˇˇ .ˇ>‡ü&    ¸Í  bˇÙWü , U ∏  EX∏ /π  >Y∏  EX∏  /π   >Yπ  Ù∫    9∏ π  Ù∏  ∏ –∏ /∫ #  901"&'732654./7.#"#4>32†5\ F-AF0UCöH9Yh.#@X6K_ú=S31C)& $"M<3* #™(7js˛g¶<]?!K?™
+%3?#&B0ˇˇ   ÔI&      ˇˇ ˇ%Ôì&    ( ˇ  ˇˇ ˇ%Ôì&    %  ˇˇ ˇ>Ôì&    ¸Íˇˇ ˇaÔì&    ˛˝    Ôì  I ∏  EX∏ /π  >Y∏  EX∏  /π   >Yª    +∏ π 
+ Ù∏ ∏ –∏ ∏ –013#573#5!#3#ÔV)“““J ((ˇ !˛∂ˇˇ _ˇÙT&    ı=  ˇˇ _ˇÙT&    ¯=  ˇˇ _ˇÙG&    ˚=  ˇˇ _ˇÙB&    ˝=  ˇˇ _ˇÙ&    =  ˇˇ _ˇÙ&    ˇ=  ˇˇ _ˇÙG&    =  ˇˇ _ˇÙg&    =  ˇˇ _ˇÙe&    =  ˇˇ _ˇÙI&    =  ˇˇ _ˇÙw&    C=  ˇˇ _ˇÙ±&    <=  ˇˇ _ˇÙØ&    E=  ˇˇ _ˇÙ±&    ?=  ˇˇ _ˇ>ì&    =¸Íˇˇ _ˇÙ_&    
+=    _ˇ3ì - G ∏  EX∏ /π  >Y∏  EX∏ /π  >Y∫ (   +∏ π  Ù∏ ∏ –∏ ∏ "–01"&54>7".5332>53327Z#20T>$.0?#$A1++8(,&Õ(* >fKñ˛oBW55WBë˛jAV:%>
+  _ˇÙÖ4 ' 7 ∏  EX∏ /π  >Y∏  EX∏  /π   >Yπ  Ù∏ ∏ –∏ "‹01".5332>53>54&'7<*P>%.0?#$A1
+0.(&&>P=fMñ˛oBW55WBë)(##(˛ÑMf=ˇˇ _ˇÙÖT& ‹   ¯<  ˇˇ _ˇÙÖT& ‹   ı<  ˇˇ _ˇÙÖ_& ‹   
+<  ˇˇ _ˇÙÖB& ‹   ˝<  ˇˇ _ˇ>Ö4& ‹   <¸Íˇˇ   ‰T&    ıÅ  ˇˇ   ‰T&    ¯Å  ˇˇ   ‰G&    ˚Å  ˇˇ   ‰&    Å  ˇˇ   ºT&    ı ﬂ  ˇˇ   ºT&    ¯ ﬂ  ˇˇ   ºG&    ˚ ﬂ  ˇˇ   º&     ﬂ  ˇˇ   º!&     ﬂ  ˇˇ ˇ>ºì&     ·¸Íˇˇ   º_&    
+ ﬂ  ˇˇ   ºB&    ˝ ﬂ  ˇˇ 2  ÍT&    ¯  ˇˇ 2  ÍI&      ˇˇ 2  Í!&      ˇˇ 2ˇ>Íì&    ¸Íˇˇ 2ˇaÍì&    ˛˝  %  :ì  ! Y ∏  EX∏ /π  >Y∏  EX∏ /π  >Y∫    9∏  /∏  –∏  π  Ù∏ –∏ π  Ù∏ π  Ù015732+32>54.+3#%QôLqJ$$JpLö.fCa>>aCf££L&.VxKK{W/L˛€+NkA@jL*ˇ!  a   ì   9 ∏  EX∏ /π  >Y∏  EX∏  /π   >Yª    +ª    +013332+532654&+a.Ü7W= |oÜ{ebcd{ìu+F3a_¶ÕHQR?  >ˇÙQü  # O ∏  EX∏ /π  >Y∏  EX∏  /π   >Y∫ 	   9∏ 	/∏ π  Ù∏  π  Ù∏ 	∏ ‹01".5465!.#"'>32'267!B>aB#‰pk3X !c?Äã&Gd>du˛K!7M2Y|Kçö% +∞§QY.'èÅ>eG&  aˇÙ2ü ) U ∏  EX∏  /π   >Y∏  EX∏  /π   >Yπ  Ù∏  π  Ù∫     9∏ π  Ù∏  ∏ –∏ /01"&'732>54.#"#3>32ì(*2E)21-..,151T=#,9+GtWUpC'˝ıìX$#OÄ\cÖR#  aˇdÄì   @ ∏  EX∏ /π  >Y∏  EX∏ /π  >Y∏  EX∏ /π  >Yª    +0133"&'732653a.É!
+	(.ì˝mú':.ú˝^çˇˇ :ˇÙúÚ&    Ù ˛  ˇˇ :ˇÙúÚ&    ˜ ˛  ˇˇ :ˇÙú·&    ˙ ˛  ˇˇ :ˇÙ¢∆&    ¸ ˛  ˇˇ :ˇÙú†&     ˛  ˇˇ :ˇÙúÇ&    ˛ ˛  ˇˇ :ˇÙú”&     ˛  ˇˇ :ˇÙú„& 

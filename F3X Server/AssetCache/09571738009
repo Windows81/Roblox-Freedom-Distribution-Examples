@@ -1,0 +1,380 @@
+escribe(this.type);
+    }
+    /**
+     *
+     */
+
+  }, {
+    key: "describe$",
+    value: function describe$() {
+      return this._conn.describe$(this.type);
+    }
+    /**
+     *
+     */
+
+  }, {
+    key: "describe$$",
+    value: function describe$$() {
+      return this._conn.describe$$(this.type);
+    }
+    /**
+     * Get record representation instance by given id
+     */
+
+  }, {
+    key: "record",
+    value: function record(id) {
+      return new RecordReference(this._conn, this.type, id);
+    }
+    /**
+     * Retrieve recently accessed records
+     */
+
+  }, {
+    key: "recent",
+    value: function recent() {
+      return this._conn.recent(this.type);
+    }
+    /**
+     * Retrieve the updated records
+     */
+
+  }, {
+    key: "updated",
+    value: function updated(start, end) {
+      return this._conn.updated(this.type, start, end);
+    }
+    /**
+     * Retrieve the deleted records
+     */
+
+  }, {
+    key: "deleted",
+    value: function deleted(start, end) {
+      return this._conn.deleted(this.type, start, end);
+    }
+    /**
+     * Describe layout information for SObject
+     */
+
+  }, {
+    key: "layouts",
+    value: function () {
+      var _layouts = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee(layoutName) {
+        var _context;
+
+        var url, body;
+        return _regeneratorRuntime.wrap(function _callee$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                url = _concatInstanceProperty(_context = "/sobjects/".concat(this.type, "/describe/")).call(_context, layoutName ? "namedLayouts/".concat(layoutName) : 'layouts');
+                _context2.next = 3;
+                return this._conn.request(url);
+
+              case 3:
+                body = _context2.sent;
+                return _context2.abrupt("return", body);
+
+              case 5:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function layouts(_x) {
+        return _layouts.apply(this, arguments);
+      }
+
+      return layouts;
+    }()
+    /**
+     * @typedef {Object} CompactLayoutInfo
+     * @prop {Array.<Object>} compactLayouts - Array of compact layouts
+     * @prop {String} defaultCompactLayoutId - ID of default compact layout
+     * @prop {Array.<Object>} recordTypeCompactLayoutMappings - Array of record type mappings
+     */
+
+    /**
+     * Describe compact layout information defined for SObject
+     *
+     * @param {Callback.<CompactLayoutInfo>} [callback] - Callback function
+     * @returns {Promise.<CompactLayoutInfo>}
+     */
+
+  }, {
+    key: "compactLayouts",
+    value: function () {
+      var _compactLayouts = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee2() {
+        var url, body;
+        return _regeneratorRuntime.wrap(function _callee2$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                url = "/sobjects/".concat(this.type, "/describe/compactLayouts");
+                _context3.next = 3;
+                return this._conn.request(url);
+
+              case 3:
+                body = _context3.sent;
+                return _context3.abrupt("return", body);
+
+              case 5:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee2, this);
+      }));
+
+      function compactLayouts() {
+        return _compactLayouts.apply(this, arguments);
+      }
+
+      return compactLayouts;
+    }()
+    /**
+     * Describe compact layout information defined for SObject
+     *
+     * @param {Callback.<ApprovalLayoutInfo>} [callback] - Callback function
+     * @returns {Promise.<ApprovalLayoutInfo>}
+     */
+
+  }, {
+    key: "approvalLayouts",
+    value: function () {
+      var _approvalLayouts = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee3() {
+        var url, body;
+        return _regeneratorRuntime.wrap(function _callee3$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                url = "/sobjects/".concat(this.type, "/describe/approvalLayouts");
+                _context4.next = 3;
+                return this._conn.request(url);
+
+              case 3:
+                body = _context4.sent;
+                return _context4.abrupt("return", body);
+
+              case 5:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee3, this);
+      }));
+
+      function approvalLayouts() {
+        return _approvalLayouts.apply(this, arguments);
+      }
+
+      return approvalLayouts;
+    }()
+    /**
+     * Find and fetch records which matches given conditions
+     */
+
+  }, {
+    key: "find",
+    value: function find(conditions, fields) {
+      var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+
+      var sort = _sortInstanceProperty(options),
+          limit = options.limit,
+          offset = options.offset,
+          qoptions = _objectWithoutProperties(options, ["sort", "limit", "offset"]);
+
+      var config = {
+        fields: fields == null ? undefined : fields,
+        includes: _includesInstanceProperty(options),
+        table: this.type,
+        conditions: conditions == null ? undefined : conditions,
+        sort: sort,
+        limit: limit,
+        offset: offset
+      };
+      var query = new Query(this._conn, config, qoptions);
+      return query.setResponseTarget(ResponseTargets.Records);
+    }
+    /**
+     * Fetch one record which matches given conditions
+     */
+
+  }, {
+    key: "findOne",
+    value: function findOne(conditions, fields) {
+      var _context5;
+
+      var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+
+      var query = _findInstanceProperty(_context5 = this).call(_context5, conditions, fields, _objectSpread(_objectSpread({}, options), {}, {
+        limit: 1
+      }));
+
+      return query.setResponseTarget(ResponseTargets.SingleRecord);
+    }
+    /**
+     * Find and fetch records only by specifying fields to fetch.
+     */
+
+  }, {
+    key: "select",
+    value: function select(fields) {
+      var _context6;
+
+      return _findInstanceProperty(_context6 = this).call(_context6, null, fields);
+    }
+    /**
+     * Count num of records which matches given conditions
+     */
+
+  }, {
+    key: "count",
+    value: function count(conditions) {
+      var _context7;
+
+      var query = _findInstanceProperty(_context7 = this).call(_context7, conditions, 'count()');
+
+      return query.setResponseTarget(ResponseTargets.Count);
+    }
+    /**
+     * Returns the list of list views for the SObject
+     *
+     * @param {Callback.<ListViewsInfo>} [callback] - Callback function
+     * @returns {Promise.<ListViewsInfo>}
+     */
+
+  }, {
+    key: "listviews",
+    value: function listviews() {
+      var _context8;
+
+      var url = _concatInstanceProperty(_context8 = "".concat(this._conn._baseUrl(), "/sobjects/")).call(_context8, this.type, "/listviews");
+
+      return this._conn.request(url);
+    }
+    /**
+     * Returns the list view info in specifed view id
+     *
+     * @param {String} id - List view ID
+     * @returns {ListView}
+     */
+
+  }, {
+    key: "listview",
+    value: function listview(id) {
+      return new ListView(this._conn, this.type, id); // eslint-disable-line no-use-before-define
+    }
+    /**
+     * Returns all registered quick actions for the SObject
+     *
+     * @param {Callback.<Array.<QuickAction~QuickActionInfo>>} [callback] - Callback function
+     * @returns {Promise.<Array.<QuickAction~QuickActionInfo>>}
+     */
+
+  }, {
+    key: "quickActions",
+    value: function quickActions() {
+      return this._conn.request("/sobjects/".concat(this.type, "/quickActions"));
+    }
+    /**
+     * Get reference for specified quick aciton in the SObject
+     *
+     * @param {String} actionName - Name of the quick action
+     * @returns {QuickAction}
+     */
+
+  }, {
+    key: "quickAction",
+    value: function quickAction(actionName) {
+      var _context9;
+
+      return new QuickAction(this._conn, _concatInstanceProperty(_context9 = "/sobjects/".concat(this.type, "/quickActions/")).call(_context9, actionName));
+    }
+  }]);
+
+  return SObject;
+}();
+/**
+ * A class for organizing list view information
+ *
+ * @protected
+ * @class ListView
+ * @param {Connection} conn - Connection instance
+ * @param {SObject} type - SObject type
+ * @param {String} id - List view ID
+ */
+
+_defineProperty(SObject, "_logger", getLogger('sobject'));
+
+var ListView = /*#__PURE__*/function () {
+  /**
+   *
+   */
+  function ListView(conn, type, id) {
+    _classCallCheck(this, ListView);
+
+    _defineProperty(this, "_conn", void 0);
+
+    _defineProperty(this, "type", void 0);
+
+    _defineProperty(this, "id", void 0);
+
+    this._conn = conn;
+    this.type = type;
+    this.id = id;
+  }
+  /**
+   * Executes query for the list view and returns the resulting data and presentation information.
+   */
+
+
+  _createClass(ListView, [{
+    key: "results",
+    value: function results() {
+      var _context10, _context11;
+
+      var url = _concatInstanceProperty(_context10 = _concatInstanceProperty(_context11 = "".concat(this._conn._baseUrl(), "/sobjects/")).call(_context11, this.type, "/listviews/")).call(_context10, this.id, "/results");
+
+      return this._conn.request(url);
+    }
+    /**
+     * Returns detailed information about a list view
+     */
+
+  }, {
+    key: "describe",
+    value: function describe() {
+      var _context12, _context13;
+
+      var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+
+      var url = _concatInstanceProperty(_context12 = _concatInstanceProperty(_context13 = "".concat(this._conn._baseUrl(), "/sobjects/")).call(_context13, this.type, "/listviews/")).call(_context12, this.id, "/describe");
+
+      return this._conn.request({
+        method: 'GET',
+        url: url,
+        headers: options.headers
+      });
+    }
+    /**
+     * Explain plan for executing list view
+     */
+
+  }, {
+    key: "explain",
+    value: function explain() {
+      var url = "/query/?explain=".concat(this.id);
+      return this._conn.request(url);
+    }
+  }]);
+
+  return ListView;
+}();
+
+export default SObject; // TODO Bulk
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uL3NyYy9zb2JqZWN0LnRzIl0sIm5hbWVzIjpbImdldExvZ2dlciIsIlJlY29yZFJlZmVyZW5jZSIsIlF1ZXJ5IiwiUmVzcG9uc2VUYXJnZXRzIiwiUXVpY2tBY3Rpb24iLCJTT2JqZWN0IiwiY29ubiIsInR5cGUiLCJjcmVhdGUiLCJkZXN0cm95IiwiY3JlYXRlQnVsayIsImRlc3Ryb3lCdWxrIiwiZGVzdHJveUhhcmRCdWxrIiwiX2Nvbm4iLCJfbG9nZ2VyIiwiX2xvZ0xldmVsIiwiY3JlYXRlSW5zdGFuY2UiLCJjYWNoZSIsImxheW91dENhY2hlS2V5IiwibGF5b3V0TmFtZSIsImxheW91dHMiLCJwcm90b3R5cGUiLCJjcmVhdGVDYWNoZWRGdW5jdGlvbiIsImtleSIsInN0cmF0ZWd5IiwibGF5b3V0cyQiLCJsYXlvdXRzJCQiLCJjb21wYWN0TGF5b3V0Q2FjaGVLZXkiLCJjb21wYWN0TGF5b3V0cyIsImNvbXBhY3RMYXlvdXRzJCIsImNvbXBhY3RMYXlvdXRzJCQiLCJhcHByb3ZhbExheW91dENhY2hlS2V5IiwiYXBwcm92YWxMYXlvdXRzIiwiYXBwcm92YWxMYXlvdXRzJCIsImFwcHJvdmFsTGF5b3V0cyQkIiwicmVjb3JkcyIsIm9wdGlvbnMiLCJpZHMiLCJyZXRyaWV2ZSIsInVwZGF0ZSIsImV4dElkRmllbGQiLCJ1cHNlcnQiLCJvcGVyYXRpb24iLCJvcHRpb25zT3JJbnB1dCIsImlucHV0IiwiYnVsayIsImxvYWQiLCJidWxrbG9hZCIsImRlc2NyaWJlIiwiZGVzY3JpYmUkIiwiZGVzY3JpYmUkJCIsImlkIiwicmVjZW50Iiwic3RhcnQiLCJlbmQiLCJ1cGRhdGVkIiwiZGVsZXRlZCIsInVybCIsInJlcXVlc3QiLCJib2R5IiwiY29uZGl0aW9ucyIsImZpZWxkcyIsInNvcnQiLCJsaW1pdCIsIm9mZnNldCIsInFvcHRpb25zIiwiY29uZmlnIiwidW5kZWZpbmVkIiwiaW5jbHVkZXMiLCJ0YWJsZSIsInF1ZXJ5Iiwic2V0UmVzcG9uc2VUYXJnZXQiLCJSZWNvcmRzIiwiU2luZ2xlUmVjb3JkIiwiQ291bnQiLCJfYmFzZVVybCIsIkxpc3RWaWV3IiwiYWN0aW9uTmFtZSIsIm1ldGhvZCIsImhlYWRlcnMiXSwibWFwcGluZ3MiOiI7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7OztBQUFBO0FBQ0E7QUFDQTtBQUNBLFNBQWlCQSxTQUFqQixRQUFrQyxlQUFsQztBQXNCQSxPQUFPQyxlQUFQLE1BQTRCLG9CQUE1QjtBQUNBLE9BQU9DLEtBQVAsSUFDRUMsZUFERixRQU1PLFNBTlA7QUFPQSxPQUFPQyxXQUFQLE1BQXdCLGdCQUF4Qjs7QUFZQTtBQUNBO0FBQ0E7QUFDQSxXQUFhQyxPQUFiO0FBY0U7QUFHQTtBQUdBOztBQU1BO0FBQ0Y7QUFDQTtBQUNFLG1CQUFZQyxJQUFaLEVBQWlDQyxJQUFqQyxFQUEwQztBQUFBOztBQUFBOztBQUFBOztBQUFBOztBQUFBOztBQUFBOztBQUFBOztBQUFBOztBQUFBOztBQUFBOztBQUFBOztBQUFBLG9DQXNFakMsS0FBS0MsTUF0RTRCOztBQUFBLG9DQTRJakMsS0FBS0MsT0E1STRCOztBQUFBLGlDQWlKcEMsS0FBS0EsT0FqSitCOztBQUFBLHdDQXdLN0IsS0FBS0MsVUF4S3dCOztBQUFBLHdDQWtNN0IsS0FBS0MsV0FsTXdCOztBQUFBLDRDQThNekIsS0FBS0MsZUE5TW9COztBQUN4QyxTQUFLTCxJQUFMLEdBQVlBLElBQVo7QUFDQSxTQUFLTSxLQUFMLEdBQWFQLElBQWI7QUFDQSxTQUFLUSxPQUFMLEdBQWVSLElBQUksQ0FBQ1MsU0FBTCxHQUNYVixPQUFPLENBQUNTLE9BQVIsQ0FBZ0JFLGNBQWhCLENBQStCVixJQUFJLENBQUNTLFNBQXBDLENBRFcsR0FFWFYsT0FBTyxDQUFDUyxPQUZaO0FBR0EsUUFBTUcsS0FBSyxHQUFHLEtBQUtKLEtBQUwsQ0FBV0ksS0FBekI7O0FBQ0EsUUFBTUMsY0FBYyxHQUFHLFNBQWpCQSxjQUFpQixDQUFDQyxVQUFEO0FBQUEsYUFDckJBLFVBQVUsa0NBQ2tCQSxVQURsQixzQkFF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

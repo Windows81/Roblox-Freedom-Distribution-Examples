@@ -1,0 +1,3877 @@
+ includes the width of trailing spaces.
+      runningMaxIntrinsicWidth += fragment.widthIncludingTrailingSpaces;
+
+      switch (fragment.type) {
+        case LineBreakType.prohibited:
+          break;
+
+        case LineBreakType.opportunity:
+          minIntrinsicWidth = math.max(minIntrinsicWidth, runningMinIntrinsicWidth);
+          runningMinIntrinsicWidth = 0;
+
+        case LineBreakType.mandatory:
+        case LineBreakType.endOfText:
+          minIntrinsicWidth = math.max(minIntrinsicWidth, runningMinIntrinsicWidth);
+          maxIntrinsicWidth = math.max(maxIntrinsicWidth, runningMaxIntrinsicWidth);
+          runningMinIntrinsicWidth = 0;
+          runningMaxIntrinsicWidth = 0;
+      }
+    }
+  }
+
+  ui.TextDirection get _paragraphDirection =>
+      paragraph.paragraphStyle.effectiveTextDirection;
+
+  /// Positions the fragments taking into account their directions and the
+  /// paragraph's direction.
+  void _positionLineFragments(ParagraphLine line) {
+    ui.TextDirection previousDirection = _paragraphDirection;
+
+    double startOffset = 0.0;
+    int? sandwichStart;
+    int sequenceStart = 0;
+
+    for (int i = 0; i <= line.fragments.length; i++) {
+      if (i < line.fragments.length) {
+        final LayoutFragment fragment = line.fragments[i];
+
+        if (fragment.fragmentFlow == FragmentFlow.previous) {
+          sandwichStart = null;
+          continue;
+        }
+        if (fragment.fragmentFlow == FragmentFlow.sandwich) {
+          sandwichStart ??= i;
+          continue;
+        }
+
+
+        assert(fragment.fragmentFlow == FragmentFlow.ltr ||
+            fragment.fragmentFlow == FragmentFlow.rtl);
+
+        final ui.TextDirection currentDirection =
+            fragment.fragmentFlow == FragmentFlow.ltr
+                ? ui.TextDirection.ltr
+                : ui.TextDirection.rtl;
+
+        if (currentDirection == previousDirection) {
+          sandwichStart = null;
+          continue;
+        }
+      }
+
+      // We've reached a fragment that'll flip the text direction. Let's
+      // position the sequence that we've been traversing.
+
+      if (sandwichStart == null) {
+        // Position fragments in range [sequenceStart:i)
+        startOffset += _positionFragmentRange(
+          line: line,
+          start: sequenceStart,
+          end: i,
+          direction: previousDirection,
+          startOffset: startOffset,
+        );
+      } else {
+        // Position fragments in range [sequenceStart:sandwichStart)
+        startOffset += _positionFragmentRange(
+          line: line,
+          start: sequenceStart,
+          end: sandwichStart,
+          direction: previousDirection,
+          startOffset: startOffset,
+        );
+        // Position fragments in range [sandwichStart:i)
+        startOffset += _positionFragmentRange(
+          line: line,
+          start: sandwichStart,
+          end: i,
+          direction: _paragraphDirection,
+          startOffset: startOffset,
+        );
+      }
+
+      sequenceStart = i;
+      sandwichStart = null;
+
+      if (i < line.fragments.length){
+        previousDirection = line.fragments[i].textDirection!;
+      }
+    }
+  }
+
+  double _positionFragmentRange({
+    required ParagraphLine line,
+    required int start,
+    required int end,
+    required ui.TextDirection direction,
+    required double startOffset,
+  }) {
+    assert(start <= end);
+
+    double cumulativeWidth = 0.0;
+
+    // The bodies of the two for loops below must remain identical. The only
+    // difference is the looping direction. One goes from start to end, while
+    // the other goes from end to start.
+
+    if (direction == _paragraphDirection) {
+      for (int i = start; i < end; i++) {
+        cumulativeWidth +=
+            _positionOneFragment(line, i, startOffset + cumulativeWidth, direction);
+      }
+    } else {
+      for (int i = end - 1; i >= start; i--) {
+        cumulativeWidth +=
+            _positionOneFragment(line, i, startOffset + cumulativeWidth, direction);
+      }
+    }
+
+    return cumulativeWidth;
+  }
+
+  double _positionOneFragment(
+    ParagraphLine line,
+    int i,
+    double startOffset,
+    ui.TextDirection direction,
+  ) {
+    final LayoutFragment fragment = line.fragments[i];
+    fragment.setPosition(startOffset: startOffset, textDirection: direction);
+    return fragment.widthIncludingTrailingSpaces;
+  }
+
+  List<ui.TextBox> getBoxesForPlaceholders() {
+    final List<ui.TextBox> boxes = <ui.TextBox>[];
+    for (final ParagraphLine line in lines) {
+      for (final LayoutFragment fragment in line.fragments) {
+        if (fragment.isPlaceholder) {
+          boxes.add(fragment.toTextBox());
+        }
+      }
+    }
+    return boxes;
+  }
+
+  List<ui.TextBox> getBoxesForRange(
+    int start,
+    int end,
+    ui.BoxHeightStyle boxHeightStyle,
+    ui.BoxWidthStyle boxWidthStyle,
+  ) {
+    // Zero-length ranges and invalid ranges return an empty list.
+    if (start >= end || start < 0 || end < 0) {
+      return <ui.TextBox>[];
+    }
+
+    final int length = paragraph.plainText.length;
+    // Ranges that are out of bounds should return an empty list.
+    if (start > length || end > length) {
+      return <ui.TextBox>[];
+    }
+
+    final List<ui.TextBox> boxes = <ui.TextBox>[];
+
+    for (final ParagraphLine line in lines) {
+      if (line.overlapsWith(start, end)) {
+        for (final LayoutFragment fragment in line.fragments) {
+          if (!fragment.isPlaceholder && fragment.overlapsWith(start, end)) {
+            boxes.add(fragment.toTextBox(start: start, end: end));
+          }
+        }
+      }
+    }
+    return boxes;
+  }
+
+  ui.TextPosition getPositionForOffset(ui.Offset offset) {
+    // After layout, each line has boxes that contain enough information to make
+    // it possible to do hit testing. Once we find the box, we look inside that
+    // box to find where exactly the `offset` is located.
+
+    final ParagraphLine line = _findLineForY(offset.dy);
+    // [offset] is to the left of the line.
+    if (offset.dx <= line.left) {
+      return ui.TextPosition(
+        offset: line.startIndex,
+      );
+    }
+
+    // [offset] is to the right of the line.
+    if (offset.dx >= line.left + line.widthWithTrailingSpaces) {
+      return ui.TextPosition(
+        offset: line.endIndex - line.trailingNewlines,
+        affinity: ui.TextAffinity.upstream,
+      );
+    }
+
+    final double dx = offset.dx - line.left;
+    for (final LayoutFragment fragment in line.fragments) {
+      if (fragment.left <= dx && dx <= fragment.right) {
+        return fragment.getPositionForX(dx - fragment.left);
+      }
+    }
+    // Is this ever reachable?
+    return ui.TextPosition(offset: line.startIndex);
+  }
+
+  ParagraphLine _findLineForY(double y) {
+    // We could do a binary search here but it's not worth it because the number
+    // of line is typically low, and each iteration is a cheap comparison of
+    // doubles.
+    for (final ParagraphLine line in lines) {
+      if (y <= line.height) {
+        return line;
+      }
+      y -= line.height;
+    }
+    return lines.last;
+  }
+}
+
+/// Builds instances of [ParagraphLine] for the given [paragraph].
+///
+/// Usage of this class starts by calling [LineBuilder.first] to start building
+/// the first line of the paragraph.
+///
+/// Then fragments can be added by calling [addFragment].
+///
+/// After adding a fragment, one can use [isOverflowing] to determine whether
+/// the added fragment caused the line to overflow or not.
+///
+/// Once the line is complete, it can be built by calling [build] to generate
+/// a [ParagraphLine] instance.
+///
+/// To start building the next line, simply call [nextLine] to get a new
+/// [LineBuilder] for the next line.
+class LineBuilder {
+  LineBuilder._(
+    this.paragraph,
+    this.spanometer, {
+    required this.maxWidth,
+    required this.lineNumber,
+    required this.accumulatedHeight,
+    required List<LayoutFragment> fragments,
+  }) : _fragments = fragments {
+    _recalculateMetrics();
+  }
+
+  /// Creates a [LineBuilder] for the first line in a paragraph.
+  factory LineBuilder.first(
+    CanvasParagraph paragraph,
+    Spanometer spanometer, {
+    required double maxWidth,
+  }) {
+    return LineBuilder._(
+      paragraph,
+      spanometer,
+      maxWidth: maxWidth,
+      lineNumber: 0,
+      accumulatedHeight: 0.0,
+      fragments: <LayoutFragment>[],
+    );
+  }
+
+  final List<LayoutFragment> _fragments;
+  List<LayoutFragment>? _fragmentsForNextLine;
+
+  int get startIndex {
+    assert(_fragments.isNotEmpty || _fragmentsForNextLine!.isNotEmpty);
+
+    return isNotEmpty
+      ? _fragments.first.start
+      : _fragmentsForNextLine!.first.start;
+  }
+
+  int get endIndex {
+    assert(_fragments.isNotEmpty || _fragmentsForNextLine!.isNotEmpty);
+
+    return isNotEmpty
+      ? _fragments.last.end
+      : _fragmentsForNextLine!.first.start;
+  }
+
+  final double maxWidth;
+  final CanvasParagraph paragraph;
+  final Spanometer spanometer;
+  final int lineNumber;
+
+  /// The accumulated height of all preceding lines, excluding the current line.
+  final double accumulatedHeight;
+
+  /// The width of the line so far, excluding trailing white space.
+  double width = 0.0;
+
+  /// The width of the line so far, including trailing white space.
+  double widthIncludingSpace = 0.0;
+
+  double get _widthExcludingLastFragment => _fragments.length > 1
+    ? widthIncludingSpace - _fragments.last.widthIncludingTrailingSpaces
+    : 0;
+
+  /// The distance from the top of the line to the alphabetic baseline.
+  double ascent = 0.0;
+
+  /// The distance from the bottom of the line to the alphabetic baseline.
+  double descent = 0.0;
+
+  /// The height of the line so far.
+  double get height => ascent + descent;
+
+  int _lastBreakableFragment = -1;
+  int _breakCount = 0;
+
+  /// Whether this line can be legally broken into more than one line.
+  bool get isBreakable {
+    if (_fragments.isEmpty) {
+      return false;
+    }
+    if (_fragments.last.isBreak) {
+      // We need one more break other than the last one.
+      return _breakCount > 1;
+    }
+    return _breakCount > 0;
+  }
+
+  /// Returns true if the line can't be legally broken any further.
+  bool get isNotBreakable => !isBreakable;
+
+  int _spaceCount = 0;
+  int _trailingSpaces = 0;
+
+  bool get isEmpty => _fragments.isEmpty;
+  bool get isNotEmpty => _fragments.isNotEmpty;
+
+  bool get isHardBreak => _fragments.isNotEmpty && _fragments.last.isHardBreak;
+
+  /// The horizontal offset necessary for the line to be correctly aligned.
+  double get alignOffset {
+    final double emptySpace = maxWidth - width;
+    final ui.TextAlign textAlign = paragraph.paragraphStyle.effectiveTextAlign;
+
+    switch (textAlign) {
+      case ui.TextAlign.center:
+        return emptySpace / 2.0;
+      case ui.TextAlign.right:
+        return emptySpace;
+      case ui.TextAlign.start:
+        return _paragraphDirection == ui.TextDirection.rtl ? emptySpace : 0.0;
+      case ui.TextAlign.end:
+        return _paragraphDirection == ui.TextDirection.rtl ? 0.0 : emptySpace;
+      default:
+        return 0.0;
+    }
+  }
+
+  bool get isOverflowing => width > maxWidth;
+
+  bool get canHaveEllipsis {
+    if (paragraph.paragraphStyle.ellipsis == null) {
+      return false;
+    }
+
+    final int? maxLines = paragraph.paragraphStyle.maxLines;
+    return (maxLines == null) || (maxLines == lineNumber + 1);
+  }
+
+  bool get _canAppendEmptyFragments {
+    if (isHardBreak) {
+      // Can't append more fragments to this line if it has a hard break.
+      return false;
+    }
+
+    if (_fragmentsForNextLine?.isNotEmpty ?? false) {
+      // If we already have fragments prepared for the next line, then we can't
+      // append more fragments to this line.
+      return false;
+    }
+
+    return true;
+  }
+
+  ui.TextDirection get _paragraphDirection =>
+      paragraph.paragraphStyle.effectiveTextDirection;
+
+  void addFragment(LayoutFragment fragment) {
+    _updateMetrics(fragment);
+
+    if (fragment.isBreak) {
+      _lastBreakableFragment = _fragments.length;
+    }
+
+    _fragments.add(fragment);
+  }
+
+  /// Updates the [LineBuilder]'s metrics to take into account the new [fragment].
+  void _updateMetrics(LayoutFragment fragment) {
+    _spaceCount += fragment.trailingSpaces;
+
+    if (fragment.isSpaceOnly) {
+      _trailingSpaces += fragment.trailingSpaces;
+    } else {
+      _trailingSpaces = fragment.trailingSpaces;
+      width = widthIncludingSpace + fragment.widthExcludingTrailingSpaces;
+    }
+    widthIncludingSpace += fragment.widthIncludingTrailingSpaces;
+
+    if (fragment.isPlaceholder) {
+      _adjustPlaceholderAscentDescent(fragment);
+    }
+
+    if (fragment.isBreak) {
+      _breakCount++;
+    }
+
+    ascent = math.max(ascent, fragment.ascent);
+    descent = math.max(descent, fragment.descent);
+  }
+
+  void _adjustPlaceholderAscentDescent(LayoutFragment fragment) {
+    final PlaceholderSpan placeholder = fragment.span as PlaceholderSpan;
+
+    final double ascent, descent;
+    switch (placeholder.alignment) {
+      case ui.PlaceholderAlignment.top:
+        // The placeholder is aligned to the top of text, which means it has the
+        // same `ascent` as the remaining text. We only need to extend the
+        // `descent` enough to fit the placeholder.
+        ascent = this.ascent;
+        descent = placeholder.height - this.ascent;
+
+      case ui.PlaceholderAlignment.bottom:
+        // The opposite of `top`. The `descent` is the same, but we extend the
+        // `ascent`.
+        ascent = placeholder.height - this.descent;
+        descent = this.descent;
+
+      case ui.PlaceholderAlignment.middle:
+        final double textMidPoint = height / 2;
+        final double placeholderMidPoint = placeholder.height / 2;
+        final double diff = placeholderMidPoint - textMidPoint;
+        ascent = this.ascent + diff;
+        descent = this.descent + diff;
+
+      case ui.PlaceholderAlignment.aboveBaseline:
+        ascent = placeholder.height;
+        descent = 0.0;
+
+      case ui.PlaceholderAlignment.belowBaseline:
+        ascent = 0.0;
+        descent = placeholder.height;
+
+      case ui.PlaceholderAlignment.baseline:
+        ascent = placeholder.baselineOffset;
+        descent = placeholder.height - ascent;
+    }
+
+    // Update the metrics of the fragment to reflect the calculated ascent and
+    // descent.
+    fragment.setMetrics(spanometer,
+      ascent: ascent,
+      descent: descent,
+      widthExcludingTrailingSpaces: fragment.widthExcludingTrailingSpaces,
+      widthIncludingTrailingSpaces: fragment.widthIncludingTrailingSpaces,
+    );
+  }
+
+  void _recalculateMetrics() {
+    width = 0;
+    widthIncludingSpace = 0;
+    ascent = 0;
+    descent = 0;
+    _spaceCount = 0;
+    _trailingSpaces = 0;
+    _breakCount = 0;
+    _lastBreakableFragment = -1;
+
+    for (int i = 0; i < _fragments.length; i++) {
+      _updateMetrics(_fragments[i]);
+      if (_fragments[i].isBreak) {
+        _lastBreakableFragment = i;
+      }
+    }
+  }
+
+  void forceBreakLastFragment({ double? availableWidth, bool allowEmptyLine = false }) {
+    assert(isNotEmpty);
+
+    availableWidth ??= maxWidth;
+    assert(widthIncludingSpace > availableWidth);
+
+    _fragmentsForNextLine ??= <LayoutFragment>[];
+
+    // When the line has fragments other than the last one, we can always allow
+    // the last fragment to be empty (i.e. completely removed from the line).
+    final bool hasOtherFragments = _fragments.length > 1;
+    final bool allowLastFragmentToBeEmpty = hasOtherFragments || allowEmptyLine;
+
+    final LayoutFragment lastFragment = _fragments.last;
+
+    if (lastFragment.isPlaceholder) {
+      // Placeholder can't be force-broken. Either keep all of it in the line or
+      // move it to the next line.
+      if (allowLastFragmentToBeEmpty) {
+        _fragmentsForNextLine!.insert(0, _fragments.removeLast());
+        _recalculateMetrics();
+      }
+      return;
+    }
+
+    spanometer.currentSpan = lastFragment.span;
+    final double lineWidthWithoutLastFragment = widthIncludingSpace - lastFragment.widthIncludingTrailingSpaces;
+    final double availableWidthForFragment = availableWidth - lineWidthWithoutLastFragment;
+    final int forceBreakEnd = lastFragment.end - lastFragment.trailingNewlines;
+
+    final int breakingPoint = spanometer.forceBreak(
+      lastFragment.start,
+      forceBreakEnd,
+      availableWidth: availableWidthForFragment,
+      allowEmpty: allowLastFragmentToBeEmpty,
+    );
+
+    if (breakingPoint == forceBreakEnd) {
+      // The entire fragment remained intact. Let's keep everything as is.
+      return;
+    }
+
+    _fragments.removeLast();
+    _recalculateMetrics();
+
+    final List<LayoutFragment?> split = lastFragment.split(breakingPoint);
+
+    final LayoutFragment? first = split.first;
+    if (first != null) {
+      spanometer.measureFragment(first);
+      addFragment(first);
+    }
+
+    final LayoutFragment? second = split.last;
+    if (second != null) {
+      spanometer.measureFragment(second);
+      _fragmentsForNextLine!.insert(0, second);
+    }
+  }
+
+  void insertEllipsis() {
+    assert(canHaveEllipsis);
+    assert(isOverflowing);
+
+    final String ellipsisText = paragraph.paragraphStyle.ellipsis!;
+
+    _fragmentsForNextLine = <LayoutFragment>[];
+
+    spanometer.currentSpan = _fragments.last.span;
+    double ellipsisWidth = spanometer.measureText(ellipsisText);
+    double availableWidth = math.max(0, maxWidth - ellipsisWidth);
+
+    while (_widthExcludingLastFragment > availableWidth) {
+      _fragmentsForNextLine!.insert(0, _fragments.removeLast());
+      _recalculateMetrics();
+
+      spanometer.currentSpan = _fragments.last.span;
+      ellipsisWidth = spanometer.measureText(ellipsisText);
+      availableWidth = maxWidth - ellipsisWidth;
+    }
+
+    final LayoutFragment lastFragment = _fragments.last;
+    forceBreakLastFragment(availableWidth: availableWidth, allowEmptyLine: true);
+
+    final EllipsisFragment ellipsisFragment = EllipsisFragment(
+      endIndex,
+      lastFragment.span,
+    );
+    ellipsisFragment.setMetrics(spanometer,
+      ascent: lastFragment.ascent,
+      descent: lastFragment.descent,
+      widthExcludingTrailingSpaces: ellipsisWidth,
+      widthIncludingTrailingSpaces: ellipsisWidth,
+    );
+    addFragment(ellipsisFragment);
+  }
+
+  void revertToLastBreakOpportunity() {
+    assert(isBreakable);
+
+    // The last fragment in the line may or may not be breakable. Regardless,
+    // it needs to be removed.
+    //
+    // We need to find the latest breakable fragment in the line (other than the
+    // last fragment). Such breakable fragment is guaranteed to be found because
+    // the line `isBreakable`.
+
+    // Start from the end and skip the last fragment.
+    int i = _fragments.length - 2;
+    while (!_fragments[i].isBreak) {
+      i--;
+    }
+
+    _fragmentsForNextLine = _fragments.getRange(i + 1, _fragments.length).toList();
+    _fragments.removeRange(i + 1, _fragments.length);
+    _recalculateMetrics();
+  }
+
+  /// Appends as many zero-width fragments as this line allows.
+  ///
+  /// Returns the number of fragments that were appended.
+  int appendZeroWidthFragments(List<LayoutFragment> fragments, {required int startFrom}) {
+    int i = startFrom;
+    while (_canAppendEmptyFragments &&
+        i < fragments.length &&
+        fragments[i].widthExcludingTrailingSpaces == 0) {
+      addFragment(fragments[i]);
+      i++;
+    }
+    return i - startFrom;
+  }
+
+  /// Builds the [ParagraphLine] instance that represents this line.
+  ParagraphLine build() {
+    if (_fragmentsForNextLine == null) {
+      _fragmentsForNextLine = _fragments.getRange(_lastBreakableFragment + 1, _fragments.length).toList();
+      _fragments.removeRange(_lastBreakableFragment + 1, _fragments.length);
+    }
+
+    final int trailingNewlines = isEmpty ? 0 : _fragments.last.trailingNewlines;
+    final ParagraphLine line = ParagraphLine(
+      lineNumber: lineNumber,
+      startIndex: startIndex,
+      endIndex: endIndex,
+      trailingNewlines: trailingNewlines,
+      trailingSpaces: _trailingSpaces,
+      spaceCount: _spaceCount,
+      hardBreak: isHardBreak,
+      width: width,
+      widthWithTrailingSpaces: widthIncludingSpace,
+      left: alignOffset,
+      height: height,
+      baseline: accumulatedHeight + ascent,
+      ascent: ascent,
+      descent: descent,
+      fragments: _fragments,
+      textDirection: _paragraphDirection,
+    );
+
+    for (final LayoutFragment fragment in _fragments) {
+      fragment.line = line;
+    }
+
+    return line;
+  }
+
+  /// Creates a new [LineBuilder] to build the next line in the paragraph.
+  LineBuilder nextLine() {
+    return LineBuilder._(
+      paragraph,
+      spanometer,
+      maxWidth: maxWidth,
+      lineNumber: lineNumber + 1,
+      accumulatedHeight: accumulatedHeight + height,
+      fragments: _fragmentsForNextLine ?? <LayoutFragment>[],
+    );
+  }
+}
+
+/// Responsible for taking measurements within spans of a paragraph.
+///
+/// Can't perform measurements across spans. To measure across spans, multiple
+/// measurements have to be taken.
+///
+/// Before performing any measurement, the [currentSpan] has to be set. Once
+/// it's set, the [Spanometer] updates the underlying [context] so that
+/// subsequent measurements use the correct styles.
+class Spanometer {
+  Spanometer(this.paragraph);
+
+  final CanvasParagraph paragraph;
+
+  static final RulerHost _rulerHost = RulerHost();
+
+  static final Map<TextHeightStyle, TextHeightRuler> _rulers =
+      <TextHeightStyle, TextHeightRuler>{};
+
+  
+  static Map<TextHeightStyle, TextHeightRuler> get rulers => _rulers;
+
+  /// Clears the cache of rulers that are used for measuring text height and
+  /// baseline metrics.
+  static void clearRulersCache() {
+    _rulers.forEach((TextHeightStyle style, TextHeightRuler ruler) {
+      ruler.dispose();
+    });
+    _rulers.clear();
+  }
+
+  double? get letterSpacing => currentSpan.style.letterSpacing;
+
+  TextHeightRuler? _currentRuler;
+  ParagraphSpan? _currentSpan;
+
+  ParagraphSpan get currentSpan => _currentSpan!;
+  set currentSpan(ParagraphSpan? span) {
+    // Update the font string if it's different from the last applied font
+    // string.
+    //
+    // Also, we need to update the font string even if the span isn't changing.
+    // That's because `textContext` is shared across all spanometers.
+    if (span != null) {
+      final String newCssFontString = span.style.cssFontString;
+      if (_lastContextFont != newCssFontString) {
+        _lastContextFont = newCssFontString;
+        textContext.font = newCssFontString;
+      }
+    }
+
+    if (span == _currentSpan) {
+      return;
+    }
+    _currentSpan = span;
+
+    if (span == null) {
+      _currentRuler = null;
+      return;
+    }
+
+    // Update the height ruler.
+    // If the ruler doesn't exist in the cache, create a new one and cache it.
+    final TextHeightStyle heightStyle = span.style.heightStyle;
+    TextHeightRuler? ruler = _rulers[heightStyle];
+    if (ruler == null) {
+      ruler = TextHeightRuler(heightStyle, _rulerHost);
+      _rulers[heightStyle] = ruler;
+    }
+    _currentRuler = ruler;
+  }
+
+  /// Whether the spanometer is ready to take measurements.
+  bool get isReady => _currentSpan != null;
+
+  /// The distance from the top of the current span to the alphabetic baseline.
+  double get ascent => _currentRuler!.alphabeticBaseline;
+
+  /// The distance from the bottom of the current span to the alphabetic baseline.
+  double get descent => height - ascent;
+
+  /// The line height of the current span.
+  double get height => _currentRuler!.height;
+
+  double measureText(String text) {
+    return measureSubstring(textContext, text, 0, text.length);
+  }
+
+  double measureRange(int start, int end) {
+    assert(_currentSpan != null);
+
+    // Make sure the range is within the current span.
+    assert(start >= currentSpan.start && start <= currentSpan.end);
+    assert(end >= currentSpan.start && end <= currentSpan.end);
+
+    return _measure(start, end);
+  }
+
+  void measureFragment(LayoutFragment fragment) {
+    if (fragment.isPlaceholder) {
+      final PlaceholderSpan placeholder = fragment.span as PlaceholderSpan;
+      // The ascent/descent values of the placeholder fragment will be finalized
+      // later when the line is built.
+      fragment.setMetrics(this,
+        ascent: placeholder.height,
+        descent: 0,
+        widthExcludingTrailingSpaces: placeholder.width,
+        widthIncludingTrailingSpaces: placeholder.width,
+      );
+    } else {
+      currentSpan = fragment.span;
+      final double widthExcludingTrailingSpaces = _measure(fragment.start, fragment.end - fragment.trailingSpaces);
+      final double widthIncludingTrailingSpaces = _measure(fragment.start, fragment.end - fragment.trailingNewlines);
+      fragment.setMetrics(this,
+        ascent: ascent,
+        descent: descent,
+        widthExcludingTrailingSpaces: widthExcludingTrailingSpaces,
+        widthIncludingTrailingSpaces: widthIncludingTrailingSpaces,
+      );
+    }
+  }
+
+  /// In a continuous, unbreakable block of text from [start] to [end], finds
+  /// the point where text should be broken to fit in the given [availableWidth].
+  ///
+  /// The [start] and [end] indices have to be within the same text span.
+  ///
+  /// When [allowEmpty] is true, the result is guaranteed to be at least one
+  /// character after [start]. But if [allowEmpty] is false and there isn't
+  /// enough [availableWidth] to fit the first character, then [start] is
+  /// returned.
+  ///
+  /// See also:
+  /// - [LineBuilder.forceBreak].
+  int forceBreak(
+    int start,
+    int end, {
+    required double availableWidth,
+    required bool allowEmpty,
+  }) {
+    assert(_currentSpan != null);
+
+    // Make sure the range is within the current span.
+    assert(start >= currentSpan.start && start <= currentSpan.end);
+    assert(end >= currentSpan.start && end <= currentSpan.end);
+
+    if (availableWidth <= 0.0) {
+      return allowEmpty ? start : start + 1;
+    }
+
+    int low = start;
+    int high = end;
+    while (high - low > 1) {
+      final int mid = (low + high) ~/ 2;
+      final double width = _measure(start, mid);
+      if (width < availableWidth) {
+        low = mid;
+      } else if (width > availableWidth) {
+        high = mid;
+      } else {
+        low = high = mid;
+      }
+    }
+
+    if (low == start && !allowEmpty) {
+      low++;
+    }
+    return low;
+  }
+
+  double _measure(int start, int end) {
+    assert(_currentSpan != null);
+    // Make sure the range is within the current span.
+    assert(start >= currentSpan.start && start <= currentSpan.end);
+    assert(end >= currentSpan.start && end <= currentSpan.end);
+
+    return measureSubstring(
+      textContext,
+      paragraph.plainText,
+      start,
+      end,
+      letterSpacing: letterSpacing,
+    );
+  }
+}
+                                               ĞÏà¡±á                >  şÿ	                               şÿÿÿ        ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿıÿÿÿşÿÿÿşÿÿÿşÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿR o o t   E n t r y                                               ÿÿÿÿÿÿÿÿ                                uì±5Û   €       D e s t L i s t                                                  ÿÿÿÿ   ÿÿÿÿ                                                D e s t L i s t P r o p e r t y S t o r e                       ,  ÿÿÿÿÿÿÿÿÿÿÿÿ                                                                                                                  ÿÿÿÿÿÿÿÿÿÿÿÿ                                                şÿÿÿşÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                +  ” vi50|Visual 50                                      P      
+ ÿÿÿÿ   ÿÿÿÿ 6 9 ÿÿ< ÿÿÿÿ> ÿÿA ÿÿÿÿD ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿM P ÿÿÿÿÿÿÿÿÿÿÿÿS V ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿY ÿÿ\ ÿÿÿÿÿÿÿÿÿÿ^ ÿÿÿÿÿÿÿÿa ÿÿd g j m p s v y | ÿÿÿÿ ÿÿÿÿÿÿ‚ ÿÿÿÿÿÿ… ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿˆ ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ‹  ÿÿÿÿÿÿ ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ’ z$<4/>   HJ K$<16/> J Y%p1%' '%+%c%p2%' '%+%c B H  C A M$<3*/> U S T W L  B P Q R V E ] L v M H D C A 
+ 
+ I 	 
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          )Óvi603|visual603|Visual 603            P   ÿÿ      ! % ÿÿÿÿ) : < ÿÿ@ ÿÿÿÿB ÿÿF ÿÿJ N R ÿÿ[ ] b ÿÿÿÿÿÿg ÿÿÿÿl q v ÿÿ{ } ÿÿÿÿ† ‹ ‘ ÿÿÿÿ— š ÿÿÿÿÿÿÿÿ¸ ÿÿ¼ ÿÿÿÿÿÿÿÿÿÿ¾ ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÂ ÿÿÿÿÿÿÆ ÿÿÿÿÿÿÊ ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÎ ÿÿÿÿÿÿ× à ÿÿé ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿò ÿÿÿÿÿÿÿÿÿÿ`ÿÿceÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿjÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ¤ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ­¸½Ğ  [%i%p1%d;%p2%dr [3g [H[J [K [J [%i%p1%d;%p2%dH 
+ [H  [C [A [P [M P2;1~\  [5m [1m [4h [7m [7m [4m  [m$<2> [4l [27m [24m \ >[?3l[?4l[?7h[?8h[1;24r [L  [B [D [C [A [%p1%dB [%p1%dD [%p1%dC [%p1%dA >[?3l[?4l[?5l[?7h[?8h D M [0%?%p1%p6%|%t;1%;%?%p2%t;4%;%?%p1%p3%|%t;7%;%?%p4%t;5%;m%?%p9%t%e%;$<2> H 	 P2~ ``aaffggjjkkllmmnnooppqqrrssttuuvvwwxxyyzz{{||}}~~ (B)0 [1K$<3> [%i%d;%dR [6n [?%[;0123456789]c Z                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                D   | şviewdata-o|optimized version of Viewdata Prestel/Viewdata terminals                 ( ÿÿ ÿÿ   ÿÿÿÿ ÿÿÿÿÿÿÿÿ ëíïñÿÿóõÿÿ÷ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿùÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿü   %p1%?%p2%{20}%>%t%?%p1%{23}%=%t%Pa%{1}%e%{1}%+%;%;%Pa%?%ga%{13}%<%t%?%ga%{07}%>%t
+
+
+
+
+
+
+
+%;%?%ga%{4}%&%t
+
+
+
+%;%?%ga%{2}%&%t
+
+%;%?%ga%{1}%&%t
+%;%e%{24}%ga%-%Pa%?%ga%{07}%>%t%;%?%ga%{4}%&%t%;%?%ga%{2}%&%t%;%?%ga%{1}%&%t%;%;%?%p2%{21}%<%t%?%p2%{07}%>%t								%;%?%p2%{15}%>%t								%;%?%p2%{4}%&%t				%;%?%p2%{2}%&%t		%;%?%p2%{1}%&%t	%;%e%'('%p2%-%Pa%?%ga%{07}%>%t%;%?%ga%{15}%>%t%;%?%ga%{4}%&%t%;%?%ga%{2}%&%t%;%?%ga%{1}%&%t%;%?%p1%{23}%=%t%;%; 
+     	  
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  OggS         êÊA    ¸xÕvorbis    €>      €»      ©OggS          êÊA   ]Uc@ÿÿÿÿÿÿÿÿÿÿÿÿÅvorbis   Lavf59.10.100      encoder=Lavc59.15.102 libvorbisvorbis"BCV @  B*­c:È!Œ¢ BÊ)ÇBĞ!£$Cˆ:Æ5ÇcG¹dŠBÉĞU  @  ¤WPrI-çœs£WÌqè çœså gÌq	%çœs9ç’r1çœs£Wr)-çœsGŠq§çœs¤GŠq¨çœsm1·’rÎ9çœsæ ‡Rr®5çœs¤gr%çœsÆ gÌqë çœsŒ5·ÔrÎ9çœsÎ9çœsÎ9çœsŒ1çœsÎ9çœsn1çs®9çœsÎ9çsÎ9çœs 4d    ¡(Šâ(²
+ È  @qG‘K±ËÑ$Y      H†¤HŠ¥Xfi&z¢(š¢*«²iÊ²,Ë²ëº.²
+ H  PQÅpY d  `(Š£8äX’¥Y„†¬ €    PG±Mñ$Ïò<Ïó<Ïó<Ïó<Ïó<Ïó<Ïó<Y     ‚(dBCV @  !CR\
+BCBÎC©¥ƒà)…%cÒS¬A!|ï=÷Ş{ïĞU    a8ˆÇ$!„b'Dq¦ !„å$XÊyè$İƒB¸œ{Ë¹÷Ş{ 4d   À „B!„B)¤”RH)¦˜bŠ)ÇsÌ1Ç ƒ2è “N:É¤’N:Ê$£Rk)µSL±åc­µÖœs¯A)cŒ1ÆcŒ1ÆcŒ1Æ#Y €  dA!„RH)¦˜rÌ1ÇBCV €     ER$Gr$G’$É’,I“<Ë³<Ë³<MÔDMUÕUm×öm_ömßÕeßöeÛÕe]–eİµm]Ö]]×u]×u]×u]×u]×u]×ĞU € €ä8ä8äH¤H
+²
+   €£8ŠãHäX%Y’&i–gy–§yš¨‰²
+        €¢(Š£8$Y–¦i§z¢(šªªŠ¦©ªªjš¦iš¦iš¦iš¦iš¦iš¦iš¦iš¦iš¦iš¦iš¦i¡!«  	  ÇqGqÇq$G’$ 4d      CQEr,Ç’4K³<ËÓDÏô\Q6uSWm 4d          Çs<Çs<É“<Ës<Ç“<IÓ4MÓ4MÓ4MÓ4MÓ4MÓ4MÓ4MÓ4MÓ4MÓ4MÓ4MÓ4MÓ4MÓ4MBCV d  “JN±WF)Æ$´^*¤“Ô{¨˜bL:í©B)¹‡J!¥ ÓŞ2¥R{§˜BÈê¡ƒ1…°×ÚsÏ½÷Y D  Æ ÆcÈ1&%ƒ1Ç$dR"çœ”NJ&¥¤VZÌ¤„˜J‹‘sNJ'%“RZ©e’Jk%¦    ,„BCV Q  ˆ1H)¤RJ1§˜CJ)Ç”cH)åœrN9Ç˜t*çtJ¤”r9§œs2•sB&  €  € ¡Ğ@œ  €sŠ1cB	)…PRªœ“ÒAI©ƒ’RI©Å’RŒ•sR:	)uR*)ÅXRŠ-¤Tci-×ÒR-Æœ[Œ½†”b-©ÕZZ«¹ÅXs‹5÷È9J”Ö:)­¥ÖjM­ÕÚIi-¤Öbi-ÆÖbÍ)Æœ3)­…–b+©ÅØbË5µ˜si-×cÏ)Æk¬¹Çœƒ0­ÕœZË9Å˜{Ì±ç˜s’s”:)­uRZK­ÕšZ«5“ÒZi­ÆZ‹-Æœ[‹1gRZ,©ÅXZŠ1Å˜s‹-×ĞZ®)ÆœS‹9ÇZƒ’±ö^Z«9Å˜{Š­ç˜s06Ç;J¹–Öz.­õ^s.BÖÜ‹h-çÔj*ÆsÎÁØÜƒ­åœjì=ÅØ{î9Ûsğ­Öà[ÍEÈœƒĞ¹ø¦{0FÕÚƒÌµ™s:è"tğÉx”j.­å\Zë=Ö|Í9ÑZî)ÆŞS‹½×›°½!ZË=ÅØƒŠ1øšs0:çbT­ÁÇœƒµ¡{/Jç ”ªµ™kP2×"tğÅè ‹/  `À  À„2PhÈŠ  N €AÈ9¥„J)¡„”B()UŒIÈ˜ƒ’1'¥”RZ%µŠ1™cR2Ç¤„Z*%´Ji©”ÒZ(¥µ–ZŒ)µC)©…RZ+¥´–Zª1µVcÄ˜”Ì9)™cRJ)­•RZ«“’1(©ƒJ))ÅRR‹•sR2è¨tJ*©ÄTRi­¤ÒR)¥Å’Rl)ÅT[‹µ†RZ,©ÄVRj1µT[‹1×ˆ1)sR2ç¤”RR+¥´–9'¥ƒJæ ¤’Rk¥¤3æ¤tJÊ £RRŠ-¥S(¥µ’Rl¥¤ÖZŒµ¦ÔZ-%µVRj±”[‹1×KM”ÖJ*1†RZk1æšZ‹1”[))Æ’Jl­Åš[l9†RZ,©ÄVJj±Õ–ck±æÔR)µš[l¹Æ”SµöœZ«5µTck±æX[oµÖœ;)­…RZ+%Å˜Z‹±ÅXs(%¶’Rl¥¤[l¹¶c¡´XJj±¤ck1æ[©µZ[l¹¦Ôb­µö[n=¥k‹±æÒR5×ŞcM9  0à  `B(4d%   Ãc¥œsNJƒ”sÎIÉœƒBJ™sBH)sNBJ-eÎAH©µPJJ­ÅJI©µ  (p  °ASbq€BCV Q  ˆ1J1¡1F)ç 4Æ(Å„J)Æœ“P)Å˜sP2ÇœƒPJæœsJ	!”RJJ!„RJI©  € € 4%(4dE   cœ3Î!
+¥ÎR$©£ÖQk(¥KŒÆV{ë¹Ó{m¹7”J©ÖkË¹ÕŞiM=·  ;p  ;°
+Y	 ä Æ(Å˜sÎ…sÎ9çRŒ9çœsŠ1çœƒBÅ˜sÎA!sÎ9¡„’9ç„JèœƒPJ)¥tÎA¡”R:ç „RJ)sJ)¥” €
+  lÙœ`$¨Ğ• @  `BÎIi­aÌ9-ÕØ0Æ””b‹œƒR‹¹FÌAH)Æ ;()µlğ„”Z‹9“R‹5çŞƒH©µšƒÎ=ÕVsÏ½÷œb¬5çŞs/  wÁ ìÀF‘Í	F‚
+Y	 ä )Å˜sÎ¥sÌ9çŒRŒ1æœsŠ1ÆœsÎAÅcÎ9!cÌ9ç „1æœsBèœsB!tÎ9!„:ç ƒBsB!„ €
+  lÙœ`$¨Ğ• @8   !„B!„B!„B!„B!„B!„B!„B!„B!„B!„B!„B!„B!„B!„B!„B!„B!„B!„B!„B!„B!„B!„B!„B!„BèœsÎ9çœsÎ9çœsÎ9çœsÎ9' È·ÂÀÿÁÆV’Î
+GƒY	 „  
+A(¥bJ)%’N:)“PJ)‘ƒRJé¤”RJ	¥”RJ¥”RJ”RB)¥”RJ)¥”RJ)¥”R:)¥”RJ)¥”Ê9)¥“RJ)¥DÎI)!”RJ)¥„RJ)¥”RJ)¥”RJ)¥”RJ)¥„B!„B!„B!„B!„B!„B!„B!„ ¸  lœa%é¬p4¸Ğ• @H   sJ)”R¨˜¢B))¤RJ
+cÎIê…PR(©ƒÊ9¥¤”B*!uÎA%…R	!•:è(”PR*%”Ò9(¥„JJ)•BH©t”R(%•”B*!•RJH%•J
+¤TJ
+©¤TRtB'%¤’J
+©“”R*%¥”JJ%tRB*)¥BJ©”JH)¥NRI©¤B(!…”RJ%¥’JJ!•TB	¥¤”R(¡¤TRJ)¥’R)  àÀ  À:É¨²M¸ğ ²   @”tÖi§I"1E™')Æ µ¤,ÃS’‰ñcŒ9(FC1ä”J¡ƒb<&•CÊPQ¹·Ô9Åc|ï±   „  (˜ #m €™	
+¡ÁA& <@DH ‰	ŠÒ….!‚tdñÀ…7¸á„m      ğ P ÑÌUX\`dhlptx|€„      |  $"@DD4s !        @@@         @@OggS  €>      êÊA   !…L!VSrtlnohljpsuotvrvqhtvu|ptmrrqrng§¶æ`ëé‚&pw¬­énÊıİ9®íåêóğãíO?ÌO&³âÓö`p{^\í_
+@öá›8ÆÍÅuı¼zİ£øMj´õD€€ír’ıgØO]ü¤Ä¬|I{€–ÉĞ  ˜àÇì×$¤*#¾kÃ£Ñ6â=’–+”s §Yáñ-á-Tkô&œ¿OG İg@…y~`]…jñvÚöÊ[0RkºZYeD¾&P)w@ëö›y°À(Iœ‹Ş¤¯5Ì|µ]Õ*ª´+!ÆÜ´t8]äİ	µ>‡ñÜÏ×os f˜…'CÈ|Øm×?Ô¯Gí¤…İ¹à(ş'mAgË¦Á¤’CƒÖ¿­\é†Ô ééÕNªÒ^EÊpÀü ‰Ç¼ ¦™ov>Rˆ² ö¥#PPùµ@pn7@¢z™f£4-ù™Máà*ˆ
+d£şÄ°z™D—¯lnU'™H¼ß´]üÈÑ}İCC¯8Û9¿‹õ¬ùéşÄ»Ò˜¥o È¿Ø ÅB@ÑÀ%EÆœn	ûÛjÄ(ö† ²ÃáË!ÑŠ
+¥Ì³!Á\ôx vŸ]»Qïoéæ ˆ[¼Ímœî¿±VÀZ
+ºjLŸØ?ö;òÎ70òî® Şêå:Õ[})aW €ÁH+8 eµ ”SòK¢
+PÔY:W0p²4ÊÁ5Bõo¤R]rO›?uœ†&Øúñ–éh½éu‚†Ô´¤òÕoÚ!zs‹	ävóšœÊ³êÈNĞ§•êş²ş*ªŒÃã¯J3ì
+4àEX€®’Z âËëòã‚‰¾0cûêrËîr„òßw)qÑA€†ò¾& fš7§-Aûµ
+G[OzıtqÜÌåìÕåQoœ)»®u÷¦M*nÇy6K¿ ş)êÉº·½Æ 37 h`HgödÀhˆ©‹ŞX€Mgàcâê¥1B¼2Ã<“İûÕ±ğĞñn´Øæ¼Ğuí%º„ñ}ÉîqÖÏ×ñ•Qö´á0q¨#¡sõùO‚è3¸ ¾ù©ú“·½ªà€= ’m‡§°ø³fĞºàÜ0Ïöôv0ƒYãŞñ0P¯sëbfñïcªSvÀœ’êi pü"¢zQ$t í*Yk#ûæ&)B™oØ©5CH§ÉYR-
+ø	33 ¾ù©W2ªÛ»
+n ˜> ™ÇÀ`¹éRÑe¿ÎN»İ‹šF¼­‰QÛ›/D58@<¸ôäXèvQHƒùk#ÍJf	;ñ‡íNzİÓÏ®Ø'1—‰ç±ÀÃª{vèkxÛ	ŞùòEjwF•Vwn×„o`¡ƒH@± à®À4é,yåÙûpR#ƒ¬Şƒ_¯u ğÚ›YPQ¡,Ã@
+JÀõäÇ@)¨hV©ná$,ê8bS^¯f7[qQæé»CÀ2ËÏ×ôªÜ{9şù*|•É™“Ò|åuÀGÓhb¡ƒsz›Z ìzëƒŸûm,x[› ñ¿rZ(ª¤à¯Ï  ÂYx¸A‘¸@å•‡ì2ØØÏÇ'ÑáÀ­„ÎgZ\àµŒGööèö²:ˆH;ş]ì~ 	ëëÅ,HY÷Í®  ,8šÁÚ@Ò  ÔB¼ h % /f‰
+ÀóO€
+´ /Œ  Kêò™2² £g{gÓ³rdØD9 æë©!Ísñ•ñãÏ=àéÙÃ Š(²j—Ü˜UkóEßÏ3È ŞÙÊ±«0¦ğ0êÄXğkÀc=øo ³¥ xV¾™|ê}P€¨ Ñ  €-Q À/Ÿk”ğd²Q  œ¼p´ßlö	æå•rÎK?ü"°Ç4æS™€;½“$EÙNÂ`Óæ÷òÍ ~)›Ê¢k¬ìÉIŞ ğÓ4@ğ8`= À›s  D7Å¬¼ë­: (@z €úæ¥„   ısÑr£H)@z5™‰@Z¸j|ÀPG5ˆ"õ0R<™Z-÷+À6Ã><¯«qÏ·Ù¹bxqĞc?ª%nÕ>¾9ëÉ4idˆŒéÂ¿« @3;€›- €Ò  ĞÛ  r™ oT\‹ù~†Ş\¥¾‰YéYEÍ*ÚîÉÕL¤ºG…+`·|‰Ëˆ}aêz,ÊÏ¹ ¾Ú©±ÕıFû¯™äYXJğ]q±ä†	 şëG7Š²À¥ƒ7 üéû>8Øƒø”d  t=‹R#º…é{M„Dá-•©å.à_^.¸Ò(å¸qà	¿ğ¿ŞâÅ ÿ)òmüói•ÂÜeˆ.w Ì:º¬«ßr ƒ‹°)c§©j£¸y¾Ùò…›¨–C“6ØÕ  `888€É  1YK3%ÕËlÒ˜Ñh”bì©" Z®¨âRªÍòOÈ–ÓôôöT${Ş1Ü ¦1}¿jÍ¨L†ıQ	ĞÔ7Úˆ¬~ß<‰™{²äã‡Ç İ	¼ 9ûh-ÖcjÄ  >*Ã}w˜L­jg%o ØS7à @w¹P7y½^'ÚÔTÂ+SÁ¢:ş• ³Õå  Ğ—ÇET½™FQĞ†¼]×5zëzæ· ;2§W¾]ÅVò¸ªÃE¬hæò-}QeÙ`›‡·*cé+	  Şùª
+ ACê°|û$­c`…'HÒLªEŞÊëúc%—‰
+Hµye ¼¯Äç Ji¼¡¢«Ö&À×ùk¤¦ò&èÈÇB·¦ªfÎ÷ÓìşÇ ¨DJ·êÅÈÇ%áõÒŸ şèZ©5'p–c¾ İ”	Ø İNÖ ÆgJ†b«Š¾äèáØ ‘¦\‚:Ú´ 9¦'x ª£V\UİÅ¥Ê>ç×Õôv¢I¬Ç{²üEâQY—†5À,Üû`¡9nlÊ‚Uõ:W¬1X=¥µŸ3ô ş(šÔšæEÄæ€w*	`% Ğ”>unºÎ¹•«0EN
+Ôÿ=íPÀ3‹^çË_C €Ñl…A
+Äñï)šÕ0j†¬ƒuô0ï·_rFïĞ‹s&y’A)Ê_úìóõ°‚ò;ÖIÄÁÄêû•ó*»¸8 ş›D;!äÂtpÉBpõµ$ãêm‰–ÎOáÛÔ	¡Ï’šr\k!@Ûû}® NTbƒ‹TÜš½ÿIiÃŞëÛ÷ŒÆÇÄk}[V˜ê*ÆNçÂ‰wdªöMOsÄàm¡Óõ¬+‡ASâışêåDµë¤´ÌÜ ÌÄG‚kàhívà0 Aîİë–şsô Ì9™Buì«%  o„ÍÇP³‡Ù,Fíî¸8‘úÛ6T9*Ú`Ï
+¼|ºÙ]C·÷“„¬“¤d0/>—ÅM¸ØE›’l[ßV¸ZcG›'c^Jªbbr†.™æ0ì4ó t0G5HX{‡ŠrñGlÖŞXË ®î— €òøíå‚QFŞ.¹À0Ædi†%6„ÊÃlºFèb˜ÏİŠt·ÿ)‹Éê×²ÜCÍºb­­5lßNÓ•Üı ^:êÕ~T·D%Ë¹ ÕÔ XØ8\­Ö	yæ¤âèj:”\û0£ÁÍåı¬ äæï ,­/ŠÒŠM¾‡àWó`×éPĞ±Óu‚U·ª²E q\^©xÜmX£QÒx^*Kc ê¼ˆ@oŸ°÷~ JêÕŞT+«J³ç¸àë,ìƒ6³6 /¸2r}†«Jõ˜M×N Àë‡¨ˆ¸ÇH5	óqı %#³tËô)Ëw¦RuÕzn»`ÈşËÒM°&/RÂ«×è¡›èáúSÉèóOÕ5 ^:ª?ºÓƒºy|7 dS‚Çì°w@B².@·Šé(Úgs(B ud+‰ Pº½\P"DĞs;  ·Úó' ¤¸Öá~(
+@o1ÁÑ™6*€şŞN É®
+¯\ş|Š©û-ò¹kZ‚çªà™L Šêgœƒà`çüà’… ğµt@Ä<cîËçâVW ä¾=  ê¥µ@5åqz±7à‚k®Á+Õ7L4#™b±öêŒ…¼]4W [*à“‚Ù?RÇB§{•‰£şù'ÔÇeÚÒ şùêIÑ­QR¨7 |ü¥€báÀÜÃĞGÖœı«æe°‰Ï ±ueªš¼
+8xÎº`(R ÁI7%”ıã1ÀË.­J(Yè?Õ ÷QU )Ş3‚"ø9 ğ022Ü–Éf¢ßŠuØnÿjşI›Xo|ğHDèÀLS[@3vĞ0Ó ~oå=+êşĞùSs
+@Ê& UÖñ6@ğ˜KŸÔi è×‰RŞxøv”z¹UÓ»èúü/ ¨+OêOQ§Ä£êê€áÑ•]»Çùõ¤¶T| ^šêyŸ^}‚Ä¤n hŸª Aÿv€± Ì@F‘ a-NıàÁ-8@í‰ õ6P
+Àx¿T&àÚÚù+¬¹2¯K  ­K£ ¸àwà°°ı¿‘IÃÍ‹??-.«ˆòC ËŠÜ§©³Ëõ2š^ºª¼»WO­RÔôXì_HŒ´#ÀZ x !¦kD›½  .· uë¶ ¥Ôñ „³ó à_X#@A$ù°#7ª ïª‚<øÎ'¬âoÕqéÅ³Móã—½¥gÛOggS  €~      êÊA   ¨ee) momkxsujqkoumgdOIHGNGHMIFN[b`^caşYšÔnªG`Í:|7À°û—#®ú zeªƒm@ıeñ¶™@ÖÌØ  ù…o Š,Ï.[hP¨,ÍOáÕ`±&«eÿYƒ ôƒ¿G/t7¼ò0èCe¼rl=@çgE {Ä¨µ}Q
+ ¾ªªµŸÍÔ!!x ~HŒ¸ Ÿ€6 fj7·r8yìú´eC"%x]2 €Ù›# °uw:(A=fr%?£’ ˜¡ä3\ FŒL\±ê: *+,À'0w o¿3O  •L_ãp€†'Œ¾ºª­_Î'Ò<îvÉ&¤/Á¤s4¸V:¿^¸´}ëjÜ  pŒ”v€ÍûR:ª¤ˆ.ÍÏDÈâ7!ÁÁ{ âäU˜ttjÔZ[¥0j) î7Ü†‹ò(Œf_…Ó8ß,è©óäQ	 >zZ‰´w%ÕxÀÏ©*d¡ƒ Pô Àé¦¨Uë½ÅÛ‚C£¢àz• 4<rS åê%Ó½@Ø5'g  HøMàˆ8«ö  ĞWJ  ÷kNá¸ò‹£0¾NVl*<Ïãl ^zŠµs†¹–Ì™]  ’Ç­à Î°¶è  ´™@ÊƒŞ±ÎŸµE¬ zàÃ­‡ ~ĞÙ) ¨ÆÅğz8Œ. ĞËWÈÀÜ_ PÁÇ'  ½İ‹Ê€‘#QÜjxM jªNO"_ğæÕ?ö¼Ï Ø?ÆÏ•©O  ~zÊ…{”¨a7 öwSû x<ĞÁì< À DÛÊ uOÇ]P² È
+*{}R@ ]NÀ•ìZsÆ3 èĞHƒ –¿cQ€l¹h  ÀğÛÒ
+€çİõu¥ÁØ	6>ÂÀeaŸju ŞÚÊÑİ!)É®  Éã;ôô <À  (mN¡
+@Z  º1 €¢êîQ Ü$û€˜	oÿòŸtB5M /¦
+ Üï½¨oÿ   J*4¼¨æJŸÄñ¨(-kÛ Dç‰7Ïä>8?ª ø	¾ª*
+gÕNPÂ0øú:<`˜ÀBR©‘ñŸ½oµØ<Hy¤@ÈÓ  °µ €Öó«–æŠ@ •‚àd.5õòå  ü1ì7Ì	l{#×_% ^/gİpd ¯—‡}* ¾Ê*
+-RĞd‰ìj  ìÃ&€’C€5   Â”(Bë$  €:  €~Ú¼ô£‚—Àô¸¢ 0¿ßÕF„}c àŞÛA*È§Uw*ERsÂ(äş;KH¶jè.²­¼şZ <?Wâ ÎGÍ~šª¢İƒX:—U¤7 ¡{*€`C‡s	<Hğ0é†™ÍÀu7¥œ|l ÀsØ ârG€P¢PM¾W€~ÍJĞ¯Ÿ ğí8ã£ffv=Ğöço¦	ø¥ÛBuC„Ùö·ªÿÓ ş‰šxƒH{¥“º ÷™ ’ƒØ$¸93 Dåé=»¢AßÍ¿ÿUªY!Ö   ´+ ğ‘ï% *RÁèZ¸¼ÖĞ‰]‡ÙÒè8C}¯õ“úïh yåxØï?p>nYsé>ŠÏİE¬?X*“yÊá³ ÊZñ6
+1"¾0?§’@çx €9Ã„óKøz,@s›©  pÒ	 û –ZR”(ç“»<T  ¾ÿÑ ø}£³ÆhÀs^ß9Æ^kHÀğßxˆ$mô×>.fÚïºohÎ9Ü Şè9°
+šØ&y7 lS[@ñx ÀKĞÆ0€Õ£Zè^/ugwİË'¤€²M  	­  ø9 ª8ƒIa”R‚‚ş…T  V^Š- ¶_V   f=Ô?£®‚zÇÆô±­b%‡È;Ï  ^ˆ™f‰1*¯¡?ĞNêç’%k³äM¿ÿò?‰ÇÁ:qŠÿW   â-; ®\Š
+  Îï½}€äXWe¸™VØ ‡¿x€cÎÀçAÅ0"X¾,6ækTÚdS ~8éÇ´•J)¸¬ ¶Û`äÀÒ]@"%İ¶Å>?^cYğ\÷Ÿ øñ¯‡ìPòy(–+  â>VÚËbv ‡üƒ6O\ŒöHÊŒ~»ê#À.ÀÇgN|OQág¾¨éÅæ®ÌKxp·rH×`1  õÔ àqM    ] gà·L À¿|¼bø©X  @Wš§ øx¯h{W¤¾^ê˜©‹ÖİV‚)y€œ
+ õ¸!X¥2á  0W À´S x    ;€‹’€ë˜†	Š„2®ÄÎçüdºğ? ŞWÙŠ}¼ºK1Tiÿ‘~ dÆ0gş² Åk;   P[
+\   @ÿY& `¬«Î:Z_1cRıºáø şgYµ½¥»†*Mwé.  ° 3@=€%M„#Á’   à;IŸ@   ÀöÉ8 À—™ñÌşì~´@n e uÖn“q ¸™øÎ˜<Å½´[Ùìn ` ä,`@ô5 0Ò‘"b]çÉ/   ü  5i €÷  €Ê€—ù]^d tğ@G”ÃZÛ@ÿQ X™Äúê‚¡—’wÜ H€™ÊèùJ'+ «/jDM ü Ïã1 ~q  À¸†$é~$@ah¶ç=‹:; xéåú˜ÜÃ«"ÕÜM  d¦ï*@$	™ÔÇU €­ Fy
+ à\/ àEä‰—MÎ€/8¿»Û;ãlUU  >(éÇú9¹›²"ÛJÜM  r ã Ü’!LõDÒİ""  ó} Dû(® ğ–   ğÀª6S÷[Ğğ›¼]ë±‰ğó' ş7éùê:<CU¥·PwÓ  Cfàƒ1ˆ¼ıÇBª4  \/À'    îÜ @xÑ!¤†Õœ°‚ïŞëˆt”W>XéÇÎÙ=Åì#w ,€¤dŠèû˜„Ş-„ÅwNH üæ¥‰ /_Âì¡  î”Y×ÓrÃ«{¨ßFùp²H©Iõ¾Ú»Ú¢^İM  €–ÈH¹Ë@·]ÊŒ¢oÕ‚Af  ¸9—  ÂÛ2 \ºD9 ®±CS¯3s½Q­9îtŸ;F¥Ì¤Õ6~8á¶x&Oé+zw  ¦WšAéÊ®)qÄun{c ĞÏÿ¬›±—wî¾~šèpØ‹Ó0èÕ	ôzaaABWóÜHşô‰“Ù@S[oFà­n™U Şˆ)sºµ·­Üo" €ŠİtV Lë©uG,_Îòß*F4 aß—§yõ>uW¾ÁÙJú€LuPÒÄIáÃÔä_VoÀ 5nnÕÙÂğ~¯°Î •ªÈÂkx ş˜Idó-N=ƒÔİD   µ(†~I ó ¢‘u-¨xœã:Ëh¸š‚îkD¤fĞ8Oaë°Z†dB·Ü.uX “Rê¤ì°~¥~×ã«UKœk¯nèîoƒ)\ûp†ƒ¾ˆY÷ãªšª 0ö› @±\ƒA8Ö—@îøåp(û<ˆã&]JfŠÛ"Åü	5.e„DØ}”×¸uB…t'Ië@\ü~²·$6¤nMeƒ•ÖDÎà5 ~˜ÙMıW'TP wÓ  ¨Æ Q“"„hØI±{¿¾i;–z:›q@%3¨ï=•v°±<¦{xœ
+ôF-Mˆ]·¸¤Xë	‹ ğ¶êû³-œñE¶Rc´æq
+ÎZ ¾hÙ­øÀ¼ƒÔ~ Tí¢ø¤ˆé ‡ù®í2tµ}3qÃEÌ”%.,ë¼©s@i,ç›Áõ^”3iØ7ü„ 0/{àD«K­œ¼åUŸ÷î÷wò[˜'òê¿½ OggS  €¾      êÊA   GBê¡#c^cbacajpRQLUU>d`gfhbgecfdea_][^a\Y¾ˆÙOıš"ª‚Äİt  @­,f<LpLà‰ÅMx²×ÅE5íMr8×=œ™º‘ù•—õŒ^1À=JvvwU“_\æj±Ö¬î’f»6•€)Ó­ ‰'ŒDuµÛK hYOü‡fAjÿ ÀãŠ¶B2İ¦l¸ıY{IHU®«C–Ïõ½AÎ ç§•ß/Á¹{!ğµ0´üÚtUèbxÓ´àmÃ¢¸wú@“>L¶” "D&ğ³×M~8Y÷}V€Ìõ ¨ÚE' d9şy¾ßÚ`èzŒ¿i£¦&@W§A:Í0ê$úşÃgš22&On2Ù)Z”õ-” †XÃÂ4ßrHıô¯ÃˆTÓOÀB£UÓyQÙ(¿3 ŞGi=eG®fp½OÄ €*ïÌ
+\·¼UßùDN&¡Óºñ¿6í­Á@ÕmHŒdÁæ9ÜÉÄæ~ÓªÖwîfÿ¾óW=â¡áèÂ÷x½ãn»•l)‘¢²u¸F Å# ¿Ó“ºbh¾xY÷üFäú ì7 ¨”Ã¶jp»µøiëò¿nè€Šq¼=äx-Ò·YBÁ­¬_-¹üÓÒeDâ"o¿|OH†İ¡ß_Äş­œónc*DTË^A±0–iŞ¾ ˜ÙşC3=ƒ×Èİ  @Í•ö 6±hè½§B\j|Óˆ°İ4Ù8U0ì   &#1ãN¸ÕÄê÷G6©C
+tèÂ#Õá[±@‚½¦EïÄ`Z*‰¿€]h‹œ9Xft&T ŞxÙõüGdj‰ı¦ Pë•pN	e#¥ãåüÇíø³ï‹Â 6Åæù®foVt¹ŞÁL‡!ºè]ùšSoL½ pêïí]‘ë‚‘ç%ßØòVa=ßÉW”_‹¦^³˜Ùô­³BM r7Ñ  4İ°;Ğ<äã8Ñ@D¶2óxy^mæ…†Í`ÚÄØö*{/ZWâBƒQtDšOœµáˆUúªsdĞkïÃÛE}äÌ‘WàƒŞœ$ë(Üì¸ä³Ód'ËV¹¹<ğ[¢$àz÷  Xi³àß2Š‰^J'×ï­‹6KëÚ5½®±áQ  Âôù4K‘÷&;ï‚²/ ©İÂ-Ïı¶bJCF“Xåô*å€Çâã¨íÍ-‘Ë4Ç+jÛi½š®†ÿ •ÉyÀmdğf×¹Ø,ûôYk°“f0–¿VãV‹óĞ~’í~ãYoñ—úı!V0d?zº.ƒãÃ‚ÚÎ¸¾²E§-4=ÈÎ •xf¾M @Ó€_ú¦Úï]Šÿ)œ´E«mµÊ=JÜå¶‹²Ç0+¢Ela9®Üår?Ù*Ì]²
+“€œŸÓÏØOtwÍ:Ñ²bº¨û£tO  àÙ·oÓ pÊ -ÀÇG*}İ³p;qÀ]p`YçÁ+ì«üÃS£—‰­œ’©¾bFÆ¢¤bØ	ïÎÅG÷±pî§¨cæ5 Lµ°ï´o Øi^ dp¿®3{j›Û/Ëq$\Q\·"'’5e 
+µ<ü"í¥x0Ş†6G—‰€ŒÛ¶X…nErx±Z‡ORÛş  D±™,ƒ6¦	  pì øŒyœ¦7·İ±ßòJxĞ,Y!  P¼¹hB˜œv¥ÒâM	óáVï ^t)$L
+—€à¡|Ÿ¤##ËŠµcC‹áÈëÙ	«íì ì9 `ò@
+NâUd²jÖ×!Y°ç£EéJ  €Ús‘  Ëíh0O8İ/æá¹§ ºXÙõï»!dG§ò‹¸O% À´êÓà€;/IzwËŸÌàCâÈ`i,^D°ˆS?›î!  ‘õÖcÎ9œs-  şãİ¨UG  ş‰ºxƒ~Ğm	âÿj¦~&uê¿^:gÿ­)9@½Ûï @µÌ	”.fF€h88šŠëcèA§HŸERm&eı¤¢+ñÎN[9’ì19Ø>Üe?p—¼~c÷(¬}1w4Cøô, H¯ —¹A zºíùNI5q
+ €m*k Û"®¸Ö¬İeg~Şû€ñBà(àuÒ-Pàz\D{”DéŒúÙ½…ÈOé•2Ğ91klèî$•vè´{=ÀøíåÔü,Æ®}[­M>JÚ÷ÓR”
+`òö›  Ôæ¸ï›`&påã Ü¼\ÿ¶!5 ×&˜Dz¼1)uÿF^f«¶¾¼=şl}¹¦ìÈí!`ş}X  ãıÌ–kªÒz Úè4;ÙyÈÂôc< >ZÚ¯¤!0@éİM   
+ n‚J	üÓ‰ $VlkMyağw
+²ÆåğA½_n~Ï-T"ˆ  ƒ8>¹%{?o
+›´L¸3ü¶ó]Ì¢¨&êŠš Ãhšt]½_±¯r£Í	ÚÇ >j:nùÍpŒÙo
+ @êÖĞáRào„®„¾Å. ÀøÿÇ&çèsôôóÚ›F„	ZvŠX½H÷ÿÕÅó0ÑK‘ŸZmÓ Ov ÌóûÁl Š}æ™ºİ½BCŸ™k¯  ^z:¤&0å»‰  8Ğ’®áHï DXFdFJöÖá¤¹—lj0w68 @ú>UÔƒ>ÙˆÛpÀ“J²ú=lÀI™›Šô¢ìüSİ ÀÉß¡ºú=8 *:®VKïê¦
+yfèÑ  ~j:NŠ¨`ûM 0g èCZU
+"Ãï#!kµk­¤ëİ9gè¢ÌÒÕP—7‡Ï¥Ã†ÍYµ‰À|üï×KÇl Ğ8êrU},‚~Ñò%Õ}cÆ©’Ãœ--³R­%.îÄe ^jÚ×eS ‚Ä~Ó $g·:àDÏ¢>È@Ubê=®'Ş„§ÑÄÙ4?ÏSmrÔÔÃĞ¹4¢s‚}õ{~uî¶põGEü?iç¤Ş.UúÂ°/`=òÚ¦ >Zºö‹ "Hí7 @í nä"°’ $Â   8>u<EüûË ”ı]µĞ‹ˆÍŸ•÷KY§¾W¼zn(`a‘Î—YŒ‘¡EU—,\§îã$:Ä‚ŸWıM1œj×™Öß  ^Z:O‹ | ö›  Ôrë VŸ€ÑH‚5€«—P 8\'ÑÄ^¢m[ÎuÇ:Mğšá;Î…§¡ç[2O•cÇ¯È'›ÁƒßYû;<l¤õíÑ×ºtÖê«Ü¯W
+ ^z:M³˜iP¨ûM  ¼ÒÁ`$°ÖHE
+Xèã`E! ıÚ3—Y]uÇKp…ü7“âÁ'~_s/ Í*`)¢<9ğß'@rôı×JPÌèg¥/sùßK)0(÷ı]DQÛë7í¤ >Z:ngM¡8Búö›  ÔŒ k€pÀ¿vI©a1[@Ğ-     ,]0$_y°ï+(ºóŠR=®ĞùJp{ó½ÿs ŸÀ·5-(KqÏéÔìN6!Ã,É6J ^zš·²³@B^'î¦ p€› ¯Á0Jà$(¥‰¨]AU‰ã?„µ!7[³"¢èÍ J  ğWànÌ®‚ øW ^Ç«N Õ$’8/¿$	Øò	ÙYv ~ŠZog§11 ^Úo P3(W€½HËn$ÃŒÜíEí   ğgyÛô„)Ìs™ˆ'ââ¸b0¡f=Ä_û8`À®€÷Ìã!RpŠy»¨N­½aA=Ûê  ^ªZŠÍ±Ú²ß Ô
+@yxĞÙ•NÔŠñ$  @>5·:âóÈİ÷1c.ˆŒÜ´0WÁûWÙXÉ•Ø€Ï …²ÅHr§ù¿˜…?²V:i8İe ^ªÚò?³êÊİt  @Í¸ .Í@!2%a†CÇé^>0jYX§A5ÕÀI¯Ü©(  0¡'w·%÷¡íyï‘‡Œz-. < mdÈ_Tn`ùÄ][Õe6İBûúYs >jÚŠH„Õö~Ó ÉB‹ bà£&i§†îº³±&•   à"x"AL&>ÎçKPfi¹uMi‹¢î¯ka½¬ë#ğğØ;Qİ²ºåwuATÃšÏ¶/îåkß†# şiZßğk&£ ÖÏûM ¨;€°KàÁd)°M1î¦ôV–wC   =Ó…(ÈÊ|©˜É@ù¼2„C•eíˆª‘±€+ ±.£A¡m†ŒáwÑVBòàa8nß 9Ú]ô%Bê#û‡  ã kØ	$E]JÖ"Šë   À¿4e-w9ÈxfXr+àz“º«>¿Ü7Cß ({±ôM¨¾g·h”‰aKh>æÇÎOggS "ú      êÊA   xdnä XU\7OQ^WVMNNJHLROHKOHHOKHLNKKHB~XY_ğ^b—»`†fÊJ>­ˆ¨36w$ö¬ÁieÌòäMušÑíÈá¨n0™Ky`ù, ~Ş `b >Òd¨³) ¼Smxcëö½³ú	>(Ùİì¿Œ_²ú½›   2ÄÔƒp])D(Ñqc¢z>á¥ƒbH–y‰`ãsOt1øÙŞKC ìÏ p¼ÉM.½)´”!oÛTjÉ©	k 6X¹}ôCñkAÕú¸ö Ğf@p”yGfè¸]WJ‘s   ¨òô’Ío¼.˜c!â›ÌŞÑ5ãYv=#ÿc àä¾|Ugƒˆuæ–lo±ğ‡Ü•û\à¼ Ğb'à²obQxÛéë©¼Ï ğ
+ r7hXšñü& úÖ×O“ò¾TÎZ& —*}ó Àj°ç²áÜé†cÓ…µÜJqëÀÓµ–¹€ş |ğÕ:Üô2fPOBk$å)8–ÑŠ3;¯AÏ%ßdÿ	•.ıáÂ  àAaß XĞuº±¹vÇ™Ëg1wªxáÚ:¸íÄÀ×ş¥GœÜ‘9!b±Ælz1Å§)ŞÁ -§>ÍréúıâQú.<‰/¾‹   Z¨¹nû™ãˆ¿	€6«(H(ŸOHå*¦á÷íIgcÓªy£Ãı<qj ÜÿND`‘Š=K +—CŞ«Äàÿ¹¹’©ÅÅ½é„¸8ñVÒ{»mşëŞW9ö2&í% éî Àèİq ."ÜJUm/B~øÍâÕ`K»ù2Š¨±¶z­+¯íÈz7% UASLY
+$£+“Ó`P¿"Sy Şg¹œF&ù¥GwĞjƒî¬3
+ÈAãW9 PWªD-9í›n:õùÉHáá=Vr3&Ği[Õ&r ÀŠSj÷k*œ’ªP&Ï‰<š™ÛÿĞ¯­ŞW¹[ñ§ÏBºx® T	X
+€¹¢‹º×Ó:Üº-”FyàG¼óôÏŸ Ÿ§*%`“ûIwÿªô¦x(·Ã@yğ *ª~&÷}£Şw¹íùÓùk@>¨¬áÁœ€2  ¢i< .uí!€‹å=Ì›ß}AHÊS4ÜJ/o7÷ E	Àì7)ë á½À¿hu§õ+SïYZ şg¹ë'* q ìÌ	è @·éxmÅáŸOYM 7Œ€Èœş.²Î
+Y5  €v#&çÏ¡¶€Àşî,,†Ö–Sé;x1^¾­~Xùè'¦‰¯\²°f¥3'à$ [pB_ ÍºéØ±İ{8ÖÙ!Êü+·ß {¾Í÷^ œß‹ö~aÉ$
+#DR¤¢~šš^o ~Hùö"}ÀÌÅÃJ+=l4âÜ:ÍÃlô¡˜;á²OZ•!ì·ÔÏtd øüÅ•ºÖ°|[¢²”´Ë739˜†ë…¶‘\H~hù¨‡öÚ¹¬p²÷àh„xr±©â@ÿVĞĞ5³G¿u+¦‰jÔÿ0ãÊÿN@s8ÁÛµ?¬Šò¥íÈ]†§7¢„Óò
+”I xyÌ‘cŠHG›ktñ |«£%(Š¢”[¼?$²~IHã„.'[%;6×ÃHÂãå7tÜÿzÉ ŠÒè”32èİ­WÎ#|k¤‡¹r^ ~hùæÈ—qt® É @— Àï
+ W(Šü¬»%à4‚£õWNxåk«H~É àü‘ –\œ3Z¸Â´}ƒÛJigyë½ğ ~xù«#ß
+‘›f”o<èÁ ô»ï
+ 0A‹÷Ee]©:÷8æë¹Ò1F¯Aêq÷ÊÃ	Ğ`‚"WT¸(&ÛÄøÔµ~ˆùëE®š#ÌÖ ¥c _¼p)4Š"M€8ó³†’šbæÜd4ÂÅ4Æˆş=K•ÌÔ4RFÇ•Ì™QV¨VS»ª™ÊÂ•e ~¨ùÅHW4\C±Û ûJÏE5íÕ ¦ªÑB$OÄŠ™py~è$÷üğØl¢Rğ wE“/–s0ˆË´àÍšŞp3¥¼ ëÕ ~¨ùÆ Ø`UB £_Ó¡BP´m[’<ªµ¨wğ’ÃìK#¸h"ï»c	”»å±r¼dû-¨ğ™¢„TmËä;/×3 Ş§y£  ¬è˜U à¶Ézúğ;Ãqn“ËVz`~ï°„,ÛmdƒêĞ6ãà|âw«pIÿ1Î[Qù±Ñüî Ş§yj?  À*{Š G —9YòI	ÁO7`âªiı=§ÉakYÂİ—º3B¶‰-g?[§Ñ`õo©4
+L/ ËPj4â÷Ê¿œJ  ~¨ùù ¶d õf·ÆX¸Ğ¥™ğß$ÿ°ÉúÊzËx»`Ús ë=Ñ«C-zÿ¶ÖíÑ†À¡‡ÊEõ¨Bz­êz~«g»6[ ~˜ùé p„yÅ‰9 ªá™o•:1‰aºÍW#	nç× )‹3Õ{¥©•šú¦bÛ˜ÇÎ@Å‚TbŒ–\ó¢	£Õ;“ ~¸ùó ˜¶-»À‰ékôÊa¨íZê9çNG}5TÆZû1¨Ëšûï—RèÖáËŞö€ÆVÊü{Ïà4v4ÃÎü2¹Íöëo— Ş—yj? „Íª-ÛÀy†-”1Ô=¶¥µV¯](Â‰s²Påõ.d¬®¿ÅÄÆj¯[—w“
+B°£y"À.úR;«³ı¶ÒŞ§yr? `°m'+ 8ÌÆ}ÌäM÷±'~ÂQæÿ(¸]Ÿğ¯£Ö×wá5!…p“íx}‚Îv9“8íÎ¾ŸÍ¢˜63‘²Ö: ŞÇyj?  &n€¶SqW°lÀ„Aª	3]WZ/î\X,~ÙšzpL!·ÇÇ¹mT[?·õé[¯¢pV¿Â"	¾Çj Ş§yj?  X%!Û ¿/”uøNîÿ°Q$Ó=Â
+5ZŸ:§œDH—Ka	ÑËÒF´Ùfa6°ÿY—¸-}ÀØ\ü&Ï ŞÇ¹§~$ À6c 5Œ&¢­rw0ÌÇ(À.*×å°j2ÀÎÔS-˜‡6Æˆk¹¶ %ğkâ 3³Wb|İY Ş×y›   A è                                                                                                                                                                                                                                                                                  OggS         j¯{œ    zz‘³vorbis    €>      €»      ©OggS          j¯{œ   B¯t@ÿÿÿÿÿÿÿÿÿÿÿÿÅvorbis   Lavf59.10.100      encoder=Lavc59.15.102 libvorbisvorbis"BCV @  B*­c:È!Œ¢ BÊ)ÇBĞ!£$Cˆ:Æ5ÇcG¹dŠBÉĞU  @  ¤WPrI-çœs£WÌqè çœså gÌq	%çœs9ç’r1çœs£Wr)-çœsGŠq§çœs¤GŠq¨çœsm1·’rÎ9çœsæ ‡Rr®5çœs¤gr%çœsÆ gÌqë çœsŒ5·ÔrÎ9çœsÎ9çœsÎ9çœsŒ1çœsÎ9çœsn1çs®9çœsÎ9çsÎ9çœs 4d    ¡(Šâ(²
+ È  @qG‘K±ËÑ$Y      H†¤HŠ¥Xfi&z¢(š¢*«²iÊ²,Ë²ëº.²
+ H  PQÅpY d  `(Š£8äX’¥Y„†¬ €    PG±Mñ$Ïò<Ïó<Ïó<Ïó<Ïó<Ïó<Ïó<Y     ‚(dBCV @  !CR\
+BCBÎC©¥ƒà)…%cÒS¬A!|ï=÷Ş{ïĞU    a8ˆÇ$!„b'Dq¦ !„å$XÊyè$İƒB¸œ{Ë¹÷Ş{ 4d   À „B!„B)¤”RH)¦˜bŠ)ÇsÌ1Ç ƒ2è “N:É¤’N:Ê$£Rk)µSL±åc­µÖœs¯A)cŒ1ÆcŒ1ÆcŒ1Æ#Y €  dA!„RH)¦˜rÌ1ÇBCV €     ER$Gr$G’$É’,I“<Ë³<Ë³<MÔDMUÕUm×öm_ömßÕeßöeÛÕe]–eİµm]Ö]]×u]×u]×u]×u]×u]×ĞU € €ä8ä8äH¤H
+²
+   €£8ŠãHäX%Y’&i–gy–§yš¨‰²
+        €¢(Š£8$Y–¦i§z¢(šªªŠ¦©ªªjš¦iš¦iš¦iš¦iš¦iš¦iš¦iš¦iš¦iš¦iš¦i¡!«  	  ÇqGqÇq$G’$ 4d      CQEr,Ç’4K³<ËÓDÏô\Q6uSWm 4d          Çs<Çs<É“<Ës<Ç“<IÓ4MÓ4MÓ4MÓ4MÓ4MÓ4MÓ4MÓ4MÓ4MÓ4MÓ4MÓ4MÓ4MÓ4MBCV d  “JN±WF)Æ$´^*¤“Ô{¨˜bL:í©B)¹‡J!¥ ÓŞ2¥R{§˜BÈê¡ƒ1…°×ÚsÏ½÷Y D  Æ ÆcÈ1&%ƒ1Ç$dR"çœ”NJ&¥¤VZÌ¤„˜J‹‘sNJ'%“RZ©e’Jk%¦    ,„BCV Q  ˆ1H)¤RJ1§˜CJ)Ç”cH)åœrN9Ç˜t*çtJ¤”r9§œs2•sB&  €  € ¡Ğ@œ  €sŠ1cB	)…PRªœ“ÒAI©ƒ’RI©Å’RŒ•sR:	)uR*)ÅXRŠ-¤Tci-×ÒR-Æœ[Œ½†”b-©ÕZZ«¹ÅXs‹5÷È9J”Ö:)­¥ÖjM­ÕÚIi-¤Öbi-ÆÖbÍ)Æœ3)­…–b+©ÅØbË5µ˜si-×cÏ)Æk¬¹Çœƒ0­ÕœZË9Å˜{Ì±ç˜s’s”:)­uRZK­ÕšZ«5“ÒZi­ÆZ‹-Æœ[‹1gRZ,©ÅXZŠ1Å˜s‹-×ĞZ®)ÆœS‹9ÇZƒ’±ö^Z«9Å˜{Š­ç˜s06Ç;J¹–Öz.­õ^s.BÖÜ‹h-çÔj*ÆsÎÁØÜƒ­åœjì=ÅØ{î9Ûsğ­Öà[ÍEÈœƒĞ¹ø¦{0FÕÚƒÌµ™s:è"tğÉx”j.­å\Zë=Ö|Í9ÑZî)ÆŞS‹½×›°½!ZË=ÅØƒŠ1øšs0:çbT­ÁÇœƒµ¡{/Jç ”ªµ™kP2×"tğÅè ‹/  `À  À„2PhÈŠ  N €AÈ9¥„J)¡„”B()UŒIÈ˜ƒ’1'¥”RZ%µŠ1™cR2Ç¤„Z*%´Ji©”ÒZ(¥µ–ZŒ)µC)©…RZ+¥´–Zª1µVcÄ˜”Ì9)™cRJ)­•RZ«“’1(©ƒJ))ÅRR‹•sR2è¨tJ*©ÄTRi­¤ÒR)¥Å’Rl)ÅT[‹µ†RZ,©ÄVRj1µT[‹1×ˆ1)sR2ç¤”RR+¥´–9'¥ƒJæ ¤’Rk¥¤3æ¤tJÊ £RRŠ-¥S(¥µ’Rl¥¤ÖZŒµ¦ÔZ-%µVRj±”[‹1×KM”ÖJ*1†RZk1æšZ‹1”[))Æ’Jl­Åš[l9†RZ,©ÄVJj±Õ–ck±æÔR)µš[l¹Æ”SµöœZ«5µTck±æX[oµÖœ;)­…RZ+%Å˜Z‹±ÅXs(%¶’Rl¥¤[l¹¶c¡´XJj±¤ck1æ[©µZ[l¹¦Ôb­µö[n=¥k‹±æÒR5×ŞcM9  0à  `B(4d%   Ãc¥œsNJƒ”sÎIÉœƒBJ™sBH)sNBJ-eÎAH©µPJJ­ÅJI©µ  (p  °ASbq€BCV Q  ˆ1J1¡1F)ç 4Æ(Å„J)Æœ“P)Å˜sP2ÇœƒPJæœsJ	!”RJJ!„RJI©  € € 4%(4dE   cœ3Î!
+¥ÎR$©£ÖQk(¥KŒÆV{ë¹Ó{m¹7”J©ÖkË¹ÕŞiM=·  ;p  ;°
+Y	 ä Æ(Å˜sÎ…sÎ9çRŒ9çœsŠ1çœƒBÅ˜sÎA!sÎ9¡„’9ç„JèœƒPJ)¥tÎA¡”R:ç „RJ)sJ)¥” €
+  lÙœ`$¨Ğ• @  `BÎIi­aÌ9-ÕØ0Æ””b‹œƒR‹¹FÌAH)Æ ;()µlğ„”Z‹9“R‹5çŞƒH©µšƒÎ=ÕVsÏ½÷œb¬5çŞs/  wÁ ìÀF‘Í	F‚
+Y	 ä )Å˜sÎ¥sÌ9çŒRŒ1æœsŠ1ÆœsÎAÅcÎ9!cÌ9ç „1æœsBèœsB!tÎ9!„:ç ƒBsB!„ €
+  lÙœ`$¨Ğ• @8   !„B!„B!„B!„B!„B!„B!„B!„B!„B!„B!„B!„B!„B!„B!„B!„B!„B!„B!„B!„B!„B!„B!„B!„BèœsÎ9çœsÎ9çœsÎ9çœsÎ9' È·ÂÀÿÁÆV’Î
+GƒY	 „  
+A(¥bJ)%’N:)“PJ)‘ƒRJé¤”RJ	¥”RJ¥”RJ”RB)¥”RJ)¥”RJ)¥”R:)¥”RJ)¥”Ê9)¥“RJ)¥DÎI)!”RJ)¥„RJ)¥”RJ)¥”RJ)¥”RJ)¥„B!„B!„B!„B!„B!„B!„B!„ ¸  lœa%é¬p4¸Ğ• @H   sJ)”R¨˜¢B))¤RJ
+cÎIê…PR(©ƒÊ9¥¤”B*!uÎA%…R	!•:è(”PR*%”Ò9(¥„JJ)•BH©t”R(%•”B*!•RJH%•J
+¤TJ
+©¤TRtB'%¤’J
+©“”R*%¥”JJ%tRB*)¥BJ©”JH)¥NRI©¤B(!…”RJ%¥’JJ!•TB	¥¤”R(¡¤TRJ)¥’R)  àÀ  À:É¨²M¸ğ ²   @”tÖi§I"1E™')Æ µ¤,ÃS’‰ñcŒ9(FC1ä”J¡ƒb<&•CÊPQ¹·Ô9Åc|ï±   „  (˜ #m €™	
+¡ÁA& <@DH ‰	ŠÒ….!‚tdñÀ…7¸á„m      ğ P ÑÌUX\`dhlptx|€„      |  $"@DD4s !        @@@         @@OggS  €>      j¯{œ   Áwçâ"GFNLvmrjfi_cjna\d_bmgldjgkZXYWaWWT©„øa³¸­‹àb›sÃ}Gë?ÿÿ¿´µp Z,kÑ~#âAô§_ŒÇôÏÈùjç†b}9ï1kÅJ€Şóí¯  <5GÈO¸-²ÀJ€9USæôÑ^óäP(0š“v9ÔûüİØ¬ošÕ ¼j¸º
+ ˆƒX$v= şûc~ê ğ@ ,;ì9Mìd€M4ÀöGOÏ·vŸ_ŸtÇÀ#É7'¦)´²nÇåt xİuWŒEÉ—éàUª÷d9ïç Ü †Ú8€šåÇg D»¡h<*² %ÀGCûd»²<=ù^iØfSıÙıVMY¢ÑŞóE:Ö¹/ËÏ—<qí™$Ôë.µD°g Ë¿ñÇÉ¨ Zzš"·G¢¼²yÒæ7‚6,h›y
+0H8ÿ$=»ı7ájû÷ïfğ¡%µu
+0}²\Ï)MikÏ¥ï{Şc“ú¯ÈÀ›ÑRïØ<İA€X?Œ5ûù$ı–ˆêP}9/ksA›«áq¾0£Ê®* ¾Úš‚QAr¹­ì’ŞáúØD
+Ÿ@ÅyZÀgM©ÿû³Ê9\³Tßí`WÑ[" Å.NvÏ&Ããsp×ËE{·»ÅÈ“úSzØ€:æ8 Ÿë×ºŠrËGH0åÒÕÛ=ùxö|B p şiZ¡– tš–Ù»  ´á°PÅ @‚Ó±vk}¸£•øÉJ´²>×j*zİ‡‘V-›N$ÿ§ù\’ø\>°è`çÏ$áhÿh¶L®&T×–ÁÆ5îm¬p‘şjëŸÊÔ])+ß_5¾šHC‰
+)Y²« p!À"Z  ¹AÀ¤%‰ÆQó»ƒH'¡Î[©é(²½,èwEØºª¶ñ?“u¯ä÷ÖF2‰ºŠ›e¢ùÈßÊF¶€êÎÜ¤v*ËŸKçNŞ†‰ ¸Í™õ}¼|`'.ú©°‚:,¸!q*€[ ™; 0×CµÙÈ…­Æw·­	£KUÃq«¢ÁkÄ·2vÉ%àŠ¸ñá!R¹>oâ2ìÏm‘døÉÂiÃY‡¾Ysü
+æÕâo‹óqõ iZQ†Räğ´,»yÙ-Ú§*$xàH`&& `°«ÔõÊJ³„42ì=d5KpU XìüZğßŸŞ@ß(Ú(xš‘è.UyyUt ˆÇÉ§
+®\Ç=áò)å`2*€c4R’Å¨J ^iÚ6†(yxš–Íå†.N$öjÕ± ’l  ñX¦úãG©«™œœèüv»GÁÔlŠÀÃLÓ”ªˆÿõeñQRØ”„orEÔÄ„sÉ˜dœät 9ÜNÀ¾à>YZe’@Õš—*zh£İè˜e:( îIiü·wºSÙS²>©›¤¬Æ“ 4Ğ‘Ì!Äxõ©Ûlíö…#ò-½í¹#96oh.¼¢i³ÄÎêòş›!ÁLf'Ì›c'ÅŒ;š" è9Àšê €%í†Á!.X Ši ”î&bè}T£pR©¦ş1ÀìIßásLÈFW8:ŠŸÓ,aK¡ 0Ş¥@Ó×ë$9>æ\lQ)3ˆg=ÇKÆª7ülÂ Õ	<™W À<^¨Ùâ`¶h„FÍ.& É ´å³œÇ—Ìôcûÿá¸&Ü_º–eÂÿª+õ ©'ÛâÁ@Ü=%İsÏ+Z=	ºã«°Qİ©Ì½˜Îª–b„Õ¶FÓ¾yÕĞ°ó2y@=*~(Z%RM¨tôr4£U¡kçÒN°Ñ!•Ç?İÉƒe§úWsœ+¼±"r[3%İ¤ĞiDEïÉÚ¨)êKz3ÆhÈªË›8ghdW®º«µßÇhnV>@«.@I~Z¡`'h®7$³ø,`UHR F~¯¬Üî[éÙŸ¬È\¨Æ~Éª—»ÑŞ¨îtô9-q Ä+Ë^)ğÔA4Ã÷RE<Ğ½=XNüM<x*lRÏ1}ËÉAÒU¾8ê©.@@óc7´ÑDR‰Î†5Ğ}±«õ^RÔØÒæcé)uåI©‘N¨l]V—ª€t-µuz;äwe‹±¢¹½q¬ï}Ë~„N7f‰6Ã#TáNë±5ŒÉò— Şøéh0Ó‹>N‰´,œh•k  O¼±âÂƒa_¯Ú©°1Hhb`A|q9B.NN“Ã×S}Ûuªø{Ä”Œ›< Hô®¬=Àîú³œƒgŒÿX4=¸ï	» è™ÉÄqĞ¤İl#~ğ0‰N´r  `D÷ÂI­º?yhÑRÑø5$S‡´&Ğ Êèa* @}õm#3¼ø:úõ¨ú·öLyô|3½r ø;9 ^˜Y! J4È¿aØ‚Â °Y€KğDvımvşq,6Ó˜órbÜ¬E£P“…«‹2BMüÑ® C°T4hS!¶úí·(y*Í0!Øcáç G{uÙ‡Xq?¢».%NtşoäT ^˜™"EOJŒ¸œ,y7>Ğ9¸D gÖà¬PW1xi†»Ñ:¶ÊK~Oeö SĞ¨¨€ JEU!îÔ†f‰y1.qRvÙ¢J~ä\ÈÎ‹³€¼‹_Û¨=|ah hY! Jl7§ÑbKÇw @ëà¬) IÊ›¯ø¡6•c}Z¦±ş³q‚ö Bxn 
+Xn·£XR© ˆ‹o&4Zäƒœ²2‚hLæÀ+á‡7á Ôûk­¡K—ø^Ø„mTRã+  ş—YQ@ƒ
+Ò»àgH ~„„¡„GJÂ0j["ß„™kÏÁBæO Ø²ì ÒÈ¡>C—†ÎhB­ËBz«e^ÚìØ¿àÒıãö¡p*>$Ş‡Ù
+@ c¼¡¢…h·eá¤€!CğÖÇ[Wî<êí{mŠ6üõ"Õã'˜î‹ğ(È$Ø¾rjƒf”ÖÍ«bÛÜ›Ş
+»ñÚŸô/–22AoFØ¤Ô +Ç‹ûTØÃŞ	‡Ù
+@ƒ	Ä»±m,¾áB"E#0o )£îÁì«ÅtÅÛQ{ĞŠÍ| òD‚Õ¡dşOK/ ãi#©Oy=†Ö=Z!Ü”YU½IĞYêq¦³Kšx••Â·¹Å ñ$ûêD§(ë/¨é; Ğ û†@A‹-ƒÀÁV ° Ù_·‰Ü}ˆˆ~L"úÔ–…ºz¢ø¤®n…k[*s$9RS Àƒ¹a¹«‡X ,K–3yÕÇÔèX›™y¨ÿ
+àÛS6¼(*ğÄ“~Ç9H€PDX6¯7&Pp(Ìé8çWk˜± ¤¢ûŸÚQß)€@?‘Îø=Îpñ¿”{Ğt +Å§Ğ\k¦7ôx’°¡^aBİõã¥¾çDWÅµ5 –Ş§Yq@SªøÆ,'Ñnt,–6 °»U™'×ÂÜÓµ'–Ò<C ê È-  Dc$Â€OÒØÉ½âÚ'¥|ÃÑ`©˜ëI'nil¼å7ÌÃƒç"  œ¾WÙ@3´îáì†
+8ã € ³L˜ßC¸‹õæúøâš W
+ ˜ N³P@!0ñeg:pb{r*šİ½†>úŞF¸ØN¡îùŸõ†]@kÀ şwÙêS VvU…wcp”| P€Uá&ŒéÚ¬á8Â‘ÁSä 5ğÔQÜ/8 
+f÷f]j‚ƒÄÖ„ıÙ»%;Ê=‘FÒ:Q÷¯®U|Œ0¸Ù4›µÂhvN` -ƒ»U `QÍ× »{ÌÚ|´“yU©°.Øç P   N 	É~ï#eË~3	˜~:ô¢ğd·¦Ç'”ğ	/ôk$­8o­
+İo ş§9XÇ¢¦#òĞ¨I»±`™ ÿ¥úØ¡uò¿=ıxõ 6kWxáàsÍ;ì@]ä•éÈ::Ú¥ñõÓñ3VšÄ1á¡:ÊŠJÂ“ô\ï €á1 ş×ÙÇ&¤EóÓn€‚IH‡2´Š+èGÃ­×~Ä:*¤LfM°³Cªn˜¶
+ç¯ƒH²^»[4ìá”°õ£¼Ñiûå¨a‘İ€w Ş×YíœÍHgÒñå†h	8 ¶(pDí‘ÿÄXÄÔ—\—}ê|ß Pè»¼!m‡ğŠ“je²…¼ì\ «“Ó3yœóôT¿á OggS  €~      j¯{œ   [û~ó TQYWUTVNLKXVQSWZTUVWWUUXXWWRNNXXş×YmÎÄÉNÓÜÄnö €9<¤ ,íëO˜'”ğw2Xì”#È®ß$.‚‡RzıÄCò&ckÎG°ØÏônqE„p&`ª†'Ğ8v„–+Ş×Y-ÇH¦eózc0g@{Ñ±dÎ`î]7ÃÎº\¥¸iŸ†¡À¦] `Z€#ÊÅ uÉíË{‚ÌŸo_“ÿ‰›vu2ˆA°Ä¢êØão6 Øéw6Ê*Š)Úü´’í8`h€ Pk¤æÂázØwÃ¨ö7 pÕ)  ±ó¦J$`ãn*QÕˆ¤kæµxùÌÛvszxh¾7Şzº°½Š/ ÇYiÊMB´‰M Ğ"fæAÚ›šŒlŠÈ:Hª„‰P‚¯ .’¡QÓ£U·FL7+Åg›V#Ñ¥õK3ºû™tË½’2@ 7ù->˜é•°Ñ’èÜ0Ì'´Ñ†…™#|€äóGhŞI~+"ÿí€èŠhTßBœŸ †äÌ×ŞÆ²ö¸½o½Æ:œ¸$%àÏ>?ñ#³€ïân¨é•Şh7Î"pC°Çèb°0S 0,÷‘õÅiMlGôÙJıìSPøà3†<:oˆÈĞfÌ/ß^KgÀ6EõM}4==¨mÎÎ‘™ ğ–>5şÇé7bK0ÿÆtÑÇÅ´äP w°ö…vSEöEŠ‚Â÷(Ûä¿°³°Ô'>ªjX EK‹ÎÈ8öìñë0Ctq]×EPÁÖ Üß >¸©Fo°	¼päÆ@Å¢Ğ1yğà1nü‘ëîH«—”fıÆ°èä=¹_°¿šnTäİ2ú<ãêKt,i¤›ñ,¥ŠÍ <N >Ø™¬}†ÛÄ<¥¹¾Ë/´Ìà¦,~o	x½Hü)½ÔnÂÕöNp“şkËKÌ°1nçÖªÿ²Rm®:¼§}$@Ÿ >÷>˜éÍ>nvJKœèÃm€4!î¤·Ü6ZÍu zÛ
+®pµ
+8ĞafÑ5Fp¤]ÉÕñ+å¶w&æ¤7,íÍ#\4¬  ';>¨é-ŞÛÜ&ãº0¸,ä‘û* ğKHw.…íºÏµ¯ìvØ®Ğ·)   ¡T æşÛU~¯ŠÓkxºE08Inıéz§×Ä¨‚¬­ØôEŸH ”: ¾×éíì-64—'nX8  ÀEuF¿i©ÿÈCÆÛ<·eaË„ûI
+ xA@ªâ[İ@U‡!ÔOF×€äàœ$Ú9ß™Ô21/£1 —k >Ø©:çéNGóããF`e 'ıá÷ÅèğvjŞ1ÛâGsêãÚğí@Áù^äa ‚áÔO­[P3Ô˜Ä1Şñûï´åµÚÿ%Ğ4™{×M< >ÈéÍŞ9SX4Ù“Ğ1§8F’âÏîª<,€÷¹o¶m¢Àq²@n“ŒÎ–±…uÙÜÑ‰qö3V%^«‡v©Òˆy“üà­]Zú›Ã2#>¸é¯½oœÀ"ò„Ğ`Ğ‘æÈàÅ´Céq…8ª…½) tfş„SQğ¿ì§¶4ñöñ7ÆåzsÅ ô÷İ¬¿èìˆW‘•©«>˜é>§8…Jğ¤¤9œ7pg Üc‰â¤ĞbcüêT(àßqî–¬Ÿlªl{Çj¹Í?;»©!S•tv^¼¼ö—.1<£,fğ&Õf>˜é-åvÑ¹”ğ“›€4<j m–¶ÊqôêE¿VåÛCJüf-  n²¬rı{ÿ£5F†¾î¢rQšÕgEˆ[k´'Öıâ„c<€W‚¡ >È©Gÿíö Lšô¡¤°°PKám1XüSÚï5ÇšÉªù$@€ ğĞ”•ån0í¯¡LİÈps‹³R‡.›ÈdŠ¥©QÃDîòÛ	†5AĞÛi^˜ñ_q[¤IiùF@î.èTOãÉå¤µÈ9¨<9ºPIPÇâä?—=ë!Z†z¡¿°£“èt÷ôw—œnŸº-Òú$äs±ù°o€ßıë >x)FŸáNt¾’zB€DD,A½{1q%‘fráÿØ( w+ LM¼­c5Êªêá»p¢´s+~œq³¤ŞÚCyùjõêÇdœ¦Šng¯› ^¨©æ´°Z”Ìñ3BØ º\	DK(Ÿ?\4¡'¶Íà'	 îï €ªWÀPÀì¯ÙÌz‹¨]k¶Õİ½j!‚u·F¸Ë‚‰4ò¿	B›ÀQ
+–¨ >x©fÿÛœy¢4*t¤5qHm-mwÙSŒÚ2l…i2 LÈ"Aü54€kL¿ ¹C	6lG¥NÃ·(oTOãwïp¥Ğ*LÍ~^hÉC:İJ-eeßh:r%X †Ôp5m;úo›.>Nñ°78°¹$PÀ!›Ø5[”‘®~‹š¿•}¥dGt-™¸ÚåÚMÖxƒ¢ù/~…Y»:¡EeVÓ}^H)Æx›Õ¢”l)ß X0GØhWØ¼„9¬\¹Y±,,1)+Àfá¤áÅ|F@Ò6ò ±oìóš˜Q0Ò«ÒÚjÔ÷Æ]€ÁÂúUµ®ëõ¹ş ^Xñ-.³K•Ì™¡m Ïˆp€i°tÉû½_Ö°ö³?XÅêéş
+—T!Ò.–Ó@bÀ¢|b;v\eE[_½é`c}õl]¼òÇ†X(a8øúV ~ˆÉc±Òn½$ùàm€d`Uµóé{B{+7¡b¿NŸ 0Í1My!fsØ@†ÚÆï
+óÉ[jo©WQlÚhæá®İ¿MjuO×õŸ~ráT ^¨‰]¶İI”“ü`ĞaèV{á‹µ ³‘õg™{6r# PëA¼e(üC¡a¦ı¡n¥*ë5.À–ó~TfA%kCFØWš}	‚2•{-  ^X©Z¹İ="Oê0 ²úp@·„&O³[ajO;8pµ" ˆ÷ˆ÷8GK¶œ!'lJ¥ÕûÇùqÌ£.µÑšÉ®9J±ŞzÛW ^X©†ìvg‹áJæM,e'9¤Á—†Ä[Y‚»¬ °¹ ôga“ŞÇ¨Öö»aÁ´:Z@Ò{Ò(Í¬÷îGúh_mŒwò ~h‰Cy»³ÅÈdÖ$`ÁŒÁP!íñì)¶²xò~´€ù€ ' ®õ+Z¯pkyÄIì“Ğ‘+5è•ók€|³LôiJ„È‹²~Hñeıv÷ĞáN'|  À#œÒ!íÕ5?KËR@¸ÿX Ôá$ NĞUUk¦®^È¯Š/+èCÙRÜ¯’îïH¾|³I§ä¬—å¶ŞÎÇèñÙt¨Éüûîïw ^H)†âvg	ÁÑ©? Ğa¶ æ€.ƒj?}ÊªyVQ ?I ¨™r³àÕ&P ¤ÊrÂJÚ°CË`8cÔ±7?wÓÛÉ9C2%J“³€ÍÁ©šÊ·ã- OggS  €¾      j¯{œ   ‰	Cg!YZYXZXXYTRNTSVSNPMLPQOXVPQR[@C\SD~xÑsº›¥kä,G|P@„*À’á6Óñöy¸%VœA@ <˜ÁÁ~nÀCİÓà¯³¹Î?²ê)]©P¥w›­JšÄ@|+”6#¯9UJ„{°ù\í ^h‘iq6%	%> ¨dg°&[‚O5Ö ÍñúmT!6shÒœf&2ÔËÀ-–ÓÉÚ…zº8ÿOÍÇ]‘‘VÕd›Vec÷À…S%şè$×:i²*Y¿•<
+ ^xáiZÍ J„? ˜Vñ Ö%4Ùçx˜˜‚XÍ ùÜ0K¤uRV/ß¹’ó=â»˜›˜fv0züO´$[wÚú9°ø^zêt¹%¿ÕbØŞ2uC9 ^ˆ±iv.‹ ú  , œ)€KM‘é“)µjá¸®™JÑC‡ |':4à^~~ªˆ$ruwÔõ^MàÓât÷±åÔL˜O Ü—áìùRô¯ßË©h¢ßD	 ~X¡i1ÌÒU"õ
+Fä0‡ĞHSc°;yfs»”øwÂ ˆŠŠ•µ¨ã8/…öËÍÈ=Ö|•›å$YwŞ¼¯!ÎKìÜ¥y.âsu•¹Jß¯PL2aç$ ^ˆ‘iÖ†DåGW €-@:ÔäP‡SõKá
+MS­8« ’$0Ã£ä:0d‚ç×˜…† òú¯æ€ødŒß~j>õLÈ	Å‘Ü6º—˜Ábåæô	^˜¡!.³QáJè
+ÀH(ûÀR(Ê1ˆ¡£Ùl6>jÀ‘˜‚ßLK}‹êUãıI÷›•°:K¯§Nyï?ƒÊP¬Ïæ:béİş¥‹¾^¨/Ìài^˜Á¡Üf€Hğ ^ÉáÙ·XKÔœy²®£©F¦ÚŞ”MƒÛ“†l›ß3®’÷ÚwÙ6ÎÌD=Ä÷NHI^10eVv7Iá?=3Ì÷u^¸Qªİƒå"W Áº¸7
+‡«Øe~QÉÇûl“*äÛWkôsêW#ß8œMåƒ9wl¼LÃ÷'QšãıÅÙ€~®|ÓPd@ mj5~¨IHq^İDIaÎÀ ”`
+`aÁ{^†FïŸ~6iuD-¸f`ËÖoÀ«à(^õ<Òøb›ÍuvrİA\duï+ÕÙÜ½ò°˜ç¤}Ê 	 ~ˆ)y¹^œ )6ù  ’"óåÛªğiæ&1ŒBá”¼8x¤£ı©ÏÎê`üÕşôV» ©Ë?
+2A“³á pííÜ{õÂ×	 ~ÈId±g))Íú  Ô'¤\´ìK»Ÿ“xA-ÖŒŒ<¤	$øV1~µ`äî¢z¡ºrŸÂUyÑ¦3*~ì´}ƒÂĞ·—ñ< ~¸	(®Ér…ôÊpw`Ï~¸—·‰Èœë8uRCmóé)f¶k{â@}5¸<n>±ÇÀuiºÂáNÂ©-#'lÂ($×(Ç[ ~xq¸`òà’¼Q<ƒP4¸  Æ×÷öÃÑ¥Ğ¹{u—Wi¦I7ƒ»ªqİá¹©4¢+$±VkŸ#q×@	IˆI¡Ô1{m1_JçıÄö ^x¤³»eI…Ÿä OJ€ß	J3HŒ®1m}·ú•‚ˆÊKU ¾X6s½Œİ˜º'7ôP_lrF˜¤Ç«ğÃ‚jb3.¨©ë§<&O™Løù^xaªW÷¢ˆ¤OJ 	Æ€:~áÂ‹±8h­´Õ’‡ª0R¢ó0s1¢>•z¤34dâïB^‡è¥ÒB×^S0²H©ì4#ùt¨0&^hªµ/ÎmœLî¡´c D¶ pl-Is0dD,Ù±äF H gñ<ÆssÎŞÂû&oUí>¡…	)er K=^=5ã¢cşšÊ}â|äŞ±^hªuOî/‘z  E'À<F?òĞ¾œÚ¬.µZ€H³6 |Læœ€ å:´çÿç¨ğG(Ô«J[wqv¶o¯1BìËÒÁRC ^hQ¦ıì­Y¢}à °å8 øÀÎDÛœ^km“YZ x-Ù”6ñ(¬šÚé¤ô9şÍeıŒÖ^_åNÜÈsç«?',9c<§2 ¾‡a®~O!Ê AÙ ôş:hÌc‚Áh¼	ˆ¢øÙÛÅ¾{O7Ï‘º¸ª‰i,­&?¿Ÿ9P0Í¯¾–\Î:M=­V~hQ®sF/}  fË ”ª6×KîÎõõ` Ğò©;èZ¯ÙYÂJBQéb¨»»8“yô~´?÷¥X(æ­a
+;XÇHµ ~hQ®sV"/‘x €œÅ(42ô‘K-ê²î%¶# 2ì}½P?‡÷ú–Ïx<%{;”|wÎxwÉ;¸¶õÖ )µ<ÉI*ù=Í i¿Ù ~xq¢5&ÏĞùHj¢0 f3Û
+³–5x×<ÛøÖÖFİ,õ§—M8°V/×
+Ã'9ÓL!›F6P7Úìx¤¸`æŠezQe+¾‘}¯7ğzÓ‘ ^x´³‡›ÈÛX9à“©îcÍÊéyCğò„R¶ß‘.²ùcU·s<Îj‰ajñ±ÒF!î”¸Jn¤#ÙÈÒbZwQxÅ.¸Íi_‘ ^X!¦Y†á58ï‚Äà’ Š~)ï&¤c+=®.‘2JŸ¯¨bpÈ^õÕ€“ûÌº8.­5ı±0™(ÃÚ–Ñ9ç/”>“xé| >ˆI„³1&á ¨ˆ1	«w|Ûf‡™]³††åğmÇÛ¢Ä¨¸ÒØ€E¾²QÍ,¸éœez²+ ŒæÇFs0‡b:J;4R}]Ô ^x®u'ÑïD ÀÆ˜Î"=É‡şy,‘Qˆ™  ]™ :g0!!½¸›½“mzm®:Ğ]<~© Ì»™R¢L¶sXÅşİ™õÚ
+ Öw×y–?
+æAÌ–vœ9 ±¢‡+!#ßTZ©şU€Œîaûëş=ığ)–n"fcMmd‹U˜•ÂBúaåFëh6 ­ê82“mï´›B
+Å#F´ÁM©6 ™K¿¯{ ”)=	ÁƒAÚ|0È³Â¶¼û£1A\fğ7yıVñ¼Ã½¸uÓgc¨0÷\¥ÏcÙ_ƒ»Ô ™eyÄÀ2!‘‚tz?²„ï4î¼Ãî}ÊŞÃƒOKmVõÓ ç?+Î!£jŞß8è‰.÷-ğ{€w'Î¶¾& Ú§ªù4€`(ğ“N#Îp4ÖÒR>]É” €F™u¸ÿ3Ãyïä²Æl¿e=kµR,ıŠŸ¡z+sØ|·^”™Å®F;L€¾M:+I¾S8ÿeg? ~˜ù°	@ä Ù¦”s@€ÂQ¸=û@,ÁŸQ—¡Õ°—Ÿy¨„à³hLsµÿ½Ûõ¬$¤+½Õ
+óñm¨‘MI{9Æœ—pïıº6†tÌ÷RsŞ·y­  Û‰9 èW?c„<Ó4bşoWU8õŠÚÊ¹øjUbœC;®×{/é5wïé>×¥‰_œ@`I½­åÂ‡öQê	OggS .ú      j¯{œ   (PÇ›KDHFCDHGEJDJFGHFK@DHCEJLG=DNJBŞ§yµ  9Îv à­pÆOÌšÛ]r‹a¼skÈpó.ê÷à*œŒW"À|ô©eWEŒ>á]Ï›îz]«Íz×ƒ$®cs Ş‡y¥€‚¼’%€¶¯«>ëwÌa~?$	Á‰y™pò+Û5¬IG¦íáN”\˜ø1Lÿvæ+•‚o	ıò±¹Át:Ş·y¥  DÑ9«vÊ¼Îš‚ú³$99-44”¿Ñ·´Im_–í°ŠµRl¦Òbe&å,V¾Ê”ŸoA	?úÇßÚ Ş‡¹§~$¨ îar€A©¿-Ì;CHÜË=\+¤ÁGéšpÚVfH°Pd#Î¾œ
+w!´²ğ¶Ï­]”Zc_Ö½Qq*“ãV Ş·¹ç~$ @BQ² `ü§8€Î”+PÚóàòÔìæšŠ~–v³l;VöVÚújäTcó VoWù·—ï£é`zk Ş×y¹  $$œ¬V€±·â¨Ä6™SUtAZT{A‡Îîç´µ3RìTØsgg‹êp „*ËİyÅ¹ùg³ûuŞ·yj? 0N+ ÑkFÆ\Èæ¹Ws6Ü.€çŠ|ÚL¢æk†}/–¥´ólàÍNmt00l9·>ûƒk%Lÿµc«ñÄG Ş·y½  ¬b‹ ´IFñmoïè'F÷N÷*éŞÊûİáş®t(LËN$´èd‡ó2¸´ôšnšòÖ€Ù	ù¸£ôqMŸÜš7 Ş—y¥€ 0r ’Ò“ÚC²H\ñkÃÁ¨‚=-iÈ§³õŞWë³˜A"/´l:ë+_`½¶İe9«°‰± Ş·yJ?  VÆ¬ Z·Ü•KùvÖÆ]Vü"6}s€z¥`ylm¢¼±Nq•|3â1pİünQÜ\¾ùmWA:ß) Ş§yµ  ,‹Ë€»•Qü-„ò³©Î§ÁÈ—™>²r»%LpÚ¦gJ÷B_\4²}áFM•g½f…Ê®¤`]êÏ6Ş×y‚  Ìv¶í ÀÌË²úÉ¢›-±€çù¿Ç¯µª¥ª®·´rQ{ÎnŸAƒ#¨_¬<áûJØ¾úĞÂÛöeşfE­º-Ş×y‚  ¤vv¶¢«¢Ù°™bÌ–¾‘0á”¿¥ú.i…ù{ï*Ã·êuÊÅZ‹ªq.5ñ©i£ze•ƒ¬ømbÅé‘ ŞÇyr?  Xiu6À™Ö”C§]"8‡´vQ¥t¹	*·±¸@Ô‚zˆ7úğ-É°Ö¬éE<8goİÚ^ñºú$$Ş‡¹ç~8 Y‹²: x'Ê¦Ûı‚ëU‘¼	×Ù4®î-›´î³Æ(éëv>€öŞêİiçO½‰O*K8ác?{.Š™Bu¸3Ş§yµ  ,á˜]€s‘u-'•uïaİÃC§ÒA E ®Û£—¤Ø·†m]?ƒBY—k}rFXc·¹­]Ö@Ş—yj? ’6c€óô•‘&"Y­saò¼=²MÌ"v’;~¨Z(#¤nj7˜ì†å†ÓœQ®ãÁ¤¡?¯‹·Vøï˜¯A Ş§y­  †„ÀÉJH¨tªÕı~·'Nµ´Ô°®8}_åş©¤ÊŞ{€$ß´PôWœòñé'z ŞÇyj?` `E.« :Üåß´‚¤°±x[m³¿3Y"?
+7öÊ˜¡¤\ h–7Bl…~pÊ˜’a@Lí 'ç®: Ş§yJ?  ”,X¾£wt;÷³ô9ÌMS0öÜ"ÑO”nÒeÉ¥|“wN{O(gÊ9±¹´Ììá$2Á"#Vè@©`ªoÖ Ş§yµ  <ád; 8–ìóòF>ÖvW£Öv!Ñ®°„k’o€¼š#-^¼UÚı†jÖs†’>ûGóe½ûïÆ	Ş·yµ  Û ÈÇk#mµuÛœ‡KÈñæ³q.‹C¯´ü¢P(e¥A—(‡—G´Sßâã Ušò{ÜÿmŞ§y­  †¢Íl  Œ¡2–Æ¥ˆ†q†áÒÄöÅ-YKq¶›!
+k	1vfMştx0çM¸t§\*«‘!—öCİCV¾Sİ Ş§¹—~$ À«Î1 ÓÉ…¡·…n àÁ9‚:¼ÏµU1$®¤)/ÖèVïœ¹¿Ò±±.£{—iv9{¶¢\d‹•'”4¤.TÙn Ş‡yz?`æÅ¬ N¨i^9>Ì`ìº™Måk˜ŞÄµ7h{w<ÂI )´+é{|g¡|ûiNw,ƒşØ—­¾«yŞ—y­  œKr à?ğ#]6°Pg3´´C(‹{«¯P]·ïÂR§×â§İ³ïœ»ößîC¸œª¡(kŞ§y­  Üêd—  “®Ÿa×µÈ×Ê£é-kºú;B©T%§{Ïoî·‰‰=1õZjHµ2J1
+t§†1 Ş§yr?  H¤h³„b½­L”+hÜ )&Œ@îÓõ‡pq*±_0¡v™ÃBår¶˜Î„dº9²Òú¶°×°DT<»0šıÍ™{†˜¤éÿ ~ÈùÓ °¢³màtÎóZÊ‡Z‹çtª™îñ-şpEE@™-}­5G¶L½œó·ïÕ
+mÿ˜E]–§é´£Iäagó®~¨ù‰ˆqà€`¶m; ¯§
+€'M2&Ù‡•Ë˜øÖR PRç‰åIf‹ö—Â¡¤J£üRö¦ıåÅm||üŞœøj                                                                                                                                                                                                                                                                                                                                                                             	ãS[Älš|Ÿ46—3õ­>Ğ”İ÷VšC©[Ó\mÁ×KÌFD‡?âŒi#j¥ €”tVJÒ ¬gr”ÛŞÃãb¤ŒÆ9)hÊIæ
+’TG=*ÎÇqŞ6‚9‚tòéïKEW”ıs§&m&ä{Z’r¨v†—‡b÷6>›qÜqTßøß‡[}¬´9¤Á#ÀˆTÑÆ%Å¨âªcJì®JAê˜Ÿ¬Óç¨dt+F´ˆ¿Ç.*UÓ%2¶"u.²ät©½£nRË© œG§Æ~ÕÇ/Š’²­à!I?‹q3¨$zéJ,c;on–òT¹AJ”®äæNó:Ÿ:æ>£Y±mi.Å,¶“Œ) N"áwÎ]¤-k“J,vùÇ&‚5 ´¼´„í°ƒÛx"ik3PÁ$’p8Ÿ"¬¤F•»ÏîÈıåŒåëÆ…ŒÚŒàÍ¡©HõOÑ"C«.'äëçÇ²}?Øâ"šÌ
+4øzõ¨*c:J4øzõıMH¹{TåÀzÓŸI})@ŒáHÒ±âkÌ„«*ÏP0=£&Å–×Ú% ¬}â6Ğ:hHÒ9É¬µM©Qcí(A>#ğ÷3¾Ì¶[ÄFÁqJÙ)8ÜHÜ’qß$úç.Y¶¬ÊpéÌŸ×öÜ=µæ[§O¼£ĞxòùTÈipèÜ
+›Ê’dêÊKò‘ /&IH!'ßgˆ¬TƒèR“Šºâ›L0€Rñ¢Œ¤‘á=f¦}"×ãwnÿ Ölƒ’–`‘ğõóQÏ—bïÍa}peÕó!)*Nq¼ÓßØıÆSÜQÃ^Õ¶ò¤ìuß¦µÖ‹³aŒË=iœ¬éE~ñ ©¦ğWU`öàÜ>£dÂ	ß*IùUJ±{KueRô¤¯šİ®iƒÔK†§x2T%I	ÆU‚¤ù%|<8jıÇ»['š[j0
+I'Ò˜ü‹Z½vPÚäïBŠt„¢S|ªI8=G^Œ§ZéWeH0A~us»ôz¡jÍ•d"††é­M‰­WB×ñkSéi×@Qò¥¦Ğ²€”‚B’¢q‘‚ÖÉÂíÖúÌ 3'ÂwÚ6ó¯Ì"À,™Å.ÀÊĞçH˜@Í¶S¸Rtå1 *•z½MüvK­èÒ<Uü<R§ŠƒEGnõø›Ê±¤ã>œ0¢[§ÚççÎ<(K¸¤§X<ëİ«h¢ü¸>K®KRĞVÜ:\AP’qŒôIGOâÇOcÆeYv­dÁ„Ó04SOùm¡¹XÔÌLºH”ÄjLç?á$5à”¨ÇBÙK¤ø„îq°JIW•@Õ‡n’Üè “Ê	 ÁÔHíR“n´ŒÏ'ıÏÊ—®`9¯ku}ÅÌÛŒÂÊaAC`4uM«$’”ºRÔŒ-ì­µIËª¤õ0ü*Ç·*NDh•£¡v,«–àr«"Z)6Õ¢ER°êJ‘9ò!)\uÂ6¡´õQö ‘åêRëJo¨ªLA	}•5±#ôk±õÚı­yòÛfW@†¹ßbœ¶å´ÒäÇ)ad¡ÃƒµG	QH$uO~ï®^È°QÊ…éà¡ßÖ—øã*áæ³•‘#ì¥@úüdPSZÿ 	­H“…|€] 
+²=S÷½ûp{n¾ÄK_òWªOÌz|¨µsƒñbÈğîAéÔO‡Êszò¡ËQz †´¸‚B”àÆŞ7¸Øs6†›˜mÓN´+Ğôª\˜ß
+T^XÈõ=¸¾B³ıš%BûM+DÔ0¢oíÿ —·ZwªPgNõc2ˆ$ç*÷<d+0YxõZï¿¯”ò‚“ÈQN¦B´]và¨¤?)„nBîÑ)Æ¯ÿ ”äûàkC—€Z5 ;ş'È|OÄCiÜA"Éƒ	'_§È|Nzvıû.¡¨ŒÕj’ö‰®­™z!—P¦—`³éíÅ«6m[#usda 1.0
+(
+    "WARNING: THIS FILE IS GENERATED BY usdGenSchema.  DO NOT EDIT."
+)
+
+class NodeGraph "NodeGraph" (
+    doc = '''A node-graph is a container for shading nodes, as well as other 
+    node-graphs. It has a public input interface and provides a list of public 
+    outputs.
+
+    <b>Node Graph Interfaces</b>
+    
+    One of the most important functions of a node-graph is to host the "interface"
+    with which clients of already-built shading networks will interact.  Please
+    see "Interface Inputs" for a detailed
+    explanation of what the interface provides, and how to construct and
+    use it, to effectively share/instance shader networks.
+
+    <b>Node Graph Outputs</b>
+
+    These behave like outputs on a shader and are typically connected to an 
+    output on a shader inside the node-graph.
+    '''
+)
+{
+}
+
+class Material "Material" (
+    doc = """A Material provides a container into which multiple \"render targets\"
+    can add data that defines a \"shading material\" for a renderer.  Typically
+    this consists of one or more UsdRelationship properties that target
+    other prims of type Shader - though a target/client is free to add
+    any data that is suitable.  We <b>strongly advise</b> that all targets
+    adopt the convention that all properties be prefixed with a namespace
+    that identifies the target, e.g. \"rel ri:surface = </Shaders/mySurf>\".
+    
+    ## Binding Materials
+    
+    In the UsdShading model, geometry expresses a binding to a single Material or
+    to a set of Materials partitioned by UsdGeomSubsets defined beneath the
+    geometry; it is legal to bind a Material at the root (or other sub-prim) of 
+    a model, and then bind a different Material to individual gprims, but the
+    meaning of inheritance and \"ancestral overriding\" of Material bindings is 
+    left to each render-target to determine.  Since UsdGeom has no concept of 
+    shading, we provide the API for binding and unbinding geometry on the API 
+    schema UsdShadeMaterialBindingAPI.
+    
+    ## Material Variation
+    
+    The entire power of USD VariantSets and all the other composition 
+    operators can leveraged when encoding shading variation.  
+    UsdShadeMaterial provides facilities for a particular way of building
+    \"Material variants\" in which neither the identity of the Materials themselves
+    nor the geometry Material-bindings need to change - instead we vary the
+    targeted networks, interface values, and even parameter values within
+    a single variantSet.  
+    See \"Authoring Material Variations\" 
+    for more details.
+
+    ## Materials Encapsulate their Networks in Namespace
+    
+    UsdShade requires that all of the shaders that \"belong\" to the Material 
+    live under the Material in namespace. This supports powerful, easy reuse
+    of Materials, because it allows us to *reference* a Material from one
+    asset (the asset might be a library of Materials) into another asset: USD 
+    references compose all descendant prims of the reference target into the 
+    referencer's namespace, which means that all of the referenced Material's 
+    shader networks will come along with the Material. When referenced in this
+    way, Materials can also be [instanced](http://openusd.org/docs/USD-Glossary.html#USDGlossary-Instancing), for ease of deduplication and compactness.
+    Finally, Material encapsulation also allows us to 
+    \"specialize\" child materials from 
+    parent materials.
+    
+    """
+)
+{
+    token outputs:displacement (
+        displayGroup = "Outputs"
+        doc = '''Represents the universal "displacement" output terminal of a 
+        material.'''
+    )
+    token outputs:surface (
+        displayGroup = "Outputs"
+        doc = '''Represents the universal "surface" output terminal of a
+        material.'''
+    )
+    token outputs:volume (
+        displayGroup = "Outputs"
+        doc = '''Represents the universal "volume" output terminal of a
+        material.'''
+    )
+}
+
+class Shader "Shader" (
+    apiSchemas = ["NodeDefAPI"]
+    doc = '''Base class for all USD shaders. Shaders are the building blocks
+    of shading networks. While UsdShadeShader objects are not target specific,
+    each renderer or application target may derive its own renderer-specific 
+    shader object types from this base, if needed.
+    
+    Objects of this class generally represent a single shading object, whether
+    it exists in the target renderer or not. For example, a texture, a fractal,
+    or a mix node.
+
+    The UsdShadeNodeDefAPI provides attributes to uniquely identify the
+    type of this node.  The id resolution into a renderable shader target
+    type of this node.  The id resolution into a renderable shader target
+    is deferred to the consuming application.
+
+    The purpose of representing them in Usd is two-fold:
+    - To represent, via "connections" the topology of the shading network
+    that must be reconstructed in the renderer. Facilities for authoring and 
+    manipulating connections are encapsulated in the API schema 
+    UsdShadeConnectableAPI.
+    - To present a (partial or full) interface of typed input parameters 
+    whose values can be set and overridden in Usd, to be provided later at 
+    render-time as parameter values to the actual render shader objects. Shader 
+    input parameters are encapsulated in the property schema UsdShadeInput.
+    '''
+)
+{
+}
+
+class "NodeDefAPI" (
+    doc = '''UsdShadeNodeDefAPI is an API schema that provides attributes
+    for a prim to select a corresponding Shader Node Definition ("Sdr Node"),
+    as well as to look up a runtime entry for that shader node in the
+    form of an SdrShaderNode.
+
+    UsdShadeNodeDefAPI is intended to be a pre-applied API schema for any
+    prim type that wants to refer to the SdrRegistry for further implementation
+    details about the behavior of that prim.  The primary use in UsdShade
+    itself is as UsdShadeShader, which is a basis for material shading networks
+    (UsdShadeMaterial), but this is intended to be used in other domains
+    that also use the Sdr node mechanism.
+
+    This schema provides properties that allow a prim to identify an external
+    node definition, either by a direct identifier key into the SdrRegistry
+    (info:id), an asset to be parsed by a suitable NdrParserPlugin
+    (info:sourceAsset), or an inline source code that must also be parsed
+    (info:sourceCode); as well as a selector attribute to determine which
+    specifier is active (info:implementationSource).
+    '''
+)
+{
+    uniform token info:id (
+        doc = """The id is an identifier for the type or purpose of the 
+        shader. E.g.: Texture or FractalFloat.
+        The use of this id will depend on the render target: some will turn it
+        into an actual shader path, some will use it to generate shader source 
+        code dynamically.
+        
+        \\sa SetShaderId()
+        """
+    )
+    uniform token info:implementationSource = "id" (
+        allowedTokens = ["id", "sourceAsset", "sourceCode"]
+        doc = """Specifies the attribute that should be consulted to get the 
+        shader's implementation or its source code.
+
+        * If set to \"id\", the \"info:id\" attribute's value is used to 
+        determine the shader source from the shader registry.
+        * If set to \"sourceAsset\", the resolved value of the \"info:sourceAsset\" 
+        attribute corresponding to the desired implementation (or source-type)
+        is used to locate the shader source.  A source asset file may also
+        specify multiple shader definitions, so there is an optional attribute
+        \"info:sourceAsset:subIdentifier\" whose value should be used to indicate
+        a particular shader definition from a source asset file.
+        * If set to \"sourceCode\", the value of \"info:sourceCode\" attribute 
+        corresponding to the desired implementation (or source type) is used as 
+        the shader source.
+        """
+    )
+}
+
+class "ConnectableAPI" (
+    doc = """UsdShadeConnectableAPI is an API schema that provides a common
+    interface for creating outputs and making connections between shading 
+    parameters and outputs. The interface is common to all UsdShade schemas
+    that support Inputs and Outputs, which currently includes UsdShadeShader,
+    UsdShadeNodeGraph, and UsdShadeMaterial .
+
+    One can construct a UsdShadeConnectableAPI directly from a UsdPrim, or
+    from objects of any of the schema classes listed above.  If it seems
+    onerous to need to construct a secondary schema object to interact with
+    Inputs and Outputs, keep in mind that any function whose purpose is either
+    to walk material/shader networks via their connections, or to create such
+    networks, can typically be written entirely in terms of 
+    UsdShadeConnectableAPI objects, without needing to care what the underlying
+    prim type is.
+
+    Additionally, the most common UsdShadeConnectableAPI behaviors
+    (creating Inputs and Outputs, and making connections) are wrapped as
+    convenience methods on the prim schema classes (creation) and 
+    UsdShadeInput and UsdShadeOutput.
+    """
+)
+{
+}
+
+class "MaterialBindingAPI" (
+    doc = """UsdShadeMaterialBindingAPI is an API schema that provides an 
+    interface for binding materials to prims or collections of prims 
+    (represented by UsdCollectionAPI objects). 
+    
+    In the USD shading model, each renderable gprim computes a single 
+    <b>resolved Material</b> that will be used to shade the gprim (exceptions, 
+    of course, for gprims that possess UsdGeomSubsets, as each subset can be 
+    shaded by a different Material).  A gprim <b>and each of its ancestor 
+    prims</b> can possess, through the MaterialBindingAPI, both a 
+    <b>direct</b> binding to a Material, and any number of 
+    <b>collection-based</b> bindings to Materials; each binding can be generic 
+    or declared for a particular <b>purpose</b>, and given a specific <b>binding 
+    strength</b>. It is the process of \"material resolution\" (see 
+    that examines all of 
+    these bindings, and selects the one Material that best matches the 
+    client's needs.
+
+    The intent of <b>purpose</b> is that each gprim should be able to resolve a 
+    Material for any given purpose, which implies it can have differently bound 
+    materials for different purposes. There are two <i>special</i> values of 
+    <b>purpose</b> defined in UsdShade, although the API fully supports 
+    specifying arbitrary values for it, for the sake of extensibility:
+    <ul><li><b>UsdShadeTokens->full</b>: to be used when the purpose of the 
+    render is entirely to visualize the truest representation of a scene, 
+    considering all lighting and material information, at highest fidelity.</li>  
+    <li><b>UsdShadeTokens->preview</b>: to be used when the render is in 
+    service of a goal other than a high fidelity \"full\" render (such as scene
+    manipulation, modeling, or realtime playback). Latency and speed are 
+    generally of greater concern for preview renders, therefore preview 
+    materials are generally designed to be \"lighterweight\" compared to full
+    materials.</li></ul>
+    A binding can also have no specific purpose at all, in which 
+    case, it is considered to be the fallback or all-purpose binding (denoted 
+    by the empty-valued token <b>UsdShadeTokens->allPurpose</b>). 
+
+    The <b>purpose</b> of a material binding is encoded in the name of the 
+    binding relationship. 
+    <ul><li>
+    In the case of a direct binding, the <i>allPurpose</i> binding is 
+    represented by the relationship named <b>\"material:binding\"</b>. 
+    Special-purpose direct bindings are represented by relationships named
+    <b>\"material:binding:<i>purpose</i></b>. A direct binding relationship 
+    must have a single target path that points to a <b>UsdShadeMaterial</b>.</li>
+    <li>
+    In the case of a collection-based binding, the <i>allPurpose</i> binding is 
+    represented by a relationship named 
+    \"material:binding:collection:<i>bindingName</i>\", where 
+    <b>bindingName</b> establishes an identity for the binding that is unique 
+    on the prim. Attempting to establish two collection bindings of the same 
+    name on the same prim will result in the first binding simply being 
+    overridden. A special-purpose collection-based binding is represented by a 
+    relationship named \"material:binding:collection:<i>purpose:bindingName</i>\".
+    A collection-based binding relationship must have exacly two targets, one of 
+    which should be a collection-path (see 
+    and the other should point to a
+    <b>UsdShadeMaterial</b>. In the future, we may allow a single collection 
+    binding to target multiple collections, if we can establish a reasonable 
+    round-tripping pattern for applications that only allow a single collection 
+    to be associated with each Material.
+    </li>
+    </ul>
+
+    <b>Note:</b> Both <b>bindingName</b> and <b>purpose</b> must be 
+    non-namespaced tokens. This allows us to know the role of a binding 
+    relationship simply from the number of tokens in it. 
+    <ul><li><b>Two tokens</b>: the fallback, \"all purpose\", direct binding, 
+    <i>material:binding</i></li>
+    <li><b>Three tokens</b>: a purpose-restricted, direct, fallback binding, 
+    e.g. material:binding:preview</li>
+    <li><b>Four tokens</b>: an all-purpose, collection-based binding, e.g. 
+    material:binding:collection:metalBits</li>
+    <li><b>Five tokens</b>: a purpose-restricted, collection-based binding, 
+    e.g. material:binding:collection:full:metalBits</li>
+    </ul>
+
+    A <b>binding-strength</b> value is used to specify whether a binding 
+    authored on a prim should be weaker or stronger than bindings that appear 
+    lower in namespace. We encode the binding strength with as token-valued 
+    metadata <b>'bindMaterialAs'</b> for future flexibility, even though for 
+    now, there are only two possible values:
+    <i>UsdShadeTokens->weakerThanDescendants</i> and 
+    <i>UsdShadeTokens->strongerThanDescendants</i>. When binding-strength is 
+    not authored (i.e. empty) on a binding-relationship, the default behavior 
+    matches UsdShadeTokens->weakerThanDescendants.
+
+    \\note If a material binding relationship is a built-in property defined as 
+    part of a typed prim's schema, a fallback value should not be provided for 
+    it. This is because the \"material resolution\" algorithm only conisders 
+    <i>authored</i> properties.
+    """
+)
+{
+}
+
+class "CoordSysAPI" (
+    doc = '''UsdShadeCoordSysAPI provides a way to designate, name,
+    and discover coordinate systems.
+
+    Coordinate systems are implicitly established by UsdGeomXformable
+    prims, using their local space.  That coordinate system may be
+    bound (i.e., named) from another prim.  The binding is encoded
+    as a single-target relationship.
+    Coordinate system bindings apply to descendants of the prim
+    where the binding is expressed, but names may be re-bound by
+    descendant prims.
+
+    CoordSysAPI is a multi-apply API schema, where instance names 
+    signify the named coordinate systems. The instance names are
+    used with the "coordSys:" namespace to determine the binding
+    to the UsdGeomXformable prim.
+
+    Named coordinate systems are useful in shading (and other) workflows.
+    An example is projection paint, which projects a texture
+    from a certain view (the paint coordinate system), encoded as 
+    (e.g.) "rel coordSys:paint:binding".  Using the paint coordinate frame 
+    avoids the need to assign a UV set to the object, and can be a 
+    concise way to project paint across a collection of objects with 
+    a single shared paint coordinate system.
+    '''
+)
+{
+    rel coordSys:__INSTANCE_NAME__:binding (
+        displayName = "Bound Coordinate System"
+        doc = "Prim binding expressing the appropriate coordinate systems."
+    )
+}
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                                              on %r a Ã©tÃ© intÃ©grÃ©e Ã  Sphinx depuis la version %s ; cette extension est ignorÃ©e."
+
+#: sphinx/registry.py:455
+msgid "Original exception:\n"
+msgstr "Exception initiale :\n"
+
+#: sphinx/registry.py:456
+#, python-format
+msgid "Could not import extension %s"
+msgstr "L'extension %s ne peut pas Ãªtre importÃ©e"
+
+#: sphinx/registry.py:461
+#, python-format
+msgid ""
+"extension %r has no setup() function; is it really a Sphinx extension "
+"module?"
+msgstr "l'extension %r n'a pas de fonction setup(); est-elle rÃ©ellement un module d'extension de Sphinx ?"
+
+#: sphinx/registry.py:470
+#, python-format
+msgid ""
+"The %s extension used by this project needs at least Sphinx v%s; it "
+"therefore cannot be built with this version."
+msgstr "L'extension %s utilisÃ©e par ce projet nÃ©cessite au moins Sphinx v%s ; il ne peut donc pas Ãªtre construit avec la version courante."
+
+#: sphinx/registry.py:478
+#, python-format
+msgid ""
+"extension %r returned an unsupported object from its setup() function; it "
+"should return None or a metadata dictionary"
+msgstr "l'extension %r a renvoyÃ© par sa fonction setup() un type d'objet non supportÃ© ; elle devrait renvoyer None ou un dictionnaire de mÃ©ta-donnÃ©es"
+
+#: sphinx/roles.py:201
+#, python-format
+msgid "Python Enhancement Proposals; PEP %s"
+msgstr "Python Enhancement Proposals; PEP %s"
+
+#: sphinx/roles.py:222
+#, python-format
+msgid "invalid PEP number %s"
+msgstr "numÃ©ro PEP %s non valide"
+
+#: sphinx/roles.py:257
+#, python-format
+msgid "invalid RFC number %s"
+msgstr "numÃ©ro RFC %snon valide"
+
+#: sphinx/theming.py:125
+#, python-format
+msgid "setting %s.%s occurs in none of the searched theme configs"
+msgstr "le paramÃ¨tre %s.%s n'apparaÃ®t dans aucune des configurations de thÃ¨me recherchÃ©es"
+
+#: sphinx/theming.py:140
+#, python-format
+msgid "unsupported theme option %r given"
+msgstr "l'option %r n'est pas supportÃ©e pour ce thÃ¨me"
+
+#: sphinx/theming.py:206
+#, python-format
+msgid "file %r on theme path is not a valid zipfile or contains no theme"
+msgstr "le fichier %r dans le dossier des thÃ¨mes n'est pas une archive zip valide ou ne contient aucun thÃ¨me"
+
+#: sphinx/theming.py:226
+#, python-format
+msgid "no theme named %r found (missing theme.toml?)"
+msgstr ""
+
+#: sphinx/theming.py:259
+#, python-format
+msgid "The %r theme has circular inheritance"
+msgstr ""
+
+#: sphinx/theming.py:262
+#, python-format
+msgid ""
+"The %r theme inherits from %r, which is not a loaded theme. Loaded themes "
+"are: %s"
+msgstr ""
+
+#: sphinx/theming.py:269
+#, python-format
+msgid "The %r theme has too many ancestors"
+msgstr "Le thÃ¨me %r a trop d'ancÃªtres"
+
+#: sphinx/theming.py:295
+#, python-format
+msgid "no theme configuration file found in %r"
+msgstr ""
+
+#: sphinx/theming.py:323 sphinx/theming.py:374
+#, python-format
+msgid "theme %r doesn't have the \"theme\" table"
+msgstr ""
+
+#: sphinx/theming.py:327
+#, python-format
+msgid "The %r theme \"[theme]\" table is not a table"
+msgstr ""
+
+#: sphinx/theming.py:331 sphinx/theming.py:377
+#, python-format
+msgid "The %r theme must define the \"theme.inherit\" setting"
+msgstr "Le thÃ¨me %r doit dÃ©finir la clÃ© \"theme.inherit\" dans les paramÃ¨tres"
+
+#: sphinx/theming.py:335
+#, python-format
+msgid "The %r theme \"[options]\" table is not a table"
+msgstr ""
+
+#: sphinx/theming.py:353
+#, python-format
+msgid "The \"theme.pygments_style\" setting must be a table. Hint: \"%s\""
+msgstr ""
+
+#: sphinx/builders/__init__.py:183
+#, python-format
+msgid "a suitable image for %s builder not found: %s (%s)"
+msgstr "l'image appropriÃ©e pour le constructeur %s n'a pas Ã©tÃ© trouvÃ©e : %s (%s)"
+
+#: sphinx/builders/__init__.py:187
+#, python-format
+msgid "a suitable image for %s builder not found: %s"
+msgstr "l'image appropriÃ©e pour le constructeur %s n'a pas Ã©tÃ© trouvÃ©e : %s"
+
+#: sphinx/builders/__init__.py:207
+msgid "building [mo]: "
+msgstr "construction en cours [mo] : "
+
+#: sphinx/builders/__init__.py:208 sphinx/builders/__init__.py:574
+#: sphinx/builders/__init__.py:601
+msgid "writing output... "
+msgstr "Ã‰criture... "
+
+#: sphinx/builders/__init__.py:217
+#, python-format
+msgid "all of %d po files"
+msgstr "tous les %d fichiers po"
+
+#: sphinx/builders/__init__.py:235
+#, python-format
+msgid "targets for %d po files that are specified"
+msgstr "cibles spÃ©cifiÃ©es pour les fichiers po %d"
+
+#: sphinx/builders/__init__.py:243
+#, python-format
+msgid "targets for %d po files that are out of date"
+msgstr "cibles pÃ©rimÃ©es pour les fichiers po %d"
+
+#: sphinx/builders/__init__.py:252
+msgid "all source files"
+msgstr "tous les fichiers source"
+
+#: sphinx/builders/__init__.py:262
+#, python-format
+msgid "file %r given on command line does not exist, "
+msgstr "le fichier %r passÃ© dans la ligne de commande n'existe pas, "
+
+#: sphinx/builders/__init__.py:267
+#, python-format
+msgid ""
+"file %r given on command line is not under the source directory, ignoring"
+msgstr "le fichier %r saisi en ligne de commande n'est pas prÃ©sent dans le dossier source, il sera ignorÃ©"
+
+#: sphinx/builders/__init__.py:273
+#, python-format
+msgid "file %r given on command line is not a valid document, ignoring"
+msgstr "le fichier %r passÃ© dans la ligne de commande n'est pas un document valide, ignorÃ©"
+
+#: sphinx/builders/__init__.py:282
+#, python-format
+msgid "%d source files given on command line"
+msgstr "%d fichiers source saisis en ligne de commande"
+
+#: sphinx/builders/__init__.py:294
+#, python-format
+msgid "targets for %d source files that are out of date"
+msgstr "cibles pÃ©rimÃ©es pour les fichiers sources %d"
+
+#: sphinx/builders/__init__.py:309 sphinx/builders/gettext.py:243
+#, python-format
+msgid "building [%s]: "
+msgstr "construction [%s] : "
+
+#: sphinx/builders/__init__.py:316
+msgid "looking for now-outdated files... "
+msgstr "Recherche des fichiers pÃ©rimÃ©s... "
+
+#: sphinx/builders/__init__.py:320
+#, python-format
+msgid "%d found"
+msgstr "%d trouvÃ©"
+
+#: sphinx/builders/__init__.py:322
+msgid "none found"
+msgstr "aucun rÃ©sultat trouvÃ©"
+
+#: sphinx/builders/__init__.py:327
+msgid "pickling environment"
+msgstr "Environnement de sÃ©rialisation"
+
+#: sphinx/builders/__init__.py:333
+msgid "checking consistency"
+msgstr "vÃ©rification de la cohÃ©rence"
+
+#: sphinx/builders/__init__.py:337
+msgid "no targets are out of date."
+msgstr "aucune cible n'est pÃ©rimÃ©e."
+
+#: sphinx/builders/__init__.py:376
+msgid "updating environment: "
+msgstr "mise Ã  jour de l'environnement : "
+
+#: sphinx/builders/__init__.py:397
+#, python-format
+msgid "%s added, %s changed, %s removed"
+msgstr "%s ajoutÃ©(s), %s modifiÃ©(s), %s supprimÃ©(s)"
+
+#: sphinx/builders/__init__.py:435 sphinx/builders/__init__.py:447
+msgid "reading sources... "
+msgstr "lecture des sources... "
+
+#: sphinx/builders/__init__.py:549
+#, python-format
+msgid "docnames to write: %s"
+msgstr "documents Ã  Ã©crire : %s"
+
+#: sphinx/builders/__init__.py:558 sphinx/builders/singlehtml.py:157
+msgid "preparing documents"
+msgstr "documents en prÃ©paration"
+
+#: sphinx/builders/__init__.py:561
+msgid "copying assets"
+msgstr "copie des ressources"
+
+#: sphinx/builders/_epub_base.py:215
+#, python-format
+msgid "duplicated ToC entry found: %s"
+msgstr "entrÃ©es dupliquÃ©es de la table des matiÃ¨res trouvÃ©es : %s"
+
+#: sphinx/builders/_epub_base.py:404 sphinx/builders/html/__init__.py:758
+#: sphinx/builders/latex/__init__.py:432 sphinx/builders/texinfo.py:187
+msgid "copying images... "
+msgstr "Copie des images... "
+
+#: sphinx/builders/_epub_base.py:411
+#, python-format
+msgid "cannot read image file %r: copying it instead"
+msgstr "impossible de lire le fichier image %r: il sera copiÃ© Ã  la place"
+
+#: sphinx/builders/_epub_base.py:417 sphinx/builders/html/__init__.py:766
+#: sphinx/builders/latex/__init__.py:440 sphinx/builders/texinfo.py:197
+#, python-format
+msgid "cannot copy image file %r: %s"
+msgstr "impossible de copier le fichier image %r: %s"
+
+#: sphinx/builders/_epub_base.py:434
+#, python-format
+msgid "cannot write image file %r: %s"
+msgstr "impossible d'Ã©crire le fichier image %r: %s"
+
+#: sphinx/builders/_epub_base.py:444
+msgid "Pillow not found - copying image files"
+msgstr "Pillow n'a pas Ã©tÃ© trouvÃ© - copie des fichiers image"
+
+#: sphinx/builders/_epub_base.py:470
+msgid "writing mimetype file..."
+msgstr "Ã©criture du type MIME du fichier ..."
+
+#: sphinx/builders/_epub_base.py:475
+msgid "writing META-INF/container.xml file..."
+msgstr "Ã©criture du fichier META-INF/container.xml..."
+
+#: sphinx/builders/_epub_base.py:508
+msgid "writing content.opf file..."
+msgstr "Enregistrement du fichier content.opf..."
+
+#: sphinx/builders/_epub_base.py:539
+#, python-format
+msgid "unknown mimetype for %s, ignoring"
+msgstr "type MIME inconnu pour %s, il sera ignorÃ©"
+
+#: sphinx/builders/_epub_base.py:686
+msgid "writing toc.ncx file..."
+msgstr "Enregistrement du fichier toc.ncx..."
+
+#: sphinx/builders/_epub_base.py:711
+#, python-format
+msgid "writing %s file..."
+msgstr "fichier %s en cours d'Ã©criture..."
+
+#: sphinx/builders/changes.py:32
+#, python-format
+msgid "The overview file is in %(outdir)s."
+msgstr "Le fichier d'aperÃ§u se trouve dans %(outdir)s."
+
+#: sphinx/builders/changes.py:59
+#, python-format
+msgid "no changes in version %s."
+msgstr "aucun changement dans la version %s"
+
+#: sphinx/builders/changes.py:61
+msgid "writing summary file..."
+msgstr "Ã©criture du fichier de rÃ©sumÃ©..."
+
+#: sphinx/builders/changes.py:76
+msgid "Builtins"
+msgstr "Fonctions de base"
+
+#: sphinx/builders/changes.py:78
+msgid "Module level"
+msgstr "Module"
+
+#: sphinx/builders/changes.py:123
+msgid "copying source files..."
+msgstr "copie des fichiers sources..."
+
+#: sphinx/builders/changes.py:130
+#, python-format
+msgid "could not read %r for changelog creation"
+msgstr "impossible de lire %r pour la crÃ©ation du changelog"
+
+#: sphinx/builders/dummy.py:19
+msgid "The dummy builder generates no files."
+msgstr "Le constructeur factice ne gÃ©nÃ¨re aucun fichier."
+
+#: sphinx/builders/epub3.py:81
+#, python-format
+msgid "The ePub file is in %(outdir)s."
+msgstr "Le fichier ePub se trouve dans %(outdir)s ."
+
+#: sphinx/builders/epub3.py:185
+msgid "writing nav.xhtml file..."
+msgstr "Enregistrement du fichier nav.xhtml..."
+
+#: sphinx/builders/epub3.py:211
+msgid "conf value \"epub_language\" (or \"language\") should not be empty for EPUB3"
+msgstr "la variable de configuration \"epub_language\" (ou \"language\") ne peut pas Ãªtre vide pour EPUB3"
+
+#: sphinx/builders/epub3.py:215
+msgid "conf value \"epub_uid\" should be XML NAME for EPUB3"
+msgstr "le paramÃ¨tre de configuration \"epub_uid\" ne peut pas Ãªtre vide pour EPUB3"
+
+#: sphinx/builders/epub3.py:218
+msgid "conf value \"epub_title\" (or \"html_title\") should not be empty for EPUB3"
+msgstr "le paramÃ¨tre de configuration \"epub_title\" (ou \"html_title\") ne peut pas Ãªtre vide pour EPUB3"
+
+#: sphinx/builders/epub3.py:222
+msgid "conf value \"epub_author\" should not be empty for EPUB3"
+msgstr "le paramÃ¨tre de configuration \"epub_author\" ne peut pas Ãªtre vide pour EPUB3"
+
+#: sphinx/builders/epub3.py:225
+msgid "conf value \"epub_contributor\" should not be empty for EPUB3"
+msgstr "le paramÃ¨tre de configuration \"epub_contributor\" ne peut pas Ãªtre vide pour EPUB3"
+
+#: sphinx/builders/epub3.py:228
+msgid "conf value \"epub_description\" should not be empty for EPUB3"
+msgstr "le paramÃ¨tre de configuration \"epub_description\" ne peut pas Ãªtre vide pour EPUB3"
+
+#: sphinx/builders/epub3.py:231
+msgid "conf value \"epub_publisher\" should not be empty for EPUB3"
+msgstr "le paramÃ¨tre de configuration \"epub_publisher\" ne peut pas Ãªtre vide pour EPUB3"
+
+#: sphinx/builders/epub3.py:234
+msgid "conf value \"epub_copyright\" (or \"copyright\")should not be empty for EPUB3"
+msgstr "le paramÃ¨tre de configuration \"epub_copyright\" (ou \"copyright\") ne peut pas Ãªtre vide pour EPUB3"
+
+#: sphinx/builders/epub3.py:238
+msgid "conf value \"epub_identifier\" should not be empty for EPUB3"
+msgstr "le paramÃ¨tre de configuration \"epub_identifier\" ne peut pas Ãªtre vide pour EPUB3"
+
+#: sphinx/builders/epub3.py:241
+msgid "conf value \"version\" should not be empty for EPUB3"
+msgstr "le paramÃ¨tre de configuration \"version\" ne peut pas Ãªtre vide pour EPUB3"
+
+#: sphinx/builders/epub3.py:255 sphinx/builders/html/__init__.py:1187
+#, python-format
+msgid "invalid css_file: %r, ignored"
+msgstr "Fichier CSS non valide : %r, il sera ignorÃ©"
+
+#: sphinx/builders/gettext.py:222
+#, python-format
+msgid "The message catalogs are in %(outdir)s."
+msgstr "La liste des messages se trouve dans %(outdir)s."
+
+#: sphinx/builders/gettext.py:244
+#, python-format
+msgid "targets for %d template files"
+msgstr "cibles pour les modÃ¨les de fichiers %d"
+
+#: sphinx/builders/gettext.py:248
+msgid "reading templates... "
+msgstr "lecture des gabarits... "
+
+#: sphinx/builders/gettext.py:282
+msgid "writing message catalogs... "
+msgstr "Ã©criture des catalogues de messages... "
+
+#: sphinx/builders/linkcheck.py:59
+#, python-format
+msgid "Look for any errors in the above output or in %(outdir)s/output.txt"
+msgstr "Recherchez les Ã©ventuelles erreurs dans la sortie ci-dessus ou dans %(outdir)s/output.txt"
+
+#: sphinx/builders/linkcheck.py:137
+#, python-format
+msgid "broken link: %s (%s)"
+msgstr "lien mort: %s (%s)"
+
+#: sphinx/builders/linkcheck.py:660
+#, python-format
+msgid "Failed to compile regex in linkcheck_allowed_redirects: %r %s"
+msgstr "Ã‰chec de la compilation de la regex dans linkcheck_allowed_redirects : %r%s"
+
+#: sphinx/builders/manpage.py:37
+#, python-format
+msgid "The manual pages are in %(outdir)s."
+msgstr "Le manuel se trouve dans %(outdir)s."
+
+#: sphinx/builders/manpage.py:44
+msgid "no \"man_pages\" config value found; no manual pages will be written"
+msgstr "aucun valeur de configuration \"man_pages\" trouvÃ©e; aucun page du manuel ne sera enregistrÃ©e"
+
+#: sphinx/builders/latex/__init__.py:314 sphinx/builders/manpage.py:53
+#: sphinx/builders/singlehtml.py:165 sphinx/builders/texinfo.py:112
+msgid "writing"
+msgstr "enregistrement"
+
+#: sphinx/builders/manpage.py:68
+#, python-format
+msgid "\"man_pages\" config value references unknown document %s"
+msgstr "le paramÃ¨tre de configuration \"man_pages\" rÃ©fÃ©rence un document inconnu %s"
+
+#: sphinx/builders/singlehtml.py:34
+#, python-format
+msgid "The HTML page is in %(outdir)s."
+msgstr "Les pages HTML sont dans %(outdir)s."
+
+#: sphinx/builders/singlehtml.py:160
+msgid "assembling single document"
+msgstr "crÃ©ation du document unique"
+
+#: sphinx/builders/singlehtml.py:178
+msgid "writing additional files"
+msgstr "Enregistrement des fichiers supplÃ©mentaires"
+
+#: sphinx/builders/texinfo.py:48
+#, python-format
+msgid "The Texinfo files are in %(outdir)s."
+msgstr "Les fichiers Texinfo se trouvent dans %(outdir)s."
+
+#: sphinx/builders/texinfo.py:50
+msgid ""
+"\n"
+"Run 'make' in that directory to run these through makeinfo\n"
+"(use 'make info' here to do that automatically)."
+msgstr "\nExÃ©cuter 'make' dans ce rÃ©pertoire pour les soumettre Ã  makeinfo\n(ou 'make info' directement ici pour l'automatiser)."
+
+#: sphinx/builders/texinfo.py:77
+msgid "no \"texinfo_documents\" config value found; no documents will be written"
+msgstr "aucun paramÃ¨tre de configuration \"texinfo_documents\" trouvÃ©: aucun document ne sera Ã©crit"
+
+#: sphinx/builders/texinfo.py:85
+#, python-format
+msgid "\"texinfo_documents\" config value references unknown document %s"
+msgstr "La valeur du paramÃ¨tre \"texinfo_documents\" rÃ©fÃ©rence un document inconnu %s"
+
+#: sphinx/builders/latex/__init__.py:296 sphinx/builders/texinfo.py:108
+#, python-format
+msgid "processing %s"
+msgstr "Traitement de %s en cours"
+
+#: sphinx/builders/latex/__init__.py:369 sphinx/builders/texinfo.py:161
+msgid "resolving references..."
+msgstr "rÃ©solution des rÃ©fÃ©rences..."
+
+#: sphinx/builders/latex/__init__.py:380 sphinx/builders/texinfo.py:171
+msgid " (in "
+msgstr "(dans"
+
+#: sphinx/builders/texinfo.py:202
+msgid "copying Texinfo support files"
+msgstr "copie des fichiers de support Texinfo"
+
+#: sphinx/builders/texinfo.py:206
+#, python-format
+msgid "error writing file Makefile: %s"
+msgstr "erreur lors l'Ã©criture du fichier Makefile : %s"
+
+#: sphinx/builders/text.py:30
+#, python-format
+msgid "The text files are in %(outdir)s."
+msgstr "Les fichiers texte se trouvent dans %(outdir)s."
+
+#: sphinx/builders/html/__init__.py:1138 sphinx/builders/text.py:77
+#: sphinx/builders/xml.py:96
+#, python-format
+msgid "error writing file %s: %s"
+msgstr "erreur lors l'Ã©criture du fichier %s : %s"
+
+#: sphinx/builders/xml.py:36
+#, python-format
+msgid "The XML files are in %(outdir)s."
+msgstr "Les fichiers XML se trouvent dans %(outdir)s."
+
+#: sphinx/builders/xml.py:109
+#, python-format
+msgid "The pseudo-XML files are in %(outdir)s."
+msgstr "Le fichier pseudo-XML se trouve dans %(outdir)s."
+
+#: sphinx/builders/html/__init__.py:130
+#, python-format
+msgid "build info file is broken: %r"
+msgstr "Le fichier de configuration de construction est corrompu : %r"
+
+#: sphinx/builders/html/__init__.py:168
+#, python-format
+msgid "The HTML pages are in %(outdir)s."
+msgstr "Les pages HTML sont dans %(outdir)s."
+
+#: sphinx/builders/html/__init__.py:394
+#, python-format
+msgid "Failed to read build info file: %r"
+msgstr "Ã‰chec de lecture du fichier de configuration de construction : %r"
+
+#: sphinx/builders/html/__init__.py:487 sphinx/builders/latex/__init__.py:189
+#: sphinx/transforms/__init__.py:119 sphinx/writers/manpage.py:101
+#: sphinx/writers/texinfo.py:227
+#, python-format
+msgid "%b %d, %Y"
+msgstr "%b %d, %Y"
+
+#: sphinx/builders/html/__init__.py:506 sphinx/themes/basic/defindex.html:30
+msgid "General Index"
+msgstr "Index gÃ©nÃ©ral"
+
+#: sphinx/builders/html/__init__.py:506
+msgid "index"
+msgstr "index"
+
+#: sphinx/builders/html/__init__.py:579
+msgid "next"
+msgstr "suivant"
+
+#: sphinx/builders/html/__init__.py:588
+msgid "previous"
+msgstr "prÃ©cÃ©dent"
+
+#: sphinx/builders/html/__init__.py:684
+msgid "generating indices"
+msgstr "gÃ©nÃ©ration des index"
+
+#: sphinx/builders/html/__init__.py:699
+msgid "writing additional pages"
+msgstr "Ã‰criture des pages additionnelles"
+
+#: sphinx/builders/html/__init__.py:776
+msgid "copying downloadable files... "
+msgstr "Copie des fichiers tÃ©lÃ©chargeables... "
+
+#: sphinx/builders/html/__init__.py:784
+#, python-format
+msgid "cannot copy downloadable file %r: %s"
+msgstr "impossible de copier le fichier tÃ©lÃ©chargeable %r: %s"
+
+#: sphinx/builders/html/__init__.py:817 sphinx/builders/html/__init__.py:829
+#, python-format
+msgid "Failed to copy a file in html_static_file: %s: %r"
+msgstr "Ã‰chec de la copie du fichier dans html_static_file : %s : %r"
+
+#: sphinx/builders/html/__init__.py:850
+msgid "copying static files"
+msgstr "Copie des fichiers statiques"
+
+#: sphinx/builders/html/__init__.py:866
+#, python-format
+msgid "cannot copy static file %r"
+msgstr "impossible de copier le fichier static %r"
+
+#: sphinx/builders/html/__init__.py:871
+msgid "copying extra files"
+msgstr "copie des fichiers complÃ©mentaires"
+
+#: sphinx/builders/html/__init__.py:877
+#, python-format
+msgid "cannot copy extra file %r"
+msgstr "Copie des fichiers supplÃ©mentaires impossible %r"
+
+#: sphinx/builders/html/__init__.py:884
+#, python-format
+msgid "Failed to write build info file: %r"
+msgstr "Ã‰chec d'Ã©criture du fichier de configuration de construction : %r"
+
+#: sphinx/builders/html/__init__.py:933
+msgid ""
+"search index couldn't be loaded, but not all documents will be built: the "
+"index will be incomplete."
+msgstr "L'index de recherche n'a pas pu Ãªtre chargÃ©, mais tous les documents ne seront pas construits: l'index sera incomplet."
+
+#: sphinx/builders/html/__init__.py:978
+#, python-format
+msgid "page %s matches two patterns in html_sidebars: %r and %r"
+msgstr "La page %s correspond Ã  deux motifs dans html_sidebars: %r et %r"
+
+#: sphinx/builders/html/__init__.py:1121
+#, python-format
+msgid ""
+"a Unicode error occurred when rendering the page %s. Please make sure all "
+"config values that contain non-ASCII content are Unicode strings."
+msgstr "une erreur Unicode est survenue lors du rendu de la page %s. Veuillez vous assurer que toutes les valeurs de configuration comportant des caractÃ¨res non-ASCII sont des chaÃ®nes Unicode."
+
+#: sphinx/builders/html/__init__.py:1126
+#, python-format
+msgid ""
+"An error happened in rendering the page %s.\n"
+"Reason: %r"
+msgstr "Un erreur est survenue lors de la gÃ©nÃ©ration de la page: %s.\nLa raison est: %r"
+
+#: sphinx/builders/html/__init__.py:1154
+msgid "dumping object inventory"
+msgstr "Export de l'inventaire des objets"
+
+#: sphinx/builders/html/__init__.py:1162
+#, python-format
+msgid "dumping search index in %s"
+msgstr "Export de l'index de recherche en %s"
+
+#: sphinx/builders/html/__init__.py:1210
+#, python-format
+msgid "invalid js_file: %r, ignored"
+msgstr "Fichier js_file : %r invalide, sera ignorÃ©"
+
+#: sphinx/builders/html/__init__.py:1238
+msgid "Many math_renderers are registered. But no math_renderer is selected."
+msgstr "Plusieurs math_renderers sont enregistrÃ©s. Mais aucun n'est sÃ©lectionnÃ©."
+
+#: sphinx/builders/html/__init__.py:1241
+#, python-format
+msgid "Unknown math_renderer %r is given."
+msgstr "math_renderer inconnu %r saisi."
+
+#: sphinx/builders/html/__init__.py:1249
+#, python-format
+msgid "html_extra_path entry %r does not exist"
+msgstr "Lâ€™entrÃ©e %r de html_extra_path nâ€™existe pas"
+
+#: sphinx/builders/html/__init__.py:1253
+#, python-format
+msgid "html_extra_path entry %r is placed inside outdir"
+msgstr "Lâ€™entrÃ©e %r de html_extra_path se trouve Ã  lâ€™intÃ©rieur de outdir"
+
+#: sphinx/builders/html/__init__.py:1262
+#, python-format
+msgid "html_static_path entry %r does not exist"
+msgstr "Lâ€™entrÃ©e %r de html_static_path nâ€™existe pas"
+
+#: sphinx/builders/html/__init__.py:1266
+#, python-format
+msgid "html_static_path entry %r is placed inside outdir"
+msgstr "Lâ€™entrÃ©e %r de html_static_path se trouve Ã  lâ€™intÃ©rieur de outdir"
+
+#: sphinx/builders/html/__init__.py:1275 sphinx/builders/latex/__init__.py:444
+#, python-format
+msgid "logo file %r does not exist"
+msgstr "Le fichier de logo %r nâ€™existe pas"
+
+#: sphinx/builders/html/__init__.py:1284
+#, python-format
+msgid "favicon file %r does not exist"
+msgstr "Le fichier de favicon %r nâ€™existe pas "
+
+#: sphinx/builders/html/__init__.py:1291
+msgid ""
+"HTML 4 is no longer supported by Sphinx. (\"html4_writer=True\" detected in "
+"configuration options)"
+msgstr "HTML 4 n'est plus pris en charge par Sphinx. (\"html4_writer=True\" dÃ©tectÃ© dans les options de configuration)"
+
+#: sphinx/builders/html/__init__.py:1306
+#, python-format
+msgid "%s %s documentation"
+msgstr "Documentation %s %s"
+
+#: sphinx/builders/latex/__init__.py:115
+#, python-format
+msgid "The LaTeX files are in %(outdir)s."
+msgstr "Les fichiers LaTex se trouvent dans %(outdir)s."
+
+#: sphinx/builders/latex/__init__.py:117
+msgid ""
+"\n"
+"Run 'make' in that directory to run these through (pdf)latex\n"
+"(use `make latexpdf' here to do that automatically)."
+msgstr "\nExÃ©cuter 'make' dans ce rÃ©pertoire pour les soumettre Ã  (pdf)latex\n(ou 'make latexpdf' directement ici pour lâ€™automatiser)."
+
+#: sphinx/builders/latex/__init__.py:152
+msgid "no \"latex_documents\" config value found; no documents will be written"
+msgstr "aucune valeur de configuration \"latex_documents\" trouvÃ©e; aucun document de sera gÃ©nÃ©rÃ©"
+
+#: sphinx/builders/latex/__init__.py:160
+#, python-format
+msgid "\"latex_documents\" config value references unknown document %s"
+msgstr "La valeur du paramÃ¨tre \"latex_documents\" rÃ©fÃ©rence un document inconnu %s"
+
+#: sphinx/builders/latex/__init__.py:196 sphinx/domains/std/__init__.py:559
+#: sphinx/domains/std/__init__.py:571 sphinx/templates/latex/latex.tex_t:106
+#: sphinx/themes/basic/genindex-single.html:30
+#: sphinx/themes/basic/genindex-single.html:55
+#: sphinx/themes/basic/genindex-split.html:11
+#: sphinx/themes/basic/genindex-split.html:14
+#: sphinx/themes/basic/genindex.html:11 sphinx/themes/basic/genindex.html:34
+#: sphinx/themes/basic/genindex.html:67 sphinx/themes/basic/layout.html:138
+#: sphinx/writers/texinfo.py:497
+msgid "Index"
+msgstr "Index"
+
+#: sphinx/builders/latex/__init__.py:199 sphinx/templates/latex/latex.tex_t:91
+msgid "Release"
+msgstr "Version"
+
+#: sphinx/builders/latex/__init__.py:213 sphinx/writers/latex.py:370
+#, python-format
+msgid "no Babel option known for language %r"
+msgstr "Aucune option Babel disponible pour la langue %r"
+
+#: sphinx/builders/latex/__init__.py:394
+msgid "copying TeX support files"
+msgstr "copie des fichiers de support TeX"
+
+#: sphinx/builders/latex/__init__.py:410
+msgid "copying TeX support files..."
+msgstr "Copie des fichiers de support TeX..."
+
+#: sphinx/builders/latex/__init__.py:423
+msgid "copying additional files"
+msgstr "Copie de fichiers supplÃ©mentaires"
+
+#: sphinx/builders/latex/__init__.py:466
+#, python-format
+msgid "Unknown configure key: latex_elements[%r], ignored."
+msgstr "ClÃ© de configuration inconnue : latex_elements[%r]; ignorÃ©e."
+
+#: sphinx/builders/latex/__init__.py:474
+#, python-format
+msgid "Unknown theme option: latex_theme_options[%r], ignored."
+msgstr "Option de thÃ¨me inconnue : latex_theme_options[%r], ignorÃ©."
+
+#: sphinx/builders/latex/theming.py:87
+#, python-format
+msgid "%r doesn't have \"theme\" setting"
+msgstr "%r n'a pas d'option Â« theme Â»"
+
+#: sphinx/builders/latex/theming.py:90
+#, python-format
+msgid "%r doesn't have \"%s\" setting"
+msgstr "%r n'a pas d'option Â« %s Â»"
+
+#: sphinx/builders/latex/transforms.py:120
+msgid "Failed to get a docname!"
+msgstr "Ã‰chec de l'obtention d'un nom de document !"
+
+#: sphinx/builders/latex/transforms.py:121
+msgid "Failed to get a docname for source {source!r}!"
+msgstr "Ã‰chec de l'obtention d'un nom de document pour la source {source!r} !"
+
+#: sphinx/builders/latex/transforms.py:482
+#, python-format
+msgid "No footnote was found for given reference node %r"
+msgstr "Aucune note de bas de page n'a Ã©tÃ© trouvÃ©e pour la rÃ©fÃ©rence de nÅ“ud %r donnÃ©e"
+
+#: sphinx/cmd/build.py:46
+msgid "Exception occurred while building, starting debugger:"
+msgstr "Une exception a Ã©tÃ© levÃ©e lors de la gÃ©nÃ©ration, dÃ©marrage du dÃ©bogueur :"
+
+#: sphinx/cmd/build.py:61
+msgid "Interrupted!"
+msgstr "Interrompu !"
+
+#: sphinx/cmd/build.py:63
+msgid "reST markup error:"
+msgstr "Erreur de balise reST  :"
+
+#: sphinx/cmd/build.py:69
+msgid "Encoding error:"
+msgstr "Erreur d'encodage :"
+
+#: sphinx/cmd/build.py:72 sphinx/cmd/build.py:87
+#, python-format
+msgid ""
+"The full traceback has been saved in %s, if you want to report the issue to "
+"the developers."
+msgstr "La trace dâ€™appels complÃ¨te a Ã©tÃ© sauvegardÃ©e dans %s, au cas oÃ¹ vous souhaiteriez signaler le problÃ¨me aux dÃ©veloppeurs."
+
+#: sphinx/cmd/build.py:76
+msgid "Recursion error:"
+msgstr "Erreur de rÃ©cursion :"
+
+#: sphinx/cmd/build.py:79
+msgid ""
+"This can happen with very large or deeply nested source files. You can "
+"carefully increase the default Python recursion limit of 1000 in conf.py "
+"with e.g.:"
+msgstr "Cela peut se produire avec des fichiers sources trÃ¨s volumineux ou profondÃ©ment imbriquÃ©s. Vous pouvez  augmenter avec attention la limite de rÃ©cursivitÃ© par dÃ©faut de Python de 1000 dans conf.py avec p. ex. :"
+
+#: sphinx/cmd/build.py:84
+msgid "Exception occurred:"
+msgstr "Une exception a Ã©tÃ© levÃ©e :"
+
+#: sphinx/cmd/build.py:90
+msgid ""
+"Please also report this if it was a user error, so that a better error "
+"message can be provided next time."
+msgstr "Merci de rapporter ceci s'il s'agit d'une erreur utilisateur, afin d'amÃ©liorer le message d'erreur Ã  l'avenir."
+
+#: sphinx/cmd/build.py:93
+msgid ""
+"A bug report can be filed in the tracker at <https://github.com/sphinx-"
+"doc/sphinx/issues>. Thanks!"
+msgstr "Un rapport d'erreur peut Ãªtre dÃ©posÃ© dans le systÃ¨me de tickets Ã  <https://github.com/sphinx-doc/sphinx/issues>. Merci !"
+
+#: sphinx/cmd/build.py:109
+msgid "job number should be a positive number"
+msgstr "Le numÃ©ro du job doit Ãªtre strictement positif"
+
+#: sphinx/cmd/build.py:117 sphinx/cmd/quickstart.py:474
+#: sphinx/ext/apidoc.py:317 sphinx/ext/autosummary/generate.py:689
+msgid "For more information, visit <https://www.sphinx-doc.org/>."
+msgstr "Pour plus d'informations, visitez le site <https://www.sphinx-doc.org/>."
+
+#: sphinx/cmd/build.py:118
+msgid ""
+"\n"
+"Generate documentation from source files.\n"
+"\n"
+"sphinx-build generates documentation from the files in SOURCEDIR and places it\n"
+"in OUTPUTDIR. It looks for 'conf.py' in SOURCEDIR for the configuration\n"
+"settings. The 'sphinx-quickstart' tool may be used to generate template files,\n"
+"including 'conf.py'\n"
+"\n"
+"sphinx-build can create documentation in different formats. A format is\n"
+"selected by specifying the builder name on the command line; it defaults to\n"
+"HTML. Builders can also perform other tasks related to documentation\n"
+"processing.\n"
+"\n"
+"By default, everything that is outdated is built. Output only for selected\n"
+"files can be built by specifying individual filenames.\n"
+msgstr "\nGÃ©nÃ©ration de la documentation Ã  partir des fichiers sources.\n\nsphinx-build gÃ©nÃ¨re de la documentation Ã  partir des fichiers de SOURCEDIR et la place\ndans OUTPUTDIR. Il recherche 'conf.py' dans SOURCEDIR pour les paramÃ¨tres de configuration.\nL'outil 'sphinx-quickstart' peut Ãªtre utilisÃ© pour gÃ©nÃ©rer des fichiers modÃ¨les,\ny compris 'conf.py'.\n\nsphinx-build peut crÃ©er de la documentation dans diffÃ©rents formats. Un format est\nsÃ©lectionnÃ© en spÃ©cifiant le nom du constructeur sur la ligne de commande ; le format par dÃ©faut est\nHTML. Les constructeurs peuvent Ã©galement effectuer d'autres tÃ¢ches liÃ©es au traitement de la documentation.\n\nPar dÃ©faut, tout ce qui est obsolÃ¨te est construit. La sortie pour les fichiers sÃ©lectionnÃ©s seulement\npeut Ãªtre construite en spÃ©cifiant des noms de fichiers individuels.\n"
+
+#: sphinx/cmd/build.py:139
+msgid "path to documentation source files"
+msgstr "chemin des fichiers sources de la documentation"
+
+#: sphinx/cmd/build.py:141
+msgid "path to output directory"
+msgstr "chemin du rÃ©pertoire de sortie"
+
+#: sphinx/cmd/build.py:143
+msgid ""
+"(optional) a list of specific files to rebuild. Ignored if --write-all is "
+"specified"
+msgstr ""
+
+#: sphinx/cmd/build.py:146
+msgid "general options"
+msgstr "options gÃ©nÃ©rales"
+
+#: sphinx/cmd/build.py:149
+msgid "builder to use (default: 'html')"
+msgstr "constructeur Ã  utiliser (par dÃ©faut: 'html')"
+
+#: sphinx/cmd/build.py:152
+msgid ""
+"run in parallel with N processes, when possible. 'auto' uses the number of "
+"CPU cores"
+msgstr ""
+
+#: sphinx/cmd/build.py:155
+msgid "write all files (default: only write new and changed files)"
+msgstr "enregistrer tous les fichiers (par dÃ©faut : enregistrer seulement les fichiers nouveaux ou modifiÃ©s)"
+
+#: sphinx/cmd/build.py:158
+msgid "don't use a saved environment, always read all files"
+msgstr "ne pas utiliser un environnement sauvegardÃ©, relire toujours tous les fichiers"
+
+#: sphinx/cmd/build.py:161
+msgid "path options"
+msgstr ""
+
+#: sphinx/cmd/build.py:163
+msgid ""
+"directory for doctree and environment files (default: OUTPUT_DIR/.doctrees)"
+msgstr ""
+
+#: sphinx/cmd/build.py:166
+msgid "directory for the configuration file (conf.py) (default: SOURCE_DIR)"
+msgstr ""
+
+#: sphinx/cmd/build.py:171
+msgid "use no configuration file, only use settings from -D options"
+msgstr ""
+
+#: sphinx/cmd/build.py:174
+msgid "override a setting in configuration file"
+msgstr "outre passer un paramÃ¨tre du fichier de configuration"
+
+#: sphinx/cmd/build.py:177
+msgid "pass a value into HTML templates"
+msgstr "passer une valeur aux templates HTML"
+
+#: sphinx/cmd/build.py:180
+msgid "define tag: include \"only\" blocks with TAG"
+msgstr "dÃ©finit une balise : seules les blocs \"only\" avec TAG seront inclus"
+
+#: sphinx/cmd/build.py:182
+msgid "nit-picky mode: warn about all missing references"
+msgstr ""
+
+#: sphinx/cmd/build.py:184
+msgid "console output options"
+msgstr "options de la console de sortie"
+
+#: sphinx/cmd/build.py:187
+msgid "increase verbosity (can be repeated)"
+msgstr "augmenter la verbositÃ© (peut Ãªtre rÃ©pÃ©tÃ©)"
+
+#: sphinx/cmd/build.py:189 sphinx/ext/apidoc.py:340
+msgid "no output on stdout, just warnings on stderr"
+msgstr "aucune sortie vers stdout, seulement les avertissements vers stderr"
+
+#: sphinx/cmd/build.py:191
+msgid "no output at all, not even warnings"
+msgstr "aucune sortie du tout, mÃªme pas les avertissements"
+
+#: sphinx/cmd/build.py:194
+msgid "do emit colored output (default: auto-detect)"
+msgstr "Ã©mettre une sortie de couleur (par dÃ©faut : auto-dÃ©tection)"
+
+#: sphinx/cmd/build.py:197
+msgid "do not emit colored output (default: auto-detect)"
+msgstr "ne pas Ã©mettre une sortie de couleur (par dÃ©faut : auto-dÃ©tection)"
+
+#: sphinx/cmd/build.py:199
+msgid "warning control options"
+msgstr ""
+
+#: sphinx/cmd/build.py:201
+msgid "write warnings (and errors) to given file"
+msgstr "Ã©crire les avertissem'use strict'
+
+var http = require('http')
+var https = require('https')
+var url = require('url')
+var util = require('util')
+var stream = require('stream')
+var zlib = require('zlib')
+var hawk = require('hawk')
+var aws2 = require('aws-sign2')
+var aws4 = require('aws4')
+var httpSignature = require('http-signature')
+var mime = require('mime-types')
+var stringstream = require('stringstream')
+var caseless = require('caseless')
+var ForeverAgent = require('forever-agent')
+var FormData = require('form-data')
+var extend = require('extend')
+var isstream = require('isstream')
+var isTypedArray = require('is-typedarray').strict
+var helpers = require('./lib/helpers')
+var cookies = require('./lib/cookies')
+var getProxyFromURI = require('./lib/getProxyFromURI')
+var Querystring = require('./lib/querystring').Querystring
+var Har = require('./lib/har').Har
+var Auth = require('./lib/auth').Auth
+var OAuth = require('./lib/oauth').OAuth
+var Multipart = require('./lib/multipart').Multipart
+var Redirect = require('./lib/redirect').Redirect
+var Tunnel = require('./lib/tunnel').Tunnel
+var now = require('performance-now')
+var Buffer = require('safe-buffer').Buffer
+
+var safeStringify = helpers.safeStringify
+var isReadStream = helpers.isReadStream
+var toBase64 = helpers.toBase64
+var defer = helpers.defer
+var copy = helpers.copy
+var version = helpers.version
+var globalCookieJar = cookies.jar()
+
+var globalPool = {}
+
+function filterForNonReserved (reserved, options) {
+  // Filter out properties that are not reserved.
+  // Reserved values are passed in at call site.
+
+  var object = {}
+  for (var i in options) {
+    var notReserved = (reserved.indexOf(i) === -1)
+    if (notReserved) {
+      object[i] = options[i]
+    }
+  }
+  return object
+}
+
+function filterOutReservedFunctions (reserved, options) {
+  // Filter out properties that are functions and are reserved.
+  // Reserved values are passed in at call site.
+
+  var object = {}
+  for (var i in options) {
+    var isReserved = !(reserved.indexOf(i) === -1)
+    var isFunction = (typeof options[i] === 'function')
+    if (!(isReserved && isFunction)) {
+      object[i] = options[i]
+    }
+  }
+  return object
+}
+
+// Return a simpler request object to allow serialization
+function requestToJSON () {
+  var self = this
+  return {
+    uri: self.uri,
+    method: self.method,
+    headers: self.headers
+  }
+}
+
+// Return a simpler response object to allow serialization
+function responseToJSON () {
+  var self = this
+  return {
+    statusCode: self.statusCode,
+    body: self.body,
+    headers: self.headers,
+    request: requestToJSON.call(self.request)
+  }
+}
+
+function Request (options) {
+  // if given the method property in options, set property explicitMethod to true
+
+  // extend the Request instance with any non-reserved properties
+  // remove any reserved functions from the options object
+  // set Request instance to be readable and writable
+  // call init
+
+  var self = this
+
+  // start with HAR, then override with additional options
+  if (options.har) {
+    self._har = new Har(self)
+    options = self._har.options(options)
+  }
+
+  stream.Stream.call(self)
+  var reserved = Object.keys(Request.prototype)
+  var nonReserved = filterForNonReserved(reserved, options)
+
+  extend(self, nonReserved)
+  options = filterOutReservedFunctions(reserved, options)
+
+  self.readable = true
+  self.writable = true
+  if (options.method) {
+    self.explicitMethod = true
+  }
+  self._qs = new Querystring(self)
+  self._auth = new Auth(self)
+  self._oauth = new OAuth(self)
+  self._multipart = new Multipart(self)
+  self._redirect = new Redirect(self)
+  self._tunnel = new Tunnel(self)
+  self.init(options)
+}
+
+util.inherits(Request, stream.Stream)
+
+// Debugging
+Request.debug = process.env.NODE_DEBUG && /\brequest\b/.test(process.env.NODE_DEBUG)
+function debug () {
+  if (Request.debug) {
+    console.error('REQUEST %s', util.format.apply(util, arguments))
+  }
+}
+Request.prototype.debug = debug
+
+Request.prototype.init = function (options) {
+  // init() contains all the code to setup the request object.
+  // the actual outgoing request is not started until start() is called
+  // this function is called from both the constructor and on redirect.
+  var self = this
+  if (!options) {
+    options = {}
+  }
+  self.headers = self.headers ? copy(self.headers) : {}
+
+  // Delete headers with value undefined since they break
+  // ClientRequest.OutgoingMessage.setHeader in node 0.12
+  for (var headerName in self.headers) {
+    if (typeof self.headers[headerName] === 'undefined') {
+      delete self.headers[headerName]
+    }
+  }
+
+  caseless.httpify(self, self.headers)
+
+  if (!self.method) {
+    self.method = options.method || 'GET'
+  }
+  if (!self.localAddress) {
+    self.localAddress = options.localAddress
+  }
+
+  self._qs.init(options)
+
+  debug(options)
+  if (!self.pool && self.pool !== false) {
+    self.pool = globalPool
+  }
+  self.dests = self.dests || []
+  self.__isRequestRequest = true
+
+  // Protect against double callback
+  if (!self._callback && self.callback) {
+    self._callback = self.callback
+    self.callback = function () {
+      if (self._callbackCalled) {
+        return // Print a warning maybe?
+      }
+      self._callbackCalled = true
+      self._callback.apply(self, arguments)
+    }
+    self.on('error', self.callback.bind())
+    self.on('complete', self.callback.bind(self, null))
+  }
+
+  // People use this property instead all the time, so support it
+  if (!self.uri && self.url) {
+    self.uri = self.url
+    delete self.url
+  }
+
+  // If there's a baseUrl, then use it as the base URL (i.e. uri must be
+  // specified as a relative path and is appended to baseUrl).
+  if (self.baseUrl) {
+    if (typeof self.baseUrl !== 'string') {
+      return self.emit('error', new Error('options.baseUrl must be a string'))
+    }
+
+    if (typeof self.uri !== 'string') {
+      return self.emit('error', new Error('options.uri must be a string when using options.baseUrl'))
+    }
+
+    if (self.uri.indexOf('//') === 0 || self.uri.indexOf('://') !== -1) {
+      return self.emit('error', new Error('options.uri must be a path when using options.baseUrl'))
+    }
+
+    // Handle all cases to make sure that there's only one slash between
+    // baseUrl and uri.
+    var baseUrlEndsWithSlash = self.baseUrl.lastIndexOf('/') === self.baseUrl.length - 1
+    var uriStartsWithSlash = self.uri.indexOf('/') === 0
+
+    if (baseUrlEndsWithSlash && uriStartsWithSlash) {
+      self.uri = self.baseUrl + self.uri.slice(1)
+    } else if (baseUrlEndsWithSlash || uriStartsWithSlash) {
+      self.uri = self.baseUrl + self.uri
+    } else if (self.uri === '') {
+      self.uri = self.baseUrl
+    } else {
+      self.uri = self.baseUrl + '/' + self.uri
+    }
+    delete self.baseUrl
+  }
+
+  // A URI is needed by this point, emit error if we haven't been able to get one
+  if (!self.uri) {
+    return self.emit('error', new Error('options.uri is a required argument'))
+  }
+
+  // If a string URI/URL was given, parse it into a URL object
+  if (typeof self.uri === 'string') {
+    self.uri = url.parse(self.uri)
+  }
+
+  // Some URL objects are not from a URL parsed string and need href added
+  if (!self.uri.href) {
+    self.uri.href = url.format(self.uri)
+  }
+
+  // DEPRECATED: Warning for users of the old Unix Sockets URL Scheme
+  if (self.uri.protocol === 'unix:') {
+    return self.emit('error', new Error('`unix://` URL scheme is no longer supported. Please use the format `http://unix:SOCKET:PATH`'))
+  }
+
+  // Support Unix Sockets
+  if (self.uri.host === 'unix') {
+    self.enableUnixSocket()
+  }
+
+  if (self.strictSSL === false) {
+    self.rejectUnauthorized = false
+  }
+
+  if (!self.uri.pathname) { self.uri.pathname = '/' }
+
+  if (!(self.uri.host || (self.uri.hostname && self.uri.port)) && !self.uri.isUnix) {
+    // Invalid URI: it may generate lot of bad errors, like 'TypeError: Cannot call method `indexOf` of undefined' in CookieJar
+    // Detect and reject it as soon as possible
+    var faultyUri = url.format(self.uri)
+    var message = 'Invalid URI "' + faultyUri + '"'
+    if (Object.keys(options).length === 0) {
+      // No option ? This can be the sign of a redirect
+      // As this is a case where the user cannot do anything (they didn't call request directly with this URL)
+      // they should be warned that it can be caused by a redirection (can save some hair)
+      message += '. This can be caused by a crappy redirection.'
+    }
+    // This error was fatal
+    self.abort()
+    return self.emit('error', new Error(message))
+  }
+
+  if (!self.hasOwnProperty('proxy')) {
+    self.proxy = getProxyFromURI(self.uri)
+  }
+
+  self.tunnel = self._tunnel.isEnabled()
+  if (self.proxy) {
+    self._tunnel.setup(options)
+  }
+
+  self._redirect.onRequest(options)
+
+  self.setHost = false
+  if (!self.hasHeader('host')) {
+    var hostHeaderName = self.originalHostHeaderName || 'host'
+    // When used with an IPv6 address, `host` will provide
+    // the correct bracketed format, unlike using `hostname` and
+    // optionally adding the `port` when necessary.
+    self.setHeader(hostHeaderName, self.uri.host)
+    self.setHost = true
+  }
+
+  self.jar(self._jar || options.jar)
+
+  if (!self.uri.port) {
+    if (self.uri.protocol === 'http:') { self.uri.port = 80 } else if (self.uri.protocol === 'https:') { self.uri.port = 443 }
+  }
+
+  if (self.proxy && !self.tunnel) {
+    self.port = self.proxy.port
+    self.host = self.proxy.hostname
+  } else {
+    self.port = self.uri.port
+    self.host = self.uri.hostname
+  }
+
+  if (options.form) {
+    self.form(options.form)
+  }
+
+  if (options.formData) {
+    var formData = options.formData
+    var requestForm = self.form()
+    var appendFormValue = function (key, value) {
+      if (value && value.hasOwnProperty('value') && value.hasOwnProperty('options')) {
+        requestForm.append(key, value.value, value.options)
+      } else {
+        requestForm.append(key, value)
+      }
+    }
+    for (var formKey in formData) {
+      if (formData.hasOwnProperty(formKey)) {
+        var formValue = formData[formKey]
+        if (formValue instanceof Array) {
+          for (var j = 0; j < formValue.length; j++) {
+            appendFormValue(formKey, formValue[j])
+          }
+        } else {
+          appendFormValue(formKey, formValue)
+        }
+      }
+    }
+  }
+
+  if (options.qs) {
+    self.qs(options.qs)
+  }
+
+  if (self.uri.path) {
+    self.path = self.uri.path
+  } else {
+    self.path = self.uri.pathname + (self.uri.search || '')
+  }
+
+  if (self.path.length === 0) {
+    self.path = '/'
+  }
+
+  // Auth must happen last in case signing is dependent on other headers
+  if (options.aws) {
+    self.aws(options.aws)
+  }
+
+  if (options.hawk) {
+    self.hawk(options.hawk)
+  }
+
+  if (options.httpSignature) {
+    self.httpSignature(options.httpSignature)
+  }
+
+  if (options.auth) {
+    if (Object.prototype.hasOwnProperty.call(options.auth, 'username')) {
+      options.auth.user = options.auth.username
+    }
+    if (Object.prototype.hasOwnProperty.call(options.auth, 'password')) {
+      options.auth.pass = options.auth.password
+    }
+
+    self.auth(
+      options.auth.user,
+      options.auth.pass,
+      options.auth.sendImmediately,
+      options.auth.bearer
+    )
+  }
+
+  if (self.gzip && !self.hasHeader('accept-encoding')) {
+    self.setHeader('accept-encoding', 'gzip, deflate')
+  }
+
+  if (self.uri.auth && !self.hasHeader('authorization')) {
+    var uriAuthPieces = self.uri.auth.split(':').map(function (item) { return self._qs.unescape(item) })
+    self.auth(uriAuthPieces[0], uriAuthPieces.slice(1).join(':'), true)
+  }
+
+  if (!self.tunnel && self.proxy && self.proxy.auth && !self.hasHeader('proxy-authorization')) {
+    var proxyAuthPieces = self.proxy.auth.split(':').map(function (item) { return self._qs.unescape(item) })
+    var authHeader = 'Basic ' + toBase64(proxyAuthPieces.join(':'))
+    self.setHeader('proxy-authorization', authHeader)
+  }
+
+  if (self.proxy && !self.tunnel) {
+    self.path = (self.uri.protocol + '//' + self.uri.host + self.path)
+  }
+
+  if (options.json) {
+    self.json(options.json)
+  }
+  if (options.multipart) {
+    self.multipart(options.multipart)
+  }
+
+  if (options.time) {
+    self.timing = true
+
+    // NOTE: elapsedTime is deprecated in favor of .timings
+    self.elapsedTime = self.elapsedTime || 0
+  }
+
+  function setContentLength () {
+    if (isTypedArray(self.body)) {
+      self.body = Buffer.from(self.body)
+    }
+
+    if (!self.hasHeader('content-length')) {
+      var length
+      if (typeof self.body === 'string') {
+        length = Buffer.byteLength(self.body)
+      } else if (Array.isArray(self.body)) {
+        length = self.body.reduce(function (a, b) { return a + b.length }, 0)
+      } else {
+        length = self.body.length
+      }
+
+      if (length) {
+        self.setHeader('content-length', length)
+      } else {
+        self.emit('error', new Error('Argument error, options.body.'))
+      }
+    }
+  }
+  if (self.body && !isstream(self.body)) {
+    setContentLength()
+  }
+
+  if (options.oauth) {
+    self.oauth(options.oauth)
+  } else if (self._oauth.params && self.hasHeader('authorization')) {
+    self.oauth(self._oauth.params)
+  }
+
+  var protocol = self.proxy && !self.tunnel ? self.proxy.protocol : self.uri.protocol
+  var defaultModules = {'http:': http, 'https:': https}
+  var httpModules = self.httpModules || {}
+
+  self.httpModule = httpModules[protocol] || defaultModules[protocol]
+
+  if (!self.httpModule) {
+    return self.emit('error', new Error('Invalid protocol: ' + protocol))
+  }
+
+  if (options.ca) {
+    self.ca = options.ca
+  }
+
+  if (!self.agent) {
+    if (options.agentOptions) {
+      self.agentOptions = options.agentOptions
+    }
+
+    if (options.agentClass) {
+      self.agentClass = options.agentClass
+    } else if (options.forever) {
+      var v = version()
+      // use ForeverAgent in node 0.10- only
+      if (v.major === 0 && v.minor <= 10) {
+        self.agentClass = protocol === 'http:' ? ForeverAgent : ForeverAgent.SSL
+      } else {
+        self.agentClass = self.httpModule.Agent
+        self.agentOptions = self.agentOptions || {}
+        self.agentOptions.keepAlive = true
+      }
+    } else {
+      self.agentClass = self.httpModule.Agent
+    }
+  }
+
+  if (self.pool === false) {
+    self.agent = false
+  } else {
+    self.agent = self.agent || self.getNewAgent()
+  }
+
+  self.on('pipe', function (src) {
+    if (self.ntick && self._started) {
+      self.emit('error', new Error('You cannot pipe to this stream after the outbound request has started.'))
+    }
+    self.src = src
+    if (isReadStream(src)) {
+      if (!self.hasHeader('content-type')) {
+        self.setHeader('content-type', mime.lookup(src.path))
+      }
+    } else {
+      if (src.headers) {
+        for (var i in src.headers) {
+          if (!self.hasHeader(i)) {
+            self.setHeader(i, src.headers[i])
+          }
+        }
+      }
+      if (self._json && !self.hasHeader('content-type')) {
+        self.setHeader('content-type', 'application/json')
+      }
+      if (src.method && !self.explicitMethod) {
+        self.method = src.method
+      }
+    }
+
+  // self.on('pipe', function () {
+  //   console.error('You have already piped to this stream. Pipeing twice is likely to break the request.')
+  // })
+  })
+
+  defer(function () {
+    if (self._aborted) {
+      return
+    }
+
+    var end = function () {
+      if (self._form) {
+        if (!self._auth.hasAuth) {
+          self._form.pipe(self)
+        } else if (self._auth.hasAuth && self._auth.sentAuth) {
+          self._form.pipe(self)
+        }
+      }
+      if (self._multipart && self._multipart.chunked) {
+        self._multipart.body.pipe(self)
+      }
+      if (self.body) {
+        if (isstream(self.body)) {
+          self.body.pipe(self)
+        } else {
+          setContentLength()
+          if (Array.isArray(self.body)) {
+            self.body.forEach(function (part) {
+              self.write(part)
+            })
+          } else {
+            self.write(self.body)
+          }
+          self.end()
+        }
+      } else if (self.requestBodyStream) {
+        console.warn('options.requestBodyStream is deprecated, please pass the request object to stream.pipe.')
+        self.requestBodyStream.pipe(self)
+      } else if (!self.src) {
+        if (self._auth.hasAuth && !self._auth.sentAuth) {
+          self.end()
+          return
+        }
+        if (self.method !== 'GET' && typeof self.method !== 'undefined') {
+          self.setHeader('content-length', 0)
+        }
+        self.end()
+      }
+    }
+
+    if (self._form && !self.hasHeader('content-length')) {
+      // Before ending the request, we had to compute the length of the whole form, asyncly
+      self.setHeader(self._form.getHeaders(), true)
+      self._form.getLength(function (err, length) {
+        if (!err && !isNaN(length)) {
+          self.setHeader('content-length', length)
+        }
+        end()
+      })
+    } else {
+      end()
+    }
+
+    self.ntick = true
+  })
+}
+
+Request.prototype.getNewAgent = function () {
+  var self = this
+  var Agent = self.agentClass
+  var options = {}
+  if (self.agentOptions) {
+    for (var i in self.agentOptions) {
+      options[i] = self.agentOptions[i]
+    }
+  }
+  if (self.ca) {
+    options.ca = self.ca
+  }
+  if (self.ciphers) {
+    options.ciphers = self.ciphers
+  }
+  if (self.secureProtocol) {
+    options.secureProtocol = self.secureProtocol
+  }
+  if (self.secureOptions) {
+    options.secureOptions = self.secureOptions
+  }
+  if (typeof self.rejectUnauthorized !== 'undefined') {
+    options.rejectUnauthorized = self.rejectUnauthorized
+  }
+
+  if (self.cert && self.key) {
+    options.key = self.key
+    options.cert = self.cert
+  }
+
+  if (self.pfx) {
+    options.pfx = self.pfx
+  }
+
+  if (self.passphrase) {
+    options.passphrase = self.passphrase
+  }
+
+  var poolKey = ''
+
+  // different types of agents are in different pools
+  if (Agent !== self.httpModule.Agent) {
+    poolKey += Agent.name
+  }
+
+  // ca option is only relevant if proxy or destination are https
+  var proxy = self.proxy
+  if (typeof proxy === 'string') {
+    proxy = url.parse(proxy)
+  }
+  var isHttps = (proxy && proxy.protocol === 'https:') || this.uri.protocol === 'https:'
+
+  if (isHttps) {
+    if (options.ca) {
+      if (poolKey) {
+        poolKey += ':'
+      }
+      poolKey += options.ca
+    }
+
+    if (typeof options.rejectUnauthorized !== 'undefined') {
+      if (poolKey) {
+        poolKey += ':'
+      }
+      poolKey += options.rejectUnauthorized
+    }
+
+    if (options.cert) {
+      if (poolKey) {
+        poolKey += ':'
+      }
+      poolKey += options.cert.toString('ascii') + options.key.toString('ascii')
+    }
+
+    if (options.pfx) {
+      if (poolKey) {
+        poolKey += ':'
+      }
+      poolKey += options.pfx.toString('ascii')
+    }
+
+    if (options.ciphers) {
+      if (poolKey) {
+        poolKey += ':'
+      }
+      poolKey += options.ciphers
+    }
+
+    if (options.secureProtocol) {
+      if (poolKey) {
+        poolKey += ':'
+      }
+      poolKey += options.secureProtocol
+    }
+
+    if (options.secureOptions) {
+      if (poolKey) {
+        poolKey += ':'
+      }
+      poolKey += options.secureOptions
+    }
+  }
+
+  if (self.pool === globalPool && !poolKey && Object.keys(options).length === 0 && self.httpModule.globalAgent) {
+    // not doing anything special.  Use the globalAgent
+    return self.httpModule.globalAgent
+  }
+
+  // we're using a stored agent.  Make sure it's protocol-specific
+  poolKey = self.uri.protocol + poolKey
+
+  // generate a new agent for this setting if none yet exists
+  if (!self.pool[poolKey]) {
+    self.pool[poolKey] = new Agent(options)
+    // properly set maxSockets on new agents
+    if (self.pool.maxSockets) {
+      self.pool[poolKey].maxSockets = self.pool.maxSockets
+    }
+  }
+
+  return self.pool[poolKey]
+}
+
+Request.prototype.start = function () {
+  // start() is called once we are ready to send the outgoing HTTP request.
+  // this is usually called on the first write(), end() or on nextTick()
+  var self = this
+
+  if (self.timing) {
+    // All timings will be relative to this request's startTime.  In order to do this,
+    // we need to capture the wall-clock start time (via Date), immediately followed
+    // by the high-resolution timer (via now()).  While these two won't be set
+    // at the _exact_ same time, they should be close enough to be able to calculate
+    // high-resolution, monotonically non-decreasing timestamps relative to startTime.
+    var startTime = new Date().getTime()
+    var startTimeNow = now()
+  }
+
+  if (self._aborted) {
+    return
+  }
+
+  self._started = true
+  self.method = self.method || 'GET'
+  self.href = self.uri.href
+
+  if (self.src && self.src.stat && self.src.stat.size && !self.hasHeader('content-length')) {
+    self.setHeader('content-length', self.src.stat.size)
+  }
+  if (self._aws) {
+    self.aws(self._aws, true)
+  }
+
+  // We have a method named auth, which is completely different from the http.request
+  // auth option.  If we don't remove it, we're gonna have a bad time.
+  var reqOptions = copy(self)
+  delete reqOptions.auth
+
+  debug('make request', self.uri.href)
+
+  // node v6.8.0 now supports a `timeout` value in `http.request()`, but we
+  // should delete it for now since we handle timeouts manually for better
+  // consistency with node versions before v6.8.0
+  delete reqOptions.timeout
+
+  try {
+    self.req = self.httpModule.request(reqOptions)
+  } catch (err) {
+    self.emit('error', err)
+    return
+  }
+
+  if (self.timing) {
+    self.startTime = startTime
+    self.startTimeNow = startTimeNow
+
+    // Timing values will all be relative to startTime (by comparing to startTimeNow
+    // so we have an accurate clock)
+    self.timings = {}
+  }
+
+  var timeout
+  if (self.timeout && !self.timeoutTimer) {
+    if (self.timeout < 0) {
+      timeout = 0
+    } else if (typeof self.timeout === 'number' && isFinite(self.timeout)) {
+      timeout = self.timeout
+    }
+  }
+
+  self.req.on('response', self.onRequestResponse.bind(self))
+  self.req.on('error', self.onRequestError.bind(self))
+  self.req.on('drain', function () {
+    self.emit('drain')
+  })
+
+  self.req.on('socket', function (socket) {
+    // `._connecting` was the old property which was made public in node v6.1.0
+    var isConnecting = socket._connecting || socket.connecting
+    if (self.timing) {
+      self.timings.socket = now() - self.startTimeNow
+
+      if (isConnecting) {
+        var onLookupTiming = function () {
+          self.timings.lookup = now() - self.startTimeNow
+        }
+
+        var onConnectTiming = function () {
+          self.timings.connect = now() - self.startTimeNow
+        }
+
+        socket.once('lookup', onLookupTiming)
+        socket.once('connect', onConnectTiming)
+
+        // clean up timing event listeners if needed on error
+        self.req.once('error', function () {
+          socket.removeListener('lookup', onLookupTiming)
+          socket.removeListener('connect', onConnectTiming)
+        })
+      }
+    }
+
+    var setReqTimeout = function () {
+      // This timeout sets the amount of time to wait *between* bytes sent
+      // from the server once connected.
+      //
+      // In particular, it's useful for erroring if the server fails to send
+      // data halfway through streaming a response.
+      self.req.setTimeout(timeout, function () {
+        if (self.req) {
+          self.abort()
+          var e = new Error('ESOCKETTIMEDOUT')
+          e.code = 'ESOCKETTIMEDOUT'
+          e.connect = false
+          self.emit('error', e)
+        }
+      })
+    }
+    if (timeout !== undefined) {
+      // Only start the connection timer if we're actually connecting a new
+      // socket, otherwise if we're already connected (because this is a
+      // keep-alive connection) do not bother. This is important since we won't
+      // get a 'connect' event for an already connected socket.
+      if (isConnecting) {
+        var onReqSockConnect = function () {
+          socket.removeListener('connect', onReqSockConnect)
+          clearTimeout(self.timeoutTimer)
+          self.timeoutTimer = null
+          setReqTimeout()
+        }
+
+        socket.on('connect', onReqSockConnect)
+
+        self.req.on('error', function (err) { // eslint-disable-line handle-callback-err
+          socket.removeListener('connect', onReqSockConnect)
+        })
+
+        // Set a timeout in memory - this block will throw if the server takes more
+        // than `timeout` to write the HTTP status and headers (corresponding to
+        // the on('response') event on the client). NB: this measures wall-clock
+        // time, not the time between bytes sent by the server.
+        self.timeoutTimer = setTimeout(function () {
+          socket.removeListener('connect', onReqSockConnect)
+          self.abort()
+          var e = new Error('ETIMEDOUT')
+          e.code = 'ETIMEDOUT'
+          e.connect = true
+          self.emit('error', e)
+        }, timeout)
+      } else {
+        // We're already connected
+        setReqTimeout()
+      }
+    }
+    self.emit('socket', socket)
+  })
+
+  self.emit('request', self.req)
+}
+
+Request.prototype.onRequestError = function (error) {
+  var self = this
+  if (self._aborted) {
+    return
+  }
+  if (self.req && self.req._reusedSocket && error.code === 'ECONNRESET' &&
+    self.agent.addRequestNoreuse) {
+    self.agent = { addRequest: self.agent.addRequestNoreuse.bind(self.agent) }
+    self.start()
+    self.req.end()
+    return
+  }
+  if (self.timeout && self.timeoutTimer) {
+    clearTimeout(self.timeoutTimer)
+    self.timeoutTimer = null
+  }
+  self.emit('error', error)
+}
+
+Request.prototype.onRequestResponse = function (response) {
+  var self = this
+
+  if (self.timing) {
+    self.timings.response = now() - self.startTimeNow
+  }
+
+  debug('onRequestResponse', self.uri.href, response.statusCode, response.headers)
+  response.on('end', function () {
+    if (self.timing) {
+      self.timings.end = now() - self.startTimeNow
+      response.timingStart = self.startTime
+
+      // fill in the blanks for any periods that didn't trigger, such as
+      // no lookup or connect due to keep alive
+      if (!self.timings.socket) {
+        self.timings.socket = 0
+      }
+      if (!self.timings.lookup) {
+        self.timings.lookup = self.timings.socket
+      }
+      if (!self.timings.connect) {
+        self.timings.connect = self.timings.lookup
+      }
+      if (!self.timings.response) {
+        self.timings.response = self.timings.connect
+      }
+
+      debug('elapsed time', self.timings.end)
+
+      // elapsedTime includes all redirects
+      self.elapsedTime += Math.round(self.timings.end)
+
+      // NOTE: elapsedTime is deprecated in favor of .timings
+      response.elapsedTime = self.elapsedTime
+
+      // timings is just for the final fetch
+      response.timings = self.timings
+
+      // pre-calculate phase timings as well
+      response.timingPhases = {
+        wait: self.timings.socket,
+        dns: self.timings.lookup - self.timings.socket,
+        tcp: self.timings.connect - self.timings.lookup,
+        firstByte: self.timings.response - self.timings.connect,
+        download: self.timings.end - self.timings.response,
+        total: self.timings.end
+      }
+    }
+    debug('response end', self.uri.href, response.statusCode, response.headers)
+  })
+
+  if (self._aborted) {
+    debug('aborted', self.uri.href)
+    response.resume()
+    return
+  }
+
+  self.response = response
+  response.request = self
+  response.toJSON = responseToJSON
+
+  // XXX This is different on 0.10, because SSL is strict by default
+  if (self.httpModule === https &&
+    self.strictSSL && (!response.hasOwnProperty('socket') ||
+    !response.socket.authorized)) {
+    debug('strict ssl error', self.uri.href)
+    var sslErr = response.hasOwnProperty('socket') ? response.socket.authorizationError : self.uri.href + ' does not support SSL'
+    self.emit('error', new Error('SSL Error: ' + sslErr))
+    return
+  }
+
+  // Save the original host before any redirect (if it changes, we need to
+  // remove any authorization headers).  Also remember the case of the header
+  // name because lots of broken servers expect Host instead of host and we
+  // want the caller to be able to specify this.
+  self.originalHost = self.getHeader('host')
+  if (!self.originalHostHeaderName) {
+    self.originalHostHeaderName = self.hasHeader('host')
+  }
+  if (self.setHost) {
+    self.removeHeader('host')
+  }
+  if (self.timeout && self.timeoutTimer) {
+    clearTimeout(self.timeoutTimer)
+    self.timeoutTimer = null
+  }
+
+  var targetCookieJar = (self._jar && self._jar.setCookie) ? self._jar : globalCookieJar
+  var addCookie = function (cookie) {
+    // set the cookie if it's domain in the href's domain.
+    try {
+      targetCookieJar.setCookie(cookie, self.uri.href, {ignoreError: true})
+    } catch (e) {
+      self.emit('error', e)
+    }
+  }
+
+  response.caseless = caseless(response.headers)
+
+  if (response.caseless.has('set-cookie') && (!self._disableCookies)) {
+    var headerName = response.caseless.has('set-cookie')
+    if (Array.isArray(response.headers[headerName])) {
+      response.headers[headerName].forEach(addCookie)
+    } else {
+      addCookie(response.headers[headerName])
+    }
+  }
+
+  if (self._redirect.onResponse(response)) {
+    return // Ignore the rest of the response
+  } else {
+    // Be a good stream and emit end when the response is finished.
+    // Hack to emit end on close because of a core bug that never fires end
+    response.on('close', function () {
+      if (!self._ended) {
+        self.response.emit('end')
+      }
+    })
+
+    response.once('end', function () {
+      self._ended = true
+    })
+
+    var noBody = function (code) {
+      return (
+        self.method === 'HEAD' ||
+        // Informational
+        (code >= 100 && code < 200) ||
+        // No Content
+        code === 204 ||
+        // Not Modified
+        code === 304
+      )
+    }
+
+    var responseContent
+    if (self.gzip && !noBody(response.statusCode)) {
+      var contentEncoding = response.headers['content-encoding'] || 'identity'
+      contentEncoding = contentEncoding.trim().toLowerCase()
+
+      // Be more lenient with decoding compressed responses, since (very rarely)
+      // servers send slightly invalid gzip responses that are still accepted
+      // by common browsers.
+      // Always using Z_SYNC_FLUSH is what cURL does.
+      var zlibOptions = {
+        flush: zlib.Z_SYNC_FLUSH,
+        finishFlush: zlib.Z_SYNC_FLUSH
+      }
+
+      if (contentEncoding === 'gzip') {
+        responseContent = zlib.createGunzip(zlibOptions)
+        response.pipe(responseContent)
+      } else if (contentEncoding === 'deflate') {
+        responseContent = zlib.createInflate(zlibOptions)
+        response.pipe(responseContent)
+      } else {
+        // Since previous versions didn't check for Content-Encoding header,
+        // ignore any invalid values to preserve backwards-compatibility
+        if (contentEncoding !== 'identity') {
+          debug('ignoring unrecognized Content-Encoding ' + contentEncoding)
+        }
+        responseContent = response
+      }
+    } else {
+      responseContent = response
+    }
+
+    if (self.encoding) {
+      if (self.dests.length !== 0) {
+        console.error('Ignoring encoding parameter as this stream is being piped to another stream which makes the encoding option invalid.')
+      } else if (responseContent.setEncoding) {
+        responseContent.setEncoding(self.encoding)
+      } else {
+        // Should only occur on node pre-v0.9.4 (joyent/node@9b5abe5) with
+        // zlib streams.
+        // If/When support for 0.9.4 is dropped, this should be unnecessary.
+        responseContent = responseContent.pipe(stringstream(self.encoding))
+      }
+    }
+
+    if (self._paused) {
+      responseContent.pause()
+    }
+
+    self.responseContent = responseContent
+
+    self.emit('response', response)
+
+    self.dests.forEach(function (dest) {
+      self.pipeDest(dest)
+    })
+
+    responseContent.on('data', function (chunk) {
+      if (self.timing && !self.responseStarted) {
+        self.responseStartTime = (new Date()).getTime()
+
+        // NOTE: responseStartTime is deprecated in favor of .timings
+        response.responseStartTime = self.responseStartTime
+      }
+      self._destdata = true
+      self.emit('data', chunk)
+    })
+    responseContent.once('end', function (chunk) {
+      self.emit('end', chunk)
+    })
+    responseContent.on('error', function (error) {
+      self.emit('error', error)
+    })
+    responseContent.on('close', function () { self.emit('close') })
+
+    if (self.callback) {
+      self.readResponseBody(response)
+    } else { // if no callback
+      self.on('end', function () {
+        if (self._aborted) {
+          debug('aborted', self.uri.href)
+          return
+        }
+        self.emit('complete', response)
+      })
+    }
+  }
+  debug('finish init function', self.uri.href)
+}
+
+Request.prototype.readResponseBody = function (response) {
+  var self = this
+  debug("reading response's body")
+  var buffers = []
+  var bufferLength = 0
+  var strings = []
+
+  self.on('data', function (chunk) {
+    if (!Buffer.isBuffer(chunk)) {
+      strings.push(chunk)
+    } else if (chunk.length) {
+      bufferLength += chunk.length
+      buffers.push(chunk)
+    }
+  })
+  self.on('end', function () {
+    debug('end event', self.uri.href)
+    if (self._aborted) {
+      debug('aborted', self.uri.href)
+      // `buffer` is defined in the parent scope and used in a closure it exists for the life of the request.
+      // This can lead to leaky behavior if the user retains a reference to the request object.
+      buffers = []
+      bufferLength = 0
+      return
+    }
+
+    if (bufferLength) {
+      debug('has body', self.uri.href, bufferLength)
+      response.body = Buffer.concat(buffers, bufferLength)
+      if (self.encoding !== null) {
+        response.body = response.body.toString(self.encoding)
+      }
+      // `buffer` is defined in the parent scope and used in a closure it exists for the life of the Request.
+      // This can lead to leaky behavior if the user retains a reference to the request object.
+      buffers = []
+      bufferLength = 0
+    } else if (strings.length) {
+      // The UTF8 BOM [0xEF,0xBB,0xBF] is converted to [0xFE,0xFF] in the JS UTC16/UCS2 representation.
+      // Strip this value out when the encoding is set to 'utf8', as upstream consumers won't expect it and it breaks JSON.parse().
+      if (self.encoding === 'utf8' && strings[0].length > 0 && strings[0][0] === '\uFEFF') {
+        strings[0] = strings[0].substring(1)
+      }
+      response.body = strings.join('')
+    }
+
+    if (self._json) {
+      try {
+        response.body = JSON.parse(response.body, self._jsonReviver)
+      } catch (e) {
+        debug('invalid JSON received', self.uri.href)
+      }
+    }
+    debug('emitting complete', self.uri.href)
+    if (typeof response.body === 'undefined' && !self._json) {
+      response.body = self.encoding === null ? Buffer.alloc(0) : ''
+    }
+    self.emit('complete', response, response.body)
+  })
+}
+
+Request.prototype.abort = function () {
+  var self = this
+  self._aborted = true
+
+  if (self.req) {
+    self.req.abort()
+  } else if (self.response) {
+    self.response.destroy()
+  }
+
+  self.emit('abort')
+}
+
+Request.prototype.pipeDest = function (dest) {
+  var self = this
+  var response = self.response
+  // Called after the response is received
+  if (dest.headers && !dest.headersSent) {
+    if (response.caseless.has('content-type')) {
+      var ctname = response.caseless.has('content-type')
+      if (dest.setHeader) {
+        dest.setHeader(ctname, response.headers[ctname])
+      } else {
+        dest.headers[ctname] = response.headers[ctname]
+      }
+    }
+
+    if (response.caseless.has('content-length')) {
+      var clname = response.caseless.has('content-length')
+      if (dest.setHeader) {
+        dest.setHeader(clname, response.headers[clname])
+      } else {
+        dest.headers[clname] = response.headers[clname]
+      }
+    }
+  }
+  if (dest.setHeader && !dest.headersSent) {
+    for (var i in response.headers) {
+      // If the response content is being decoded, the Content-Encoding header
+      // of the response doesn't represent the piped content, so don't pass it.
+      if (!self.gzip || i !== 'content-encoding') {
+        dest.setHeader(i, response.headers[i])
+      }
+    }
+    dest.statusCode = response.statusCode
+  }
+  if (self.pipefilter) {
+    self.pipefilter(response, dest)
+  }
+}
+
+Request.prototype.qs = function (q, clobber) {
+  var self = this
+  var base
+  if (!clobber && self.uri.query) {
+    base = self._qs.parse(self.uri.query)
+  } else {
+    base = {}
+  }
+
+  for (var i in q) {
+    base[i] = q[i]
+  }
+
+  var qs = self._qs.stringify(base)
+
+  if (qs === '') {
+    return self
+  }
+
+  self.uri = url.parse(self.uri.href.split('?')[0] + '?' + qs)
+  self.url = self.uri
+  self.path = self.uri.path
+
+  if (self.uri.host === 'unix') {
+    self.enableUnixSocket()
+  }
+
+  return self
+}
+Request.prototype.form = function (form) {
+  var self = this
+  if (form) {
+    if (!/^application\/x-www-form-urlencoded\b/.test(self.getHeader('content-type'))) {
+      self.setHeader('content-type', 'application/x-www-form-urlencoded')
+    }
+    self.body = (typeof form === 'string')
+      ? self._qs.rfc3986(form.toString('utf8'))
+      : self._qs.stringify(form).toString('utf8')
+    return self
+  }
+  // create form-data object
+  self._form = new FormData()
+  self._form.on('error', function (err) {
+    err.message = 'form-data: ' + err.message
+    self.emit('error', err)
+    self.abort()
+  })
+  return self._form
+}
+Request.prototype.multipart = function (multipart) {
+  var self = this
+
+  self._multipart.onRequest(multipart)
+
+  if (!self._multipart.chunked) {
+    self.body = self._multipart.body
+  }
+
+  return self
+}
+Request.prototype.json = function (val) {
+  var self = this
+
+  if (!self.hasHeader('accept')) {
+    self.setHeader('accept', 'application/json')
+  }
+
+  if (typeof self.jsonReplacer === 'function') {
+    self._jsonReplacer = self.jsonReplacer
+  }
+
+  self._json = true
+  if (typeof val === 'boolean') {
+    if (self.body !== undefined) {
+      if (!/^application\/x-www-form-urlencoded\b/.test(self.getHeader('content-type'))) {
+        self.body = safeStringify(self.body, self._jsonReplacer)
+      } else {
+        self.body = self._qs.rfc3986(self.body)
+      }
+      if (!self.hasHeader('content-type')) {
+        self.setHeader('content-type', 'application/json')
+      }
+    }
+  } else {
+    self.body = safeStringify(val, self._jsonReplacer)
+    if (!self.hasHeader('content-type')) {
+      self.setHeader('content-type', 'application/json')
+    }
+  }
+
+  if (typeof self.jsonReviver === 'function') {
+    self._jsonReviver = self.jsonReviver
+  }
+
+  return self
+}
+Request.prototype.getHeader = function (name, headers) {
+  var self = this
+  var result, re, match
+  if (!headers) {
+    headers = self.headers
+  }
+  Object.keys(headers).forEach(function (key) {
+    if (key.length !== name.length) {
+      return
+    }
+    re = new RegExp(name, 'i')
+    match = key.match(re)
+    if (match) {
+      result = headers[key]
+    }
+  })
+  return result
+}
+Request.prototype.enableUnixSocket = function () {
+  // Get the socket & request paths from the URL
+  var unixParts = this.uri.path.split(':')
+  var host = unixParts[0]
+  var path = unixParts[1]
+  // Apply unix properties to request
+  this.socketPath = host
+  this.uri.pathname = path
+  this.uri.path = path
+  this.uri.host = host
+  this.uri.hostname = host
+  this.uri.isUnix = true
+}
+
+Request.prototype.auth = function (user, pass, sendImmediately, bearer) {
+  var self = this
+
+  self._auth.onRequest(user, pass, sendImmediately, bearer)
+
+  return self
+}
+Request.prototype.aws = function (opts, now) {
+  var self = this
+
+  if (!now) {
+    self._aws = opts
+    return self
+  }
+
+  if (opts.sign_version === 4 || opts.sign_version === '4') {
+    // use aws4
+    var options = {
+      host: self.uri.host,
+      path: self.uri.path,
+      method: self.method,
+      headers: {
+        'content-type': self.getHeader('content-type') || ''
+      },
+      body: self.body
+    }
+    var signRes = aws4.sign(options, {
+      accessKeyId: opts.key,
+      secretAccessKey: opts.secret,
+      sessionToken: opts.session
+    })
+    self.setHeader('authorization', signRes.headers.Authorization)
+    self.setHeader('x-amz-date', signRes.headers['X-Amz-Date'])
+    if (signRes.headers['X-Amz-Security-Token']) {
+      self.setHeader('x-amz-security-token', signRes.headers['X-Amz-Security-Token'])
+    }
+  } else {
+    // default: use aws-sign2
+    var date = new Date()
+    self.setHeader('date', date.toUTCString())
+    var auth = {
+      key: opts.key,
+      secret: opts.secret,
+      verb: self.method.toUpperCase(),
+      date: date,
+      contentType: self.getHeader('content-type') || '',
+      md5: self.getHeader('content-md5') || '',
+      amazonHeaders: aws2.canonicalizeHeaders(self.headers)
+    }
+    var path = self.uri.path
+    if (opts.bucket && path) {
+      auth.resource = '/' + opts.bucket + path
+    } else if (opts.bucket && !path) {
+      auth.resource = '/' + opts.bucket
+    } else if (!opts.bucket && path) {
+      auth.resource = path
+    } else if (!opts.bucket && !path) {
+      auth.resource = '/'
+    }
+    auth.resource = aws2.canonicalizeResource(auth.resource)
+    self.setHeader('authorization', aws2.authorization(auth))
+  }
+
+  return self
+}
+Request.prototype.httpSignature = function (opts) {
+  var self = this
+  httpSignature.signRequest({
+    getHeader: function (header) {
+      return self.getHeader(header, self.headers)
+    },
+    setHeader: function (header, value) {
+      self.setHeader(header, value)
+    },
+    method: self.method,
+    path: self.path
+  }, opts)
+  debug('httpSignature authorization', self.getHeader('authorization'))
+
+  return self
+}
+Request.prototype.hawk = function (opts) {
+  var self = this
+  self.setHeader('Authorization', hawk.client.header(self.uri, self.method, opts).field)
+}
+Request.prototype.oauth = function (_oauth) {
+  var self = this
+
+  self._oauth.onRequest(_oauth)
+
+  return self
+}
+
+Request.prototype.jar = function (jar) {
+  var self = this
+  var cookies
+
+  if (self._redirect.redirectsFollowed === 0) {
+    self.originalCookieHeader = self.getHeader('cookie')
+  }
+
+  if (!jar) {
+    // disable cookies
+    cookies = false
+    self._disableCookies = true
+  } else {
+    var targetCookieJar = (jar && jar.getCookieString) ? jar : globalCookieJar
+    var urihref = self.uri.href
+    // fetch cookie in the Specified host
+    if (targetCookieJar) {
+      cookies = targetCookieJar.getCookieString(urihref)
+    }
+  }
+
+  // if need cookie and cookie is not empty
+  if (cookies && cookies.length) {
+    if (self.originalCookieHeader) {
+      // Don't overwrite existing Cookie header
+      self.setHeader('cookie', self.originalCookieHeader + '; ' + cookies)
+    } else {
+      self.setHeader('cookie', cookies)
+    }
+  }
+  self._jar = jar
+  return self
+}
+
+// Stream API
+Request.prototype.pipe = function (dest, opts) {
+  var self = this
+
+  if (self.response) {
+    if (self._destdata) {
+      self.emit('error', new Error('You cannot pipe after data has been emitted from the response.'))
+    } else if (self._ended) {
+      self.emit('error', new Error('You cannot pipe after the response has been ended.'))
+    } else {
+      stream.Stream.prototype.pipe.call(self, dest, opts)
+      self.pipeDest(dest)
+      return dest
+    }
+  } else {
+    self.dests.push(dest)
+    stream.Stream.prototype.pipe.call(self, dest, opts)
+    return dest
+  }
+}
+Request.prototype.write = function () {
+  var self = this
+  if (self._aborted) { return }
+
+  if (!self._started) {
+    self.start()
+  }
+  if (self.req) {
+    return self.req.write.apply(self.req, arguments)
+  }
+}
+Request.prototype.end = function (chunk) {
+  var self = this
+  if (self._aborted) { return }
+
+  if (chunk) {
+    self.write(chunk)
+  }
+  if (!self._started) {
+    self.start()
+  }
+  if (self.req) {
+    self.req.end()
+  }
+}
+Request.prototype.pause = function () {
+  var self = this
+  if (!self.responseContent) {
+    self._paused = true
+  } else {
+    self.responseContent.pause.apply(self.responseContent, arguments)
+  }
+}
+Request.prototype.resume = function () {
+  var self = this
+  if (!self.responseContent) {
+    self._paused = false
+  } else {
+    self.responseContent.resume.apply(self.responseContent, arguments)
+  }
+}
+Request.prototype.destroy = function () {
+  var self = this
+  if (!self._ended) {
+    self.end()
+  } else if (self.response) {
+    self.response.destroy()
+  }
+}
+
+Request.defaultProxyHeaderWhiteList =
+  Tunnel.defaultProxyHeaderWhiteList.slice()
+
+Request.defaultProxyHeaderExclusiveList =
+  Tunnel.defaultProxyHeaderExclusiveList.slice()
+
+// Exports
+
+Request.prototype.toJSON = requestToJSON
+module.exports = Request
+                                                                                                                                                                                                                                                                                                                                        wvpkC    ¡      ¡  ¼Ú´ÁJ!RIFF"C WAVEfmt      D¬  ˆX   dataşB WWGHFWGILJHKMFWG~W<2
+ô1ù+ùÄ¶be  ŠK!     ĞçšDŞQq! (î?¥7ñÖãµ;îs¦1¹ÔÍ‹—Ø‰²>Ñ1Pt$QA¥G¾:å®SÀ…Q’›¨ìåT•»Øğó¹3@Æn\Ä"&îéİo’Ãåhü„LÇvàBáwÈ»XÿOÖ¯à«Û&Ä|uÔŸ×Ú“@+Ø¬u”~Rôò„„œvÚ_\jÅ•*€ªT±8Áµ²…WğÉ ¤+õz´Áê=R„20LÕ"³"t2‘ÎÜ\ÅğèhÆª„PƒA/ÔF…%€Z_–¼§ğQ2¸õCÉÃ$SRÜ_\ŒX‚è*Äeá]°&6AÒ,k=mV ¡÷„¼á>è¨¢æ©ÿ•§…–
+*'qñÉ7Õ‚Oœ8†==^B>õ?Eˆa`Åò•È‚õ8êï‘³ÌEÍ4XoÂÔA2‰é-%€|oIÈ*)“/qDs“à2.w1¯–‰XõK*&c<"Ç´‡"hø.,ŞÉĞ@®¤¼ULĞÇÉ
+¶pLü“Qxê¿³Ô¯«Tú@›ÕvÔEuF‰…¬MŒØ›{d`eÍÉ²ˆ@%Ó¤aàiÄ.P¢5	ø×58Å(0@kæ1¬±¦ŸCP Aí: Ğ“T¶â;GŠ·m0dƒ–	B%e5Z½HVê…ş®ú†Ğİ½MãL­t-¶t­ë#ËIŸAre|ÈÓÛÌ_gNc7‰—(‘Ù‚N5©z¬;Fèè¤3Ìu4Îâ5Ö¤Äü¥YwHÄZ];vouõôşÀ®=ŠçÌ€İ™úğY:>•DE;D`d€Mh‚ä×Á
+Ü¿
+ÂR‡oËe½)]n{ğ£à.4akÄ•§šÍD[UæW?ª¥¦lkœä„µÙ”Í<5T¿KŠÑ`õpjW¤².>*~ê5Æ‚`jà\2ÍÖ 0$2bnäÒÓj¯¨t[U×_‡öYùnçM¨:œeÀÔı®c3w{XF¨¹lJÙŒ½ùrØeTãƒpE}-¼[œÊÀS°Búk“"BI‡Şå¥Ë°O²äFç¬z@ZøW“p Wèëu©%WÖºVÕÊJAŒ&H§[¸„ LÈdN
+S‘‡*Ğ1Ì×YU{˜·ëªŸáuT½ÁqäŒÕwãüóXbBÅCè/ò¦è	¶ı,·ÈÂ¤>®@
+ŸQMUx©²4 ×/ Wzz.ÓÛ0¢<ñäñTÄµSáØ$Ø“) ÑãX4ª€¬Ä5!2M¢aT%dJÈ^˜Ù2¿ñù$S‡½É§¸%SÛ×îŠHo#ÌxŒó÷ÅVZ&Snfˆ†ü"xmúğb¡Ld*>„™×Â	m3("o¸¢=”¤ÄAg›ˆ‡D3G«,äà­©{£ğ LT=Ù§ÚvŸğ‹PÄÁ¬a,š, @aj„l	 ÈÈMõ«?$À%ø]ôçİâ`şçÏym²ßXê»²­WŸÉ¼wQ+Ì¡VŠd°¾İÎ™CòV9v‹H¾íBzT<VÍ‡×jà x×n?¨ã,Ní 1b‚xx âƒc~]ÒÿhßH\vÙ!r00	æEcmaŒUŒ3;ŸÈesTMi3Å†j/_ağ¿ùfû¾¯î¿?¥x£è‚kWŸeK.;â;¶*S*_„~.œè !0™3ñøíÔSHñv‹H¾ıßRˆ‘@ešôszVvrM–lÒÜ:§0}„ÎÜ$o9å¿ÒÃ·bº©¾Af*7EËJÓ’İeˆùzIˆ,HÂbæÄHlÉ¢@	`†üáTÂ˜Ï~O~å¢•ëø™+ÂAvJù¥_Ó©ßƒîñˆShù‚GÈ¥QĞXŞ: 5/.|}?i#\hñ»Å2¡qX}f›P‡œÑIXŒfN„RK©•ë·"5³@]şDºÂX€Ş\‚ìø`ùÅ`w!Ä¾éõAqT™‘‚@‘48‚Çäe¯òÑ¸ÅŸ©€µ“V®è.¶÷|TÿÄ©òn¬¼ÓiYP™Ï õ6MÇNöF³”®ø6ÿcy)Ûƒ¨ù¬ç¦™Û§4‡JéûX[V…A!€k&%)E ø,[vË’ú¸ „@ÓŒ&8VAH¦/BË`B$v?7>›ò)n|94îÙ»ä^3Eš2Ã¤ì„§YMÉJö’‰ÀÔ‘6‘ä,
+d ¸a¨MI5Œ~cÏ×(æàøÚ/ä>®àğ.í·³½»ñ·T~ë,ô~À­÷ÓwØ«Hıİ=½a‹T¢ÊC–DU«jÓèoT—Áw 1½¢V7A 5>Q&í6u.Ù³ÄEùrg8Àw«¿œ-"=ü›5ä’•oÎQfè‹;áW‡d—xØn˜MQˆ0ŒLa- ‚X¥T§D+à˜8‘!z‹\İh:‰V˜òBù‰9_ŒŸ4»ÌEÒ¦¶CéŸ³¿sø&¡S<îğbË±z‘;ùyƒÌúÜÎñqLÃddaÍş A›,Óy1ì½ZCê†Ñ…À$Q
+R" T9¦FRç ö“#«ƒ#0Øhãw‰ÿc#VÁÅ’÷(…¾&dd³Ò	„:7NjÃƒ’¥>ç,imLoĞÙŒ(Ğ>fhè0À# 4|Á.Íct![QØ€;İ/^¡ã6jk{¢4N3ü©¬şyö6ùDâ}=ŞIÈKˆbÂN8ïRi@õÎxÀBˆj‘†hIbÀ¡yPÔÉRTâ& !"ªe¿z˜³J? SD	 œ( @"ñÛã™áv¥—²HAKCâ‹aĞ&ÖSÅ
+Ä¯4!£PjRû±Ú"?¯Îa;öÉ‚t'ùù#.v*ÁAP!1„ƒK
+A~BJ©ê•a-ràªÂd	µ¦+¾Ú{î:ë’ûfEs—T¾â¯\×ïÑ•YMj[Y„ğìe÷›ş}# Ÿcªp]ı²ÉÕå±\™i™2Yü¬ÅíY½N	à©ª œĞB».µÑÀÇà²w'à©›€ ])iB$"Ô”ˆ0lø<Ñİ›yDf$xH'¨) Èg Ú±™:¬‰ çë]èÍl<Ö,§ƒrÊÍô“Ş¬‚GÏ•… %Và²XŞ2†šDyUé8LXp‹BÌÉd»Š—Œ˜Á~\Z²yoIó¼—4îÈ<ıŒDŒ)ªìÿ¢'ıfˆ±pá_8Mûˆò"JG”?xN\§·İÀË:hö_A^Á>àøı—zôFnš»tE"'Ä+Y@Ë”Ãò±ß[Qà¡rJ:ñĞ€]j’Uétj\N‚æ+.¬ŠAŠ@xncFƒ‚ QüÒœÏd €Ï¯P[ @ï‹`fŒ©Ğ°œäÆ:³3„ d)ˆÒ’ğÙ^8û•‡¯rFv5ºpT4ÜTÔ‚%©‘¬‘ÛÚYŞ‰ßÒ?A½®DŒÊúŸÙi>p•:ˆ$>rgî™®‘¬Ä…Ø/[˜ÏhgxË ÿøo[¸îßŒ,i‹ZJj÷sÜÉE ‘+ …Î/™†`ğ³ìÍ°Óï1H4¼Ìˆ.+lÑ0ĞBñoˆÚ›6!„¨”dĞõ›¼ÿ¨¬GL ?£g éZbuæ@¯\ª#÷0f^‚¤'‘õ@i8·††‚vğ£kr¡GE	'J€ j\ *;‚‚¥¥ÂÚS‡80K¯]pôwÆËßØÆ–uä¾p¿w•ÿ=Â|+M[~rËÅ]ÀK¨Ô5†Ü«ó«—Ğhİ3/^%1­üñõwœKb2%û/J$•œÈòá–J)-U¸TC+FqÁƒ`F‚ÑÈşİ$7c&œ€Cç‚ÁZ‡!;C&şHTœ! ”›µÄ  dšEöÙ-sRipB„ğQYg–™ÔÔúµ˜ÅÈCO)*ãXÄ:!7Æö¦G¸l!Ö¢Îˆe"hA*?œ1«í’ß{gØfÁ2Ğï‚ºf9=Çìèô%;ÕCÉçEÇÆOëêüò‘ìôù{[fg„ù/2&‹1FWT	fØø_ê„­5ÆÀğÑ‚a‰[ğş—ÿóÉ?Âoäzgn3\»H,lê÷+®òIÈ÷Zx¨.4qÈœ„$<2çõlû«íàgbbKå‚@˜Äz 
+Ôê‚AC::~ã>5QÈ…2)`ai	²„O†ÔK•^'9h€V= ¸ó ã;„|qb™tz˜‡}áF‰ïo	A½Zqª/Ï}ñc;ZÅR‰ÓT ÂÈœ –
+fVñ+j¢½&`eh^¾r›6íMîK3Q*‰v…w*ó™}iÉÛxQçmmWîôÆÌ*Mı­1¯ÈŸ\Æô”Ï¤"d L#4°)½ŞûêŞQrW1 ¨aiHhõ@Ú'ÓX¦¬jÀ ×„Eò0šœ°—7³/ÄYXg µNšó§–İb°õÇöPY+ ä-Ó$RDÑ…+n†¥çOxDÿœL!4d!‹5@Ñ¹)V¥” ’,…öš» p Ü©4èx~äC.ƒ?"¼W¥³d¸)‚†â62êŒCGÊEŒÉI28
+Ã¬oÔaXWƒDºÉzl*NGUÓçJÅ®‰ÇæÚåúaì1_ù ˆÄÿ~Ç¦Úıÿ?3s¿Ö;\ÑùSî¾ÊÓË?Í‰ï|¾	ùÛœ¢0õ©$Ü‰aø‘‹Ï+£SNWX‘d|µ`©X¤`–ÙF‚“9ÃıÌ:¢LbJD;fmz;QæX¥ª¡ˆù(+ËÁXS(SƒHfG¢(IwT-/ğÆåhş­×O»G»€»AtK+€4e…p/·¦Ğµ…e(ãÂØ8
+®ÈpôcUó;XİñÑ¾Fåóh¿ã.‚M³lº¶-‚ÚÉZpÙDµT5,†‰lÎ-qO3ÈF+3­‹nYˆ}I~Mëlì9e‹ë}áQ¡‘
+= ‰¥¿y³¼€Q( cíïzÀ<ÿµ…3ãucg…ôüN,ğ/Âş¼×|¸ô«W&¸;w}	 „äaM 98@š5w¾ìêÇÇ"›$O|ûò)§k\ÃbS“‘(Q`ğŠ·•°¦«ÌÌXÚQ&j¦£àô‚-H´…+vÅ`†ÂùĞ;2vÿˆ1÷äg€b TP ‘AGìd…VcQ©G²ñI7d1‘¤’K!pÙ~€œ(%àLQ…ÄI"äBK¡Â
+v¸âœÑ*Å 0"ˆ„,ÉaèyÀ7Çí¢,ş	<JÎÀ½\Ö@aó°¢RÑªéû´›%¡mø²ÖÎê¦VNZ1ØEHıCzKG¸#jYÀkñÇ…û:_yF4ˆ™+:‹Ô°òL­FÀÅû_“úFó™õÿÀ°GĞ_ØPÓxO0˜“¯
+ZD¢"7CI­€â/I`lôë”ÏíÇiƒ­½nRòD°úbRö"”&d†r0E‡>âğ((ıëõ…ÇËÕJ“	Ô“%!„H%¸Æ•‚‘‘		*æB$ áD¸‚gËòü…ŸQØ˜B…î¤¡­!ÎìHR>0U8†KßiøÁÊ¦ÍD-fxÔW×ÅµqÖğjíò.Ú“i"åïH³Š‘UÉ±ù1çÍ(¸ƒA–Jk‹>H†eÑ/Œ$sA1 :£&‘ˆ÷FûÒ#ìÌ¼Ğ¥øşÔA§Á|ÛBü€_ 3Î4&5ñ€ù[#cÂÁÒfÃû Ë&‘Å=?±nÚ¾2±pU(TµS®H†-$HÆ;aÿ©9¯Òö
+íY)ú1ãò)úùØö8£fâä0¸'#NRè	÷K¾ÿFÜ¤²ù˜3‰ZeP*HÌ1®Ö@úÛ¦Ì¦yàâá*i9 şšZI¢ní·6/)Ş¡»ñ_È#÷!Ÿ[İ³pB& ¸:DÅA,VnÄ"¡,ÈäBqq(Š#% öĞòƒ;ˆæ €‘˜éh.¡@†ŠÒ(¹1X–œ	ÃHTÚLå(kŒm8›tzé†ÖHë(QŸ¯-cX¥ˆ™óš‚qzâyv !9" € †ªh¦"&eJ6wmŒFï`ú#îlÜÑ;R#¤ÎÉ—IçXÅ6C±gÄcøŸŸ¦ùŸ6{R_F¢ÖûëNœŒvıW`E¨h‡GšÜbş¯èİß\¾£ç§²Ü,jà\w@3¸Ğeğ…òÿÏêüo¹©‘W‹j¦˜¬à¨b6
+ê¶XÆaÎ•üŸUûÄuŸêÃ·yÒ•C~.ÓÉ§0Ğ|0C[ñ›XÍ6 H, CoùÀrßwt»OØ÷óÑ:nGaQšQà`…hVùˆ`
+KTÔ’Ë
