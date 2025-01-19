@@ -1,0 +1,112 @@
+[game_setup]
+roblox_version = '2021'
+
+[server_core.place_file]
+rbxl_uri = '_.rbxl'
+enable_saveplace = true
+
+[game_setup.database]
+path = '_.sqlite'
+clear_on_start = false
+
+[server_core.metadata]
+title = 'F3X'
+description = ''
+creator.name = 'ÒÓ'
+icon_uri = 'https://ussopload.wikimedia.org/wikipedia/commons/0/0b/Write_machine.jpg'
+
+[server_core]
+retrieve_default_user_code = '''
+function(tick) -- float -> str
+    return 'VisualPlugin'
+end
+'''
+
+check_user_allowed = '''
+function(user_iden, user_code) -- string -> bool
+    return true
+end
+'''
+
+retrieve_avatar_type = '''
+function(user_iden, user_code)
+    return 'R15'
+end
+'''
+
+retrieve_avatar_items = '''
+function(user_iden, user_code)
+    return {
+        10726856854,
+        9482991343,
+        9481782649,
+        9120251003,
+        4381817635,
+        6969309778,
+        5731052645,
+        2846257298,
+        121390054,
+        261826995,
+        154386348,
+        201733574,
+        48474294,
+        6340101,
+        192483960,
+        190245296,
+        183808364,
+        34247191,
+    }
+end
+'''
+
+retrieve_avatar_colors = '''
+function(user_iden, user_code)
+    return {
+        head = 315,
+        left_arm = 315,
+        left_leg = 315,
+        right_arm = 315,
+        right_leg = 315,
+        torso = 315,
+    }
+end
+'''
+
+retrieve_avatar_scales = '''
+function(user_iden, user_code)
+    return {
+        height = 1,
+        width = 1,
+        head = 1,
+        depth = 1,
+        proportion = 1,
+        body_type = 1,
+    }
+end
+'''
+
+retrieve_username = '''
+function(user_iden, user_code)
+    return user_code
+end
+'''
+
+retrieve_user_id = '''
+function(user_code)
+    return math.random(1, 16777216)
+end
+'''
+
+retrieve_account_age = '''
+function(user_iden, user_code)
+    return 6969
+end
+'''
+
+filter_text = '''
+function(text, ...)
+    return text:gsub('oo','òó'):gsub('OO','ÒÓ'):gsub('ee','èé'):gsub('EE','ÈÉ'):gsub('Roblox','Rōblox'):gsub('ROBLOX','RŌBLOX')
+end
+'''
+
+chat_style = 'ClassicAndBubble'

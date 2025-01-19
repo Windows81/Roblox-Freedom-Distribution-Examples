@@ -1,0 +1,3 @@
+game_setup.roblox_version = '2018'
+server_core.place_file.rbxl_uri = './PBB.rbxl'
+server_core.startup_script = 'game.workspace.FilteringEnabled = false'

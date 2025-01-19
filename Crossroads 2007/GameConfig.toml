@@ -1,4 +1,4 @@
-metadata.config_version_wildcard = "0.53.*"
+metadata.config_version_wildcard = "0.54.*"
 
 [game_setup]
 roblox_version = '2018'
@@ -42,36 +42,6 @@ end
 
 retrieve_avatar_items = '''
 function(user_iden, user_code) -- str -> [str]
-    if user_code == 'VisualPlugin' then
-        return {
-            10726856854,
-            9482991343,
-            9481782649,
-            9120251003,
-            4381817635,
-            6969309778,
-            5731052645,
-            2846257298,
-            121390054,
-            261826995,
-            154386348,
-            201733574,
-            48474294,
-            6340101,
-            192483960,
-            190245296,
-            183808364,
-            34247191,
-        }
-    elseif user_code == 'Twig' then
-        return {
-            301820642,
-            5243961918,
-            11857928130,
-            86487700,
-            16630147,
-        }
-    end
     return {}
 end
 '''
@@ -80,25 +50,6 @@ end
 
 retrieve_avatar_colors = '''
 function(user_iden, user_code) -- str -> {[str]: number}
-    if user_code == 'VisualPlugin' then
-        return {
-            head = 315,
-            left_arm = 315,
-            left_leg = 315,
-            right_arm = 315,
-            right_leg = 315,
-            torso = 315,
-        }
-    elseif user_code == 'Twig' then
-        return {
-            head = 361,
-            left_arm = 361,
-            left_leg = 361,
-            right_arm = 361,
-            right_leg = 361,
-            torso = 361,
-        }
-    end
     return {
         head = BrickColor.Random().Number,
         left_arm = BrickColor.Random().Number,
