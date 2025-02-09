@@ -1,4 +1,4 @@
-metadata.config_version_wildcard = "0.56.*"
+metadata.config_version_wildcard = "*"
 
 [game_setup]
 roblox_version = '2018'
