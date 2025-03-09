@@ -25,15 +25,13 @@ enable_saveplace = false
 [server_core]
 startup_script = 'game.workspace.FilteringEnabled = true'
 retrieve_default_user_code = '''
-function(tick) -- float -> str
-    return string.format('Player%d', tick)
-end
+def f(tick: float) -> str:
+    return 'Player%d' % tick
 '''
 
 check_user_allowed = '''
-function(user_iden, user_code) -- string -> bool
-    return true
-end
+def f(user_iden, user_code) -> bool:
+    return True
 '''
 
 retrieve_avatar_type = '''

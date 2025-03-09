@@ -23,30 +23,27 @@ icon_uri = 'https://ia600506.us.archive.org/34/items/soundcloud-1509042007/15090
 startup_script = ''
 
 retrieve_default_user_code = '''
-function(tick) -- float -> str
-    return string.format('Player%d', tick)
-end
+def f(tick: float) -> str:
+    return 'Player%d' % tick
 '''
 
 check_user_allowed = '''
-function(user_iden, user_code) -- string -> bool
-    return true
-end
+def f(user_iden, user_code) -> bool:
+    return True
 '''
 
 retrieve_avatar_type = '''
-function(user_iden, user_code) -- str -> str
+def f(user_iden, user_code) -> str:
     return 'R6'
-end
 '''
 
 retrieve_avatar_items = '''
-function(user_iden, user_code) -- str -> [str]
-    return {}
-end
+def f(user_iden, user_code):
+    return []
 '''
 
-#Please refer to this page for avatar colors. https://create.roblox.com/docs/reference/engine/datatypes/BrickColor
+# Please refer to this page for avatar colors. https://create.roblox.com/docs/reference/engine/datatypes/BrickColor
+# We're using a Lua function here for direct access to `BrickColor.Random().Number`.
 
 retrieve_avatar_colors = '''
 function(user_iden, user_code) -- str -> {[str]: number}

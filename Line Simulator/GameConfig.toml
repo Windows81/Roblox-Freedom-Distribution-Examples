@@ -3,14 +3,14 @@ roblox_version = '2021'
 
 [server_core.place_file]
 rbxl_uri = '_.rbxl'
-enable_saveplace = true
+track_file_changes = true
 
 [game_setup.database]
 path = '_.sqlite'
 clear_on_start = false
 
 [server_core.metadata]
-title = 'F3X'
+title = 'A Long Q Shall Emerge!'
 description = ''
 creator.name = 'ÒÓ'
 icon_uri = 'https://ussopload.wikimedia.org/wikipedia/commons/0/0b/Write_machine.jpg'
@@ -23,15 +23,13 @@ end
 '''
 
 check_user_allowed = '''
-function(user_iden, user_code) -- string -> bool
-    return true
-end
+def f(user_iden, user_code) -> bool:
+    return True
 '''
 
 retrieve_avatar_type = '''
-function(user_iden, user_code)
+def f(user_iden, user_code) -> str:
     return 'R15'
-end
 '''
 
 retrieve_avatar_items = '''
@@ -60,53 +58,56 @@ end
 '''
 
 retrieve_avatar_colors = '''
-function(user_iden, user_code)
+def f(user_iden, user_code):
     return {
-        head = 315,
-        left_arm = 315,
-        left_leg = 315,
-        right_arm = 315,
-        right_leg = 315,
-        torso = 315,
+        "head": 315,
+        "left_arm": 315,
+        "left_leg": 315,
+        "right_arm": 315,
+        "right_leg": 315,
+        "torso": 315,
     }
-end
 '''
 
 retrieve_avatar_scales = '''
-function(user_iden, user_code)
+def f(user_iden, user_code):
     return {
-        height = 1,
-        width = 1,
-        head = 1,
-        depth = 1,
-        proportion = 1,
-        body_type = 1,
+        "height": 1,
+        "width": 1,
+        "head": 1,
+        "depth": 1,
+        "proportion": 0,
+        "body_type": 0,
     }
-end
 '''
 
 retrieve_username = '''
-function(user_iden, user_code)
+def f(user_id_num, user_code):
     return user_code
-end
 '''
 
 retrieve_user_id = '''
-function(user_code)
-    return math.random(1, 16777216)
-end
+import random
+def f(user_code) -> int:
+    return random.randint(1, 16777216)
 '''
 
 retrieve_account_age = '''
-function(user_iden, user_code)
+def f(*a):
     return 6969
-end
 '''
 
 filter_text = '''
-function(text, ...)
-    return text:gsub('oo','òó'):gsub('OO','ÒÓ'):gsub('ee','èé'):gsub('EE','ÈÉ'):gsub('Roblox','Rōblox'):gsub('ROBLOX','RŌBLOX')
-end
+def f(text, user_id_num, user_code):
+    return (
+        text
+        .replace('oo','òó')
+        .replace('OO','ÒÓ')
+        .replace('ee','èé')
+        .replace('EE','ÈÉ')
+        .replace('Roblox','Rōblox')
+        .replace('ROBLOX','RŌBLOX')
+    )
 '''
 
 chat_style = 'ClassicAndBubble'
