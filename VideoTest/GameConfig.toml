@@ -25,7 +25,7 @@ def f(asset_iden):
         return
     if asset_iden == 'video.webm':
         return {
-            'uri': r'c:\Users\USERNAME\Videos\Duo-1.webm',
+            'forward_url': r'c:\Users\USERNAME\Videos\Duo-1.webm',
         }
 '''
 
