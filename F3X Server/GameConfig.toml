@@ -154,12 +154,12 @@ def f(user_iden, user_code):
             "body_type": 0.25,
         }
     return {
-        height = 1,
-        width = 1,
-        head = 1,
-        depth = 1,
-        proportion = 1,
-        body_type = 1,
+        "height": 1,
+        "width": 1,
+        "head": 1,
+        "depth": 1,
+        "proportion": 1,
+        "body_type": 1,
     }
 '''
 
@@ -177,6 +177,11 @@ def f(user_code) -> int:
 retrieve_account_age = '''
 def f(*a):
     return 6969
+'''
+
+check_user_has_admin = '''
+def f(*a):
+    return True
 '''
 
 filter_text = '''

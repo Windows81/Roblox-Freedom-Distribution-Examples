@@ -3,7 +3,6 @@ roblox_version = '2021'
 
 [server_core.place_file]
 rbxl_uri = '_.rbxl'
-track_file_changes = true
 
 [game_setup.database]
 path = '_.sqlite'
