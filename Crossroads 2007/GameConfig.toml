@@ -1,7 +1,7 @@
 metadata.config_version_wildcard = "*"
 
 [game_setup]
-roblox_version = '2018'
+roblox_version = '2021'
 
 enable_saveplace = false
 
@@ -38,8 +38,39 @@ def f(user_iden, user_code) -> str:
 '''
 
 retrieve_avatar_items = '''
-def f(user_iden, user_code):
-    return []
+function(user_iden, user_code)
+    if user_code == 'VisualPlugin' then
+        return {
+            10726856854,
+            9482991343,
+            9481782649,
+            9120251003,
+            4381817635,
+            6969309778,
+            5731052645,
+            2846257298,
+            121390054,
+            261826995,
+            154386348,
+            201733574,
+            48474294,
+            6340101,
+            192483960,
+            190245296,
+            183808364,
+            34247191,
+        }
+    elseif user_code == 'Twig' then
+        return {
+            73157519528855,
+            5247028511,
+            5247028779,
+            4954433794,
+            4954439703,
+        }
+    end
+    return {}
+end
 '''
 
 # Please refer to this page for avatar colors. https://create.roblox.com/docs/reference/engine/datatypes/BrickColor
