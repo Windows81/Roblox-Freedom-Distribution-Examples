@@ -11,7 +11,7 @@ clear_on_start = false
 title = 'òó'
 description = ''
 creator_name = 'ÒÓ'
-icon_uri = 'c:\Users\USER\Pictures\Byfron Icon.png'
+icon_uri = 'https://ia800506.us.archive.org/34/items/soundcloud-1509042007/1509042007.jpg'
 
 [server_core.place_file]
 rbxl_uri = '_.rbxl'
@@ -25,16 +25,34 @@ price = 2
 name = 'EnforcersPowers'
 price = 2
 
-
 [remote_data.gamepasses.163231044]
+name = 'EnforcersPowers'
+price = 1
+
+[remote_data.gamepasses.119121530]
+name = 'EnforcersPowers'
+price = 1
+
+[remote_data.gamepasses.127744882]
 name = 'EnforcersPowers'
 price = 1
 
 [server_core]
 startup_script = '''
-local url = "https://localhost:2005/"
-print('tttt', url)
-print(game.HttpRbxApiService:GetAsyncFullUrl(url))
+_G.test_http = function(use_rbxapi: bool)
+    local url = "https://localhost:2005/test_http"
+    print('testing', url, use_rbxapi)
+    if use_rbxapi then
+        game.HttpRbxApiService:GetAsyncFullUrl(url)
+    else
+        game.HttpService:GetAsync(url)
+    end
+end
+local val = true
+while wait(3) do
+    print(pcall(function() _G.test_http(val) end))
+    val = not val
+end
 '''
 
 retrieve_default_user_code = '''
@@ -63,44 +81,12 @@ end
 
 retrieve_avatar_items = '''
 function(user_iden, user_code)
-    if user_code == 'VisualPlugin' then
-        return {
-            10726856854,
-            9482991343,
-            9481782649,
-            9120251003,
-            4381817635,
-            6969309778,
-            5731052645,
-            2846257298,
-            121390054,
-            261826995,
-            154386348,
-            201733574,
-            48474294,
-            6340101,
-            192483960,
-            190245296,
-            183808364,
-            34247191,
-        }
-    end
     return {}
 end
 '''
 
 retrieve_avatar_colors = '''
 function(user_iden, user_code)
-    if user_code == 'VisualPlugin' then
-        return {
-            head = 315,
-            left_arm = 315,
-            left_leg = 315,
-            right_arm = 315,
-            right_leg = 315,
-            torso = 315,
-        }
-    end
     return {
         head = BrickColor.Random().Number,
         left_arm = BrickColor.Random().Number,

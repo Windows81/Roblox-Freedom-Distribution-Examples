@@ -21,7 +21,7 @@ enable_saveplace = false
 title = 'Lumber Tycoon 2'
 description = ''
 creator.name = 'ÒÓ'
-icon_uri = 'c:\Users\USERNAME\Pictures\Byfron Icon.png'
+icon_uri = 'https://ia800506.us.archive.org/34/items/soundcloud-1509042007/1509042007.jpg'
 
 [server_core]
 startup_script = 'game.workspace.FilteringEnabled = true'

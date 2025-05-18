@@ -15,7 +15,7 @@ enable_saveplace = false
 title = 'òó'
 description = ''
 creator_name = 'ÒÓ'
-icon_uri = 'c:\Users\USERNAME\Pictures\Byfron Icon.png'
+icon_uri = 'https://ia800506.us.archive.org/34/items/soundcloud-1509042007/1509042007.jpg'
 
 
 [remote_data]
@@ -25,7 +25,7 @@ def f(asset_iden):
         return
     if asset_iden == 'video.webm':
         return {
-            'forward_url': r'c:\Users\USERNAME\Videos\Duo-1.webm',
+            'forward_url': r'~/Videos/Duo-1.webm',
         }
 '''
 

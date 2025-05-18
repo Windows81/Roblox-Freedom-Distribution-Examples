@@ -1,0 +1,127 @@
+metadata.config_version_wildcard = "*"
+
+[game_setup]
+roblox_version = '2021'
+
+[game_setup.persistence]
+sqlite_path = '_.sqlite'
+clear_on_start = false
+
+[server_core.metadata]
+title = 'òó'
+description = ''
+creator_name = 'ÒÓ'
+icon_uri = 'https://ia800506.us.archive.org/34/items/soundcloud-1509042007/1509042007.jpg'
+
+[server_core.place_file]
+rbxl_uri = 'Baseplate.rbxl'
+enable_saveplace = false
+
+[server_core]
+startup_script = '''
+local idens = {
+    '1037158.mesh',
+    'box_stack.obj.mesh',
+    'Nayberhud.obj.mesh',
+}
+for _, iden in next, idens do
+    local mesh = game.InsertService:CreateMeshPartAsync('rbxassetid://' .. iden, Enum.CollisionFidelity.Default, Enum.RenderFidelity.Automatic)
+    mesh.CFrame = CFrame.new(0, mesh.Size.Y/2, 0)
+    mesh.Anchored = true
+    mesh.Parent = game.workspace
+end
+'''
+
+retrieve_default_user_code = '''
+function(tick) -- float -> str
+    return string.format('Player%d', tick)
+end
+'''
+
+check_user_allowed = '''
+function(user_iden, user_code) -- string -> bool
+    return true
+end
+'''
+
+check_user_has_admin = '''
+function(user_iden, user_code) -- string -> bool
+    return true
+end
+'''
+
+retrieve_avatar_type = '''
+function(user_iden, user_code)
+    return 'R15'
+end
+'''
+
+retrieve_avatar_items = '''
+function(user_iden, user_code)
+    return {}
+end
+'''
+
+retrieve_avatar_colors = '''
+function(user_iden, user_code)
+    return {
+        head = BrickColor.Random().Number,
+        left_arm = BrickColor.Random().Number,
+        left_leg = BrickColor.Random().Number,
+        right_arm = BrickColor.Random().Number,
+        right_leg = BrickColor.Random().Number,
+        torso = BrickColor.Random().Number,
+    }
+end
+'''
+
+retrieve_avatar_scales = '''
+function(user_iden, user_code)
+    return {
+        height = 1,
+        width = 1,
+        head = 1,
+        depth = 1,
+        proportion = 1,
+        body_type = 1,
+    }
+end
+'''
+
+retrieve_username = '''
+def f(user_id_num, user_code):
+    return user_code
+'''
+
+filter_text = '''
+def f(text, user_id_num, user_code):
+    return (
+        text
+        .replace('oo','òó')
+        .replace('OO','ÒÓ')
+        .replace('ee','èé')
+        .replace('EE','ÈÉ')
+        .replace('Roblox','Rōblox')
+        .replace('ROBLOX','RŌBLOX')
+    )
+'''
+
+retrieve_groups = '''
+def f(user_iden, user_code):
+    return {
+        '1200769': 255,
+        '2868472': 255,
+        '4199740': 255,
+        '4265462': 255,
+        '4265456': 255,
+        '4265443': 255,
+        '4265449': 255,
+    }
+'''
+
+retrieve_default_funds = '''
+def f(*a):
+    return 6969
+'''
+
+chat_style = 'ClassicAndBubble'
