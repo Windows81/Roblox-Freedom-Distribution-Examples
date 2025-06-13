@@ -3,5 +3,5 @@
 **/AssetCache/[0-9]*
 **/AssetCache/rbx-mtl-*.dds
 !Crossroads 2007/AssetCache/*
-Photo/AssetCache/photo-*z
+Photo/AssetCache/photo-*
 VideoTest/AssetCache/*.webm
