@@ -50,40 +50,27 @@ function(user_iden, user_code) -- string -> bool
 end
 '''
 
-retrieve_avatar_type = '''
-function(user_iden, user_code)
-    return 'R15'
-end
-'''
-
-retrieve_avatar_items = '''
-function(user_iden, user_code)
-    return {}
-end
-'''
-
-retrieve_avatar_colors = '''
+retrieve_avatar = '''
 function(user_iden, user_code)
     return {
-        head = BrickColor.Random().Number,
-        left_arm = BrickColor.Random().Number,
-        left_leg = BrickColor.Random().Number,
-        right_arm = BrickColor.Random().Number,
-        right_leg = BrickColor.Random().Number,
-        torso = BrickColor.Random().Number,
-    }
-end
-'''
-
-retrieve_avatar_scales = '''
-function(user_iden, user_code)
-    return {
-        height = 1,
-        width = 1,
-        head = 1,
-        depth = 1,
-        proportion = 1,
-        body_type = 1,
+        type = 'R15',
+        colors = {
+            head = BrickColor.Random().Number,
+            left_arm = BrickColor.Random().Number,
+            left_leg = BrickColor.Random().Number,
+            right_arm = BrickColor.Random().Number,
+            right_leg = BrickColor.Random().Number,
+            torso = BrickColor.Random().Number,
+        },
+        scales = {
+            height = 1,
+            width = 1,
+            head = 1,
+            depth = 1,
+            proportion = 1,
+            body_type = 1,
+        },
+        items = {},
     }
 end
 '''

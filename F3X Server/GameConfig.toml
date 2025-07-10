@@ -71,35 +71,26 @@ def f(user_iden, user_code) -> bool:
     return True
 '''
 
-retrieve_avatar_type = '''
-def f(user_iden, user_code) -> str:
-    return 'R15'
-'''
-
-retrieve_avatar_items = '''
+retrieve_avatar = '''
 def f(user_iden, user_code):
-    if 'Abhidjt' in user_code:
-        return []
-    elif 'Mary' in user_code:
-        return [
-            8746101819,
-            12546881897,
-            9571743205,
-            10714877787,
-            6775120568,
-            5945433814,
-            144075659,
-            746767604,
-            376547633,
-            376546668,
-            376547341,
-            376547092,
-            86499666,
-            8863219600,
-            14318768992,
-            14318770705,
-        ]
-    return [
+    type = 'R15'
+    colors = {
+        "head": 315,
+        "left_arm": 315,
+        "left_leg": 315,
+        "right_arm": 315,
+        "right_leg": 315,
+        "torso": 315,
+    }
+    scales = {
+        "height": 1,
+        "width": 1,
+        "head": 1,
+        "depth": 1,
+        "proportion": 1,
+        "body_type": 1,
+    }
+    items = [
         10726856854,
         9482991343,
         9481782649,
@@ -119,12 +110,8 @@ def f(user_iden, user_code):
         183808364,
         34247191,
     ]
-'''
-
-retrieve_avatar_colors = '''
-def f(user_iden, user_code):
     if 'Abhidjt' in user_code:
-        return {
+        colors = {
             "head": 24,
             "left_arm": 24,
             "left_leg": 37,
@@ -132,20 +119,8 @@ def f(user_iden, user_code):
             "right_leg": 37,
             "torso": 23,
         }
-    return {
-        "head": 315,
-        "left_arm": 315,
-        "left_leg": 315,
-        "right_arm": 315,
-        "right_leg": 315,
-        "torso": 315,
-    }
-'''
-
-retrieve_avatar_scales = '''
-def f(user_iden, user_code):
-    if 'Mary' in user_code:
-        return {
+    elif 'Mary' in user_code:
+        scales = {
             "height": 0.95,
             "width": 0.95,
             "head": 0.95,
@@ -153,13 +128,29 @@ def f(user_iden, user_code):
             "proportion": 0.1,
             "body_type": 0.25,
         }
+        items = {
+            8746101819,
+            12546881897,
+            9571743205,
+            10714877787,
+            6775120568,
+            5945433814,
+            144075659,
+            746767604,
+            376547633,
+            376546668,
+            376547341,
+            376547092,
+            86499666,
+            8863219600,
+            14318768992,
+            14318770705,
+        }
     return {
-        "height": 1,
-        "width": 1,
-        "head": 1,
-        "depth": 1,
-        "proportion": 1,
-        "body_type": 1,
+        'type': type,
+        'colors': colors,
+        'scales': scales,
+        'items': items,
     }
 '''
 

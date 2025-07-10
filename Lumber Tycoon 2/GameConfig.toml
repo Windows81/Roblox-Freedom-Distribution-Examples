@@ -36,37 +36,27 @@ def f(user_iden, user_code) -> bool:
     return True
 '''
 
-retrieve_avatar_type = '''
-def f(user_iden, user_code) -> str:
-    return 'R6'
-'''
-
-retrieve_avatar_items = '''
-def f(user_iden, user_code):
-    return []
-'''
-
-retrieve_avatar_colors = '''
-def f(user_iden, user_code):
+retrieve_avatar = '''
+def f(user_iden, user_code) -> dict:
     return {
-        "head": 315,
-        "left_arm": 315,
-        "left_leg": 315,
-        "right_arm": 315,
-        "right_leg": 315,
-        "torso": 315,
-    }
-'''
-
-retrieve_avatar_scales = '''
-def f(user_id_num, user_code):
-    return {
-        "height": 1,
-        "width": 1,
-        "head": 1,
-        "depth": 1,
-        "proportion": 0,
-        "body_type": 0,
+        'type': 'R6',
+        'colors': {
+            "head": 315,
+            "left_arm": 315,
+            "left_leg": 315,
+            "right_arm": 315,
+            "right_leg": 315,
+            "torso": 315,
+        },
+        'scales': {
+            "height": 1,
+            "width": 1,
+            "head": 1,
+            "depth": 1,
+            "proportion": 0,
+            "body_type": 0,
+        },
+        'items': []
     }
 '''
 

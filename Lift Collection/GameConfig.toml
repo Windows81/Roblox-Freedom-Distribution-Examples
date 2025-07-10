@@ -32,41 +32,27 @@ def f(user_iden, user_code) -> bool:
     return True
 '''
 
-retrieve_avatar_type = '''
-def f(user_iden, user_code) -> str:
-    return 'R6'
-'''
-
-retrieve_avatar_items = '''
-def f(user_iden, user_code):
-    return []
-'''
-
-# Please refer to this page for avatar colors. https://create.roblox.com/docs/reference/engine/datatypes/BrickColor
-# We're using a Lua function here for direct access to `BrickColor.Random().Number`.
-
-retrieve_avatar_colors = '''
-function(user_iden, user_code) -- str -> {[str]: number}
+retrieve_avatar = '''
+def f(user_iden, user_code) -> dict:
     return {
-        head = BrickColor.Random().Number,
-        left_arm = BrickColor.Random().Number,
-        left_leg = BrickColor.Random().Number,
-        right_arm = BrickColor.Random().Number,
-        right_leg = BrickColor.Random().Number,
-        torso = BrickColor.Random().Number,
-    }
-end
-'''
-
-retrieve_avatar_scales = '''
-def f(*a):
-    return {
-        "height": 1,
-        "width": 1,
-        "head": 1,
-        "depth": 1,
-        "proportion": 0,
-        "body_type": 0,
+        'type': 'R6',
+        'colors': {
+            'head': BrickColor.Random().Number,
+            'left_arm': BrickColor.Random().Number,
+            'left_leg': BrickColor.Random().Number,
+            'right_arm': BrickColor.Random().Number,
+            'right_leg': BrickColor.Random().Number,
+            'torso': BrickColor.Random().Number,
+        },
+        'scales': {
+            'height': 1,
+            'width': 1,
+            'head': 1,
+            'depth': 1,
+            'proportion': 0,
+            'body_type': 0,
+        },
+        'items': [],
     }
 '''
 

@@ -32,15 +32,11 @@ def f(asset_iden):
 [server_core]
 chat_style = 'ClassicAndBubble'
 
-retrieve_avatar_type = '''
+retrieve_avatar = '''
 def f(id_num, user_code):
-    return 'R15'
-'''
-
-retrieve_avatar_items = '''
-def f(id_num, user_code):
-    if user_code == 'VisualPlugin':
-        return [
+    return {
+        'type': 'R15',
+        'items': [
             10726856854,
             9482991343,
             9481782649,
@@ -59,42 +55,23 @@ def f(id_num, user_code):
             190245296,
             183808364,
             34247191,
-        ]
-    return []
-'''
-
-retrieve_avatar_colors = '''
-function(id_num, user_code) -- str -> {[str]: number}
-    if user_code == 'VisualPlugin' then
-        return {
-            head = 315,
-            left_arm = 315,
-            left_leg = 315,
-            right_arm = 315,
-            right_leg = 315,
-            torso = 315,
-        }
-    end
-    return {
-        head = BrickColor.Random().Number,
-        left_arm = BrickColor.Random().Number,
-        left_leg = BrickColor.Random().Number,
-        right_arm = BrickColor.Random().Number,
-        right_leg = BrickColor.Random().Number,
-        torso = BrickColor.Random().Number,
-    }
-end
-'''
-
-retrieve_avatar_scales = '''
-def f(id_num, user_code):
-    return {
-        "height": 1,
-        "width": 1,
-        "head": 1,
-        "depth": 1,
-        "proportion": 0,
-        "body_type": 0,
+        ],
+        'colors': {
+            'head': 315,
+            'left_arm': 315,
+            'left_leg': 315,
+            'right_arm': 315,
+            'right_leg': 315,
+            'torso': 315,
+        },
+        'scales': {
+            'height': 1,
+            'width': 1,
+            'head': 1,
+            'depth': 1,
+            'proportion': 0,
+            'body_type': 0,
+        },
     }
 '''
 

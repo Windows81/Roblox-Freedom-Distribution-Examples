@@ -26,57 +26,46 @@ def f(user_iden, user_code) -> bool:
     return True
 '''
 
-retrieve_avatar_type = '''
-def f(user_iden, user_code) -> str:
-    return 'R15'
-'''
-
-retrieve_avatar_items = '''
-function(user_iden, user_code)
-    return {
-        10726856854,
-        9482991343,
-        9481782649,
-        9120251003,
-        4381817635,
-        6969309778,
-        5731052645,
-        2846257298,
-        121390054,
-        261826995,
-        154386348,
-        201733574,
-        48474294,
-        6340101,
-        192483960,
-        190245296,
-        183808364,
-        34247191,
-    }
-end
-'''
-
-retrieve_avatar_colors = '''
+retrieve_avatar = '''
 def f(user_iden, user_code):
     return {
-        "head": 315,
-        "left_arm": 315,
-        "left_leg": 315,
-        "right_arm": 315,
-        "right_leg": 315,
-        "torso": 315,
-    }
-'''
-
-retrieve_avatar_scales = '''
-def f(user_iden, user_code):
-    return {
-        "height": 1,
-        "width": 1,
-        "head": 1,
-        "depth": 1,
-        "proportion": 0,
-        "body_type": 0,
+        "type": "R15",
+        "colors": {
+            "head": 315,
+            "left_arm": 315,
+            "left_leg": 315,
+            "right_arm": 315,
+            "right_leg": 315,
+            "torso": 315,
+        },
+        "scales": {
+            "height": 1,
+            "width": 1,
+            "head": 1,
+            "depth": 1,
+            "proportion": 0,
+            "body_type": 0,
+        },
+        "items": {
+            10726856854,
+            9482991343,
+            9481782649,
+            9120251003,
+            4381817635,
+            6969309778,
+            5731052645,
+            2846257298,
+            121390054,
+            261826995,
+            154386348,
+            201733574,
+            48474294,
+            6340101,
+            192483960,
+            190245296,
+            183808364,
+            34247191,
+        },
     }
 '''
 
