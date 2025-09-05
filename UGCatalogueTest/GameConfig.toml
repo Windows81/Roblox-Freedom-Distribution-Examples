@@ -1,0 +1,115 @@
+metadata.config_version_wildcard = "*"
+
+[game_setup]
+roblox_version = '2018'
+
+enable_saveplace = false
+
+[game_setup.persistence]
+sqlite_path = '_.sqlite'
+clear_on_start = false
+
+[server_core.place_file]
+rbxl_uri = './_.rbxl'
+
+[server_core.metadata]
+title = 'Baseplate'
+description = ''
+creator_name = ''
+icon_uri = 'https://ia600506.us.archive.org/34/items/soundcloud-1509042007/1509042007.jpg'
+
+
+[server_core]
+startup_script = 'game.workspace.FilteringEnabled = true'
+
+retrieve_default_user_code = '''
+def f(user_iden, user_code) -> bool:
+    return True
+'''
+
+check_user_allowed = '''
+def f(user_iden, user_code) -> bool:
+    return True
+'''
+
+retrieve_avatar_type = '''
+def f(user_iden, user_code) -> str:
+    return 'R6'
+'''
+
+retrieve_avatar_call_mode = "lua"
+retrieve_avatar = '''
+function(user_id_num, user_code)
+    local default_avatar = {
+        type = 'R6',
+        items = {},
+        scales = {
+            height = 1,
+            width = 1,
+            head = 1,
+            depth = 1,
+            proportion = 0,
+            body_type = 0,
+        },
+        colors = {
+            head = BrickColor.Random().Number,
+            left_arm = BrickColor.Random().Number,
+            left_leg = BrickColor.Random().Number,
+            right_arm = BrickColor.Random().Number,
+            right_leg = BrickColor.Random().Number,
+            torso = BrickColor.Random().Number,
+        },
+    }
+
+    default_avatar.items = {
+            116791445,
+    }
+    default_avatar.colors = {
+        head = 226,
+        left_arm = 226,
+        left_leg = 102,
+        right_arm = 226,
+        right_leg = 102,
+        torso = 208,
+    }
+    default_avatar.scales = {
+        height = 1,
+        width = 1,
+        head = 1,
+        depth = 1,
+        proportion = 0,
+        body_type = 0,
+    }
+
+    return default_avatar
+end
+'''
+
+retrieve_username = '''
+def f(user_id_num, user_code):
+    return user_code
+'''
+retrieve_account_age = '''
+def f(*a):
+    return 6969
+'''
+
+filter_text = '''
+def f(text, user_id_num, user_code):
+    return (
+        text
+        .replace('oo','òó')
+        .replace('OO','ÒÓ')
+        .replace('ee','èé')
+        .replace('EE','ÈÉ')
+        .replace('Roblox','Rōblox')
+        .replace('ROBLOX','RŌBLOX')
+    )
+'''
+
+retrieve_default_funds = '''
+def f(*a):
+    return 6969
+'''
+
+chat_style = 'ClassicAndBubble'
