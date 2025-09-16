@@ -1,7 +1,7 @@
 00000001818
 **/_AssetCache/
 **/AssetCache/[0-9]*
-**/AssetCache/rbx-mtl-*.dds
+**/AssetCache/rbxmtl-*
 !Crossroads 2007/AssetCache/*
 Photo/AssetCache/photo-*
 VideoTest/AssetCache/*.webm
