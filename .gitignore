@@ -6,3 +6,4 @@
 Photo/AssetCache/photo-*
 VideoTest/AssetCache/*.webm
 *.rbxl.lock
+*.zip

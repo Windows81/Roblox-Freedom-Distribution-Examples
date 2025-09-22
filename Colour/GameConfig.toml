@@ -1,7 +1,7 @@
 metadata.config_version_wildcard = "*"
 
 [game_setup]
-roblox_version = '2021'
+roblox_version = '2018'
 
 [game_setup.persistence]
 sqlite_path = '_.sqlite'
@@ -39,7 +39,7 @@ price = 1
 
 [server_core]
 startup_script = '''
-_G.test_http = function(use_rbxapi: bool)
+_G.test_http = function(use_rbxapi)
     local url = "https://localhost:2005/test_http"
     print('testing', url, use_rbxapi)
     if use_rbxapi then
