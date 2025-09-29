@@ -18,23 +18,31 @@ rbxl_uri = '_.rbxl'
 enable_saveplace = false
 
 [remote_data.dev_products.1365914116]
-name = 'EnforcersPowers'
+name = 'Dev Product 1'
 price = 2
 
 [remote_data.dev_products.1365914117]
-name = 'EnforcersPowers'
+name = 'Dev Product 2'
 price = 2
 
 [remote_data.gamepasses.163231044]
-name = 'EnforcersPowers'
+name = 'Gamepass 1'
 price = 1
 
 [remote_data.gamepasses.119121530]
-name = 'EnforcersPowers'
+name = 'Gamepass 2'
 price = 1
 
 [remote_data.gamepasses.127744882]
-name = 'EnforcersPowers'
+name = 'Gamepass 3'
+price = 1
+
+[remote_data.gamepasses.127744510]
+name = 'Gamepass 4'
+price = 1
+
+[remote_data.gamepasses.127744703]
+name = 'Gamepass 5'
 price = 1
 
 [server_core]

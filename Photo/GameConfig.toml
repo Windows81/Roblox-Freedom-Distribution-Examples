@@ -156,7 +156,7 @@ def f(id_num, user_code):
             'left_arm': 315,
             'left_leg': 315,
             'right_arm': 315,
-            'right_leg': 315,README
+            'right_leg': 315,
             'torso': 315,
         },
         'scales': {
