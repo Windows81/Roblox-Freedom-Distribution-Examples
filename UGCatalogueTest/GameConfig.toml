@@ -91,7 +91,7 @@ def f(user_id_num, user_code):
 '''
 retrieve_account_age = '''
 def f(*a):
-    return 6969
+    return 6767
 '''
 
 filter_text = '''
@@ -109,7 +109,7 @@ def f(text, user_id_num, user_code):
 
 retrieve_default_funds = '''
 def f(*a):
-    return 6969
+    return 6767
 '''
 
 chat_style = 'ClassicAndBubble'

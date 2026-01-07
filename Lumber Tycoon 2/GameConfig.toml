@@ -73,7 +73,7 @@ def f(user_code) -> int:
 
 retrieve_account_age = '''
 def f(*a):
-    return 6969
+    return 6767
 '''
 
 filter_text = '''

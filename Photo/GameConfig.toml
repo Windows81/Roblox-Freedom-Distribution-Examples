@@ -197,5 +197,10 @@ def f(user_id_num, user_code):
 
 retrieve_default_funds = '''
 def f(*a):
-    return 6969
+    return 6767
+'''
+
+check_user_has_admin = '''
+def f(*a):
+    return True
 '''
