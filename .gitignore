@@ -1,9 +1,15 @@
-00000001818
 **/_AssetCache/
-**/AssetCache/[0-9]*
+**/AssetCache/[0-9][0-9]*
 **/AssetCache/rbxmtl-*
+
 !Crossroads 2007/AssetCache/*
+!Lumber Tycoon 2/AssetCache/*
+
 Photo/AssetCache/photo-*
 VideoTest/AssetCache/*.webm
+00000001818
 *.rbxl.lock
 *.zip
+*.7z
+*.*.[0-9][0-9]*
+*.rar
