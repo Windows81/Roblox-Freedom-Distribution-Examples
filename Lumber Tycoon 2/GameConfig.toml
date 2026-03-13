@@ -26,14 +26,15 @@ icon_uri = 'https://ia800506.us.archive.org/34/items/soundcloud-1509042007/15090
 [server_core]
 startup_script = 'game.workspace.FilteringEnabled = true'
 
-retrieve_default_user_code = '''
-def f(tick: float) -> str:
-    return 'Player%d' % tick
+check_user_allowed = '''
+def f(user_code) -> bool:
+    return True
 '''
 
-check_user_allowed = '''
-def f(user_iden, user_code) -> bool:
-    return True
+retrieve_default_user_code = '''
+import time
+def f(tick: float) -> str:
+    return 'Player%d' % time.time()
 '''
 
 retrieve_avatar = '''

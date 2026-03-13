@@ -15,15 +15,15 @@ creator.name = 'ÒÓ'
 icon_uri = 'https://ussopload.wikimedia.org/wikipedia/commons/0/0b/Write_machine.jpg'
 
 [server_core]
-retrieve_default_user_code = '''
-function(tick) -- float -> str
-    return 'VisualPlugin'
-end
+check_user_allowed = '''
+def f(user_code) -> bool:
+    return True
 '''
 
-check_user_allowed = '''
-def f(user_iden, user_code) -> bool:
-    return True
+retrieve_default_user_code = '''
+import time
+def f(tick: float) -> str:
+    return 'Player%d' % time.time()
 '''
 
 retrieve_avatar = '''

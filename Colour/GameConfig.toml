@@ -63,16 +63,15 @@ while wait(3) do
 end
 '''
 
-retrieve_default_user_code = '''
-function(tick) -- float -> str
-    return string.format('Player%d', tick)
-end
+check_user_allowed = '''
+def f(user_code) -> bool:
+    return True
 '''
 
-check_user_allowed = '''
-function(user_iden, user_code) -- string -> bool
-    return true
-end
+retrieve_default_user_code = '''
+import time
+def f(tick: float) -> str:
+    return 'Player%d' % time.time()
 '''
 
 check_user_has_admin = '''
