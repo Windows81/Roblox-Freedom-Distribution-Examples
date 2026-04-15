@@ -20,32 +20,43 @@ enable_saveplace = false
 [server_core]
 startup_script = '''
 local idens = {
-    '1037158.mesh',
+    '107220860697580',
     'box_stack.obj.mesh',
     'Nayberhud.obj.mesh',
 }
-for _, iden in next, idens do
+for index, iden in next, idens do
     local mesh = game.InsertService:CreateMeshPartAsync('rbxassetid://' .. iden, Enum.CollisionFidelity.Default, Enum.RenderFidelity.Automatic)
-    mesh.CFrame = CFrame.new(0, mesh.Size.Y/2, 0)
+    mesh.Size /= mesh.Size.Y / 6
+    mesh.CFrame = CFrame.new(0, 18, index*18)
     mesh.Anchored = true
     mesh.Parent = game.workspace
 end
 '''
 
+retrieve_default_user_code = '''
+function(tick) -- float -> str
+    return string.format('Player%d', tick)
+end
+'''
+
 check_user_allowed = '''
-def f(user_code) -> bool:
-    return True
+function(user_iden, user_code) -- string -> bool
+    return true
+end
 '''
 
 check_user_has_admin = '''
-def f(user_iden, user_code):
-    return True
+function(user_iden, user_code) -- string -> bool
+    return true
+end
 '''
 
 retrieve_avatar = '''
 function(user_iden, user_code)
+
+
     return {
-        type = 'R15',
+        type = 'R6',
         colors = {
             head = BrickColor.Random().Number,
             left_arm = BrickColor.Random().Number,
@@ -62,7 +73,6 @@ function(user_iden, user_code)
             proportion = 1,
             body_type = 1,
         },
-        items = {},
     }
 end
 '''
@@ -104,3 +114,17 @@ def f(*a):
 '''
 
 chat_style = 'ClassicAndBubble'
+
+[remote_data]
+asset_redirects = '''
+import assets.serialisers
+import requests
+
+def f(asset_iden):
+    headers = {'User-Agent': 'Roblox/WinInet'}
+    data = requests.get("https://pekora.zip/asset?id=%s" % str(asset_iden), headers=headers).content
+    data, _changed = assets.serialisers.parse(data)
+    return {
+        "raw_data": data,
+    }
+'''
