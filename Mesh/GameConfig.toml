@@ -115,12 +115,15 @@ def f(*a):
 
 chat_style = 'ClassicAndBubble'
 
+
 [remote_data]
 asset_redirects = '''
 import assets.serialisers
 import requests
 
 def f(asset_iden):
+    if not isinstance(asset_iden, int):
+        return
     headers = {'User-Agent': 'Roblox/WinInet'}
     data = requests.get("https://pekora.zip/asset?id=%s" % str(asset_iden), headers=headers).content
     data, _changed = assets.serialisers.parse(data)
