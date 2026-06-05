@@ -17,11 +17,11 @@ icon_uri = 'https://ia800506.us.archive.org/34/items/soundcloud-1509042007/15090
 rbxl_uri = '_.rbxl'
 enable_saveplace = false
 
-[remote_data.dev_products.1365914116]
+[remote_data.devproducts.1365914116]
 name = 'Dev Product 1'
 price = 2
 
-[remote_data.dev_products.1365914117]
+[remote_data.devproducts.1365914117]
 name = 'Dev Product 2'
 price = 2
 
