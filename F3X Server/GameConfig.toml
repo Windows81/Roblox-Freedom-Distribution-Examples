@@ -45,18 +45,18 @@ spawn(function()
     local save_delta = 0
     game["Run Service"].Heartbeat:Connect(function(delta)
         save_delta = save_delta + delta
-		if save_delta < SaveInterval.Value then
+        if save_delta < SaveInterval.Value then
             return
         end
 
         save_delta = 0
-		game:SavePlace()
-		print(os.date('Place saved: %Y-%m-%d %H:%M:%S'))
-	end)
+        game:SavePlace()
+        print(os.date('Place saved: %Y-%m-%d %H:%M:%S'))
+    end)
 end)
 
 game:BindToClose(function()
-	game:SavePlace()
+    game:SavePlace()
 end)
 '''
 
