@@ -22,7 +22,7 @@ def f(user_code) -> bool:
 
 retrieve_default_user_code = '''
 import time
-def f(tick: float) -> str:
+def f() -> str:
     return 'Player%d' % time.time()
 '''
 

@@ -65,9 +65,11 @@ def f(user_code) -> bool:
     return True
 '''
 
+allow_unsafe_users = true
+
 retrieve_default_user_code = '''
 import time
-def f(tick: float) -> str:
+def f() -> str:
     return 'Player%d' % time.time()
 '''
 
