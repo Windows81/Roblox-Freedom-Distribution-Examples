@@ -1,0 +1,132 @@
+metadata.config_version_wildcard = "*"
+
+[game_setup]
+roblox_version = '2018'
+
+enable_saveplace = false
+
+[game_setup.persistence]
+sqlite_path = '_.sqlite'
+clear_on_start = false
+
+[server_core.place_file]
+rbxl_uri = '_.rbxl'
+track_file_changes = true
+
+[server_core.metadata]
+title = "òÓ"
+description = ""
+creator_name = "VisualPlugin"
+icon_uri = 'https://ia600506.us.archive.org/34/items/soundcloud-1509042007/1509042007.jpg'
+
+
+[server_core]
+startup_script = 'game.workspace.FilteringEnabled = true'
+
+check_user_has_admin = '''
+def f(user_id_num, user_code):
+    return True
+'''
+
+check_user_allowed = '''
+def f(user_code) -> bool:
+    return True
+'''
+
+retrieve_avatar = '''
+def f(user_iden, user_code) -> dict:
+    return {
+        'type': 'R6',
+        'colors': {
+            'head': 315,
+            'left_arm': 315,
+            'left_leg': 315,
+            'right_arm': 315,
+            'right_leg': 315,
+            'torso': 315,
+        },
+        'scales': {
+            'height': 1,
+            'width': 1,
+            'head': 1,
+            'depth': 1,
+            'proportion': 1,
+            'body_type': 1,
+        },
+        'items': [],
+    }
+'''
+
+retrieve_username = '''
+def f(user_id_num, user_code):
+    return user_code
+'''
+
+filter_text = '''
+def f(text, user_id_num, user_code):
+    return (
+        text
+        .replace('oo','òó')
+        .replace('OO','ÒÓ')
+        .replace('ee','èé')
+        .replace('EE','ÈÉ')
+        .replace('Roblox','Rōblox')
+        .replace('ROBLOX','RŌBLOX')
+    )
+'''
+
+retrieve_groups = '''
+def f(user_iden, user_code):
+    return {
+        '1200769': 255,
+        '2868472': 255,
+        '4199740': 255,
+        '4265462': 255,
+        '4265456': 255,
+        '4265443': 255,
+        '4265449': 255,
+    }
+'''
+
+retrieve_default_funds = '''
+def f(*a):
+    return 6969
+'''
+
+chat_style = 'ClassicAndBubble'
+
+retrieve_account_age = '''
+def f(user_id_num, user_code) -> int:
+    return 6969
+'''
+
+[remote_data]
+# asset_redirects = '''
+# import requests
+# requests.packages.urllib3.disable_warnings()
+# def f(asset_iden):
+#     return {
+#         'raw_data': requests.get("https://bloxxia.de/asset?id=%s" % (asset_iden), verify=False).content,
+#     }
+# '''
+
+
+[[remote_data.gamepasses]]
+id_num = 692897
+name = 'Unlimited Judge'
+price = 1
+
+[[remote_data.gamepasses]]
+id_num = 696884
+name = 'Judge Music'
+price = 1
+
+[[remote_data.gamepasses]]
+id_num = 697132
+name = 'Unlimited Host'
+price = 1
+
+[[remote_data.gamepasses]]
+id_num = 1689373
+name = 'Server Host'
+price = 1
